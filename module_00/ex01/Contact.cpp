@@ -18,14 +18,14 @@ Contact::~Contact(void)
     _nr_instances -= 1;
 }
 
-void	Contact::print(void) const
+void Contact::print(void) const
 {
     std::cout << "first name: " << this->_first_name << std::endl;
 }
 
-int		Contact::get_nr_instances(void)
+int Contact::get_nr_instances(void)
 {
-    return(Contact::_nr_instances);
+    return (Contact::_nr_instances);
 }
 
-int		Contact::_nr_instances = 0;
+int Contact::_nr_instances = 0;

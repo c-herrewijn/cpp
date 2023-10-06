@@ -10,7 +10,7 @@ PhoneBook::~PhoneBook(void)
     std::cout << "PhoneBook destructor called" << std::endl;
 }
 
-void	PhoneBook::add(void)
+void PhoneBook::add(void)
 {
     std::cout << "adding something to the phonebook" << std::endl;
 }
