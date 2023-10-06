@@ -1,10 +1,10 @@
+#include <iostream>
 #include "Contact.h"
 #include "PhoneBook.h"
 
 int main()
 {
-    Contact c1;
-    PhoneBook b1;
+	PhoneBook book;
 
-    return (0);
+	return (0);
 }
