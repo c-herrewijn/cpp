@@ -5,6 +5,7 @@
 
 --style=stroustrup
 --suffix=none
+--recursive
 --convert-tabs
 --squeeze-ws
 --squeeze-lines=1
@@ -16,3 +17,4 @@
 --unpad-paren
 --unpad-brackets
 --lineend=linux
+--max-code-length=80
