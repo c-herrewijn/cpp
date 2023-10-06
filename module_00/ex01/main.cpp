@@ -4,7 +4,7 @@
 
 int main()
 {
-	PhoneBook book;
+    PhoneBook book;
 
-	return (0);
+    return (0);
 }
