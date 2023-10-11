@@ -3,9 +3,50 @@
 PhoneBook::PhoneBook(void) {}
 PhoneBook::~PhoneBook(void) {}
 
-void PhoneBook::add(std::string first_name, std::string last_name,
-                    std::string nick_name, std::string phone_number,
-                    std::string darkest_secret)
+bool PhoneBook::query_for_new_contact(void)
+{
+    std::string first_name;
+    std::string last_name;
+    std::string nick_name;
+    std::string phone_number;
+    std::string darkest_secret;
+
+    std::cout << "Enter new contact details" << std::endl;
+    if (this->_query_for_contact_attribute(first_name, "first name: ")
+            && this->_query_for_contact_attribute(last_name, "last name: ")
+            && this->_query_for_contact_attribute(nick_name, "nick name: ")
+            && this->_query_for_contact_attribute(phone_number, "phone number: ")
+            && this->_query_for_contact_attribute(darkest_secret, "darkest secret: ")
+       ) {
+        this->_add_contact(first_name, last_name, nick_name, phone_number,
+                           darkest_secret);
+        return (true);
+    }
+    else {
+        return (false);
+    }
+}
+
+bool PhoneBook::_query_for_contact_attribute(std::string &attribute,
+    std::string query_str) const
+{
+    std::string input;
+    while (true) {
+        std::cout << query_str << std::endl;
+        if (!std::getline(std::cin, input) || std::cin.eof()) {
+            return false;
+        }
+        if (!input.empty()) {
+            attribute = input;
+            break;
+        }
+    }
+    return (true);
+}
+
+void PhoneBook::_add_contact(std::string first_name, std::string last_name,
+                             std::string nick_name, std::string phone_number,
+                             std::string darkest_secret)
 {
     unsigned int index = get_nr_contacts();
 
