@@ -5,9 +5,8 @@
 #include <string>
 
 PhoneBook::PhoneBook(void) {}
-PhoneBook::~PhoneBook(void) {}
 
-bool PhoneBook::user_add(void)
+bool PhoneBook::user_add_contact(void)
 {
     std::string first_name;
     std::string last_name;
@@ -31,7 +30,7 @@ bool PhoneBook::user_add(void)
     }
 }
 
-bool PhoneBook::user_search(void)
+bool PhoneBook::search_contact(void)
 {
     if (this->_get_nr_contacts() == 0) {
         std::cout << "The phonebook is empty" << std::endl;

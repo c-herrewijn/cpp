@@ -14,12 +14,12 @@ int main()
             break;
         }
         if (input.compare("ADD") == 0 || input.compare("add") == 0) {
-            if (book.user_add() == false) {
+            if (book.user_add_contact() == false) {
                 break;
             }
         }
         else if (input.compare("SEARCH") == 0 || input.compare("search") == 0) {
-            if (book.user_search() == false) {
+            if (book.search_contact() == false) {
                 break;
             }
         }

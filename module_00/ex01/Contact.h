@@ -6,7 +6,6 @@
 class Contact {
 public:
     Contact(void);
-    ~Contact(void);
 
     void print_contact_line(unsigned int col_width) const;
     void print_contact_info(void) const;

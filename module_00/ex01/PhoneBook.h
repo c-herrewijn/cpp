@@ -7,9 +7,8 @@
 class PhoneBook {
 public:
     PhoneBook(void);
-    ~PhoneBook(void);
-    bool user_add(void);
-    bool user_search(void);
+    bool user_add_contact(void);
+    bool search_contact(void);
 
 private:
     Contact _contact_list[8];

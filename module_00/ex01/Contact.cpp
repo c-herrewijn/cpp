@@ -12,8 +12,6 @@ Contact::Contact(void) :
     _phone_number(""),
     _darkest_secret("") {}
 
-Contact::~Contact(void) {}
-
 void Contact::print_contact_line(unsigned int col_width) const
 {
     std::cout << std::setw(col_width) << this->_index << "|"
