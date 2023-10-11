@@ -4,8 +4,6 @@
 #include <iostream>
 #include <string>
 
-PhoneBook::PhoneBook(void) {}
-
 bool PhoneBook::user_add_contact(void)
 {
     std::string first_name;

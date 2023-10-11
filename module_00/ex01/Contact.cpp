@@ -4,14 +4,6 @@
 #include <iostream>
 #include <string>
 
-Contact::Contact(void) :
-    _index(0),
-    _first_name(""),
-    _last_name(""),
-    _nickname(""),
-    _phone_number(""),
-    _darkest_secret("") {}
-
 void Contact::print_contact_line(unsigned int col_width) const
 {
     std::cout << std::setw(col_width) << this->_index << "|"

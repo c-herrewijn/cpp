@@ -5,8 +5,6 @@
 
 class Contact {
 public:
-    Contact(void);
-
     void print_contact_line(unsigned int col_width) const;
     void print_contact_info(void) const;
     void fill_contact(unsigned int index, std::string first_name,

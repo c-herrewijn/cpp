@@ -6,7 +6,6 @@
 
 class PhoneBook {
 public:
-    PhoneBook(void);
     bool user_add_contact(void);
     bool search_contact(void);
 
