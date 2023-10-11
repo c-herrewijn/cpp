@@ -1,9 +1,9 @@
 #ifndef PHONEBOOK_H
 # define PHONEBOOK_H
 
-#include <iostream>
-#include <iomanip>
-#include "Contact.h"
+# include <Contact.h>
+
+# include <string>
 
 class PhoneBook {
 public:

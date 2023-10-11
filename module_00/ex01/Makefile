@@ -1,6 +1,7 @@
 NAME	= phonebook
 CFLAGS	= -Wall -Wextra -Werror
 CC		= c++
+INCLUDE = .
 
 SRCS	= main.cpp Contact.cpp PhoneBook.cpp
 
@@ -15,7 +16,7 @@ $(NAME): $(OBJS)
 
 $(OBJ_DIR)/%.o: %.cpp
 	mkdir -p $(OBJ_DIR)
-	$(CC) -c $(CFLAGS) $< -o $@
+	$(CC) -c $(CFLAGS) -I $(INCLUDE) $< -o $@
 
 clean:
 	rm -rf $(OBJ_DIR)

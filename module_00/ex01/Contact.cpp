@@ -1,6 +1,8 @@
-#include "Contact.h"
-#include <string>
+#include <Contact.h>
+
 #include <iomanip>
+#include <iostream>
+#include <string>
 
 Contact::Contact(void) :
     _index(0),

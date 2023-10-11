@@ -1,7 +1,6 @@
 #ifndef CONTACT_H
 # define CONTACT_H
 
-# include <iostream>
 # include <string>
 
 class Contact {
@@ -12,9 +11,8 @@ public:
     void print_contact_line(void) const;
     void print_contact_info(void) const;
     void fill_contact(unsigned int index, std::string first_name,
-                      std::string last_name,
-                      std::string nick_name, std::string phone_number,
-                      std::string darkest_secret);
+                      std::string last_name, std::string nick_name,
+                      std::string phone_number, std::string darkest_secret);
     void update_index(unsigned int index);
 
 private:
