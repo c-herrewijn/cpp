@@ -16,25 +16,10 @@ Contact::~Contact(void) {}
 
 void Contact::print_contact_line(void) const
 {
-    std::string first_name_short = this->_first_name;
-    if (first_name_short.length() > 10) {
-        first_name_short.resize(10, ' ');
-        first_name_short[9] = '.';
-    }
-    std::string last_name_short = this->_last_name;
-    if (last_name_short.length() > 10) {
-        last_name_short.resize(10, ' ');
-        last_name_short[9] = '.';
-    }
-    std::string nick_name_short = this->_nick_name;
-    if (nick_name_short.length() > 10) {
-        nick_name_short.resize(10, ' ');
-        nick_name_short[9] = '.';
-    }
     std::cout << std::setw(10) << this->_index << "|"
-              << std::setw(10) << first_name_short << "|"
-              << std::setw(10) << last_name_short << "|"
-              << std::setw(10) << nick_name_short << std::endl;
+              << std::setw(10) << _crop_string(this->_first_name) << "|"
+              << std::setw(10) << _crop_string(this->_last_name) << "|"
+              << std::setw(10) << _crop_string(this->_nick_name) << std::endl;
 }
 
 void Contact::print_contact_info(void) const
@@ -61,4 +46,13 @@ void Contact::fill_contact(unsigned int index, std::string first_name,
 void Contact::update_index(unsigned int index)
 {
     this->_index = index;
+}
+
+std::string Contact::_crop_string(std::string str) const
+{
+    if (str.length() > 10) {
+        str.resize(10, ' ');
+        str[9] = '.';
+    }
+    return (str);
 }

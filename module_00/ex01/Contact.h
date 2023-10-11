@@ -22,6 +22,8 @@ private:
     std::string _nick_name;
     std::string _phone_number;
     std::string _darkest_secret;
+
+    std::string _crop_string(std::string str) const;
 };
 
 #endif
