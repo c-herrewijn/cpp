@@ -2,7 +2,6 @@
 # define PHONEBOOK_H
 
 # include <Contact.h>
-
 # include <string>
 
 class PhoneBook {
@@ -13,11 +12,12 @@ public:
     bool user_search(void);
 
 private:
-    unsigned int _nr_contacts = 0;
     Contact _contact_list[8];
+    unsigned int _nr_contacts = 0;
+    unsigned int _col_width = 10;
 
     void _add_contact(std::string first_name, std::string last_name,
-                      std::string nick_name, std::string phone_number,
+                      std::string nickname, std::string phone_number,
                       std::string darkest_secret);
     void _reset_indices(void);
     bool _query_for_input(std::string &attribute, std::string query_str) const;

@@ -11,18 +11,18 @@ bool PhoneBook::user_add(void)
 {
     std::string first_name;
     std::string last_name;
-    std::string nick_name;
+    std::string nickname;
     std::string phone_number;
     std::string darkest_secret;
 
     std::cout << "Enter new contact details" << std::endl;
     if (this->_query_for_input(first_name, "first name: ")
             && this->_query_for_input(last_name, "last name: ")
-            && this->_query_for_input(nick_name, "nick name: ")
+            && this->_query_for_input(nickname, "nickname: ")
             && this->_query_for_input(phone_number, "phone number: ")
             && this->_query_for_input(darkest_secret, "darkest secret: ")
        ) {
-        this->_add_contact(first_name, last_name, nick_name, phone_number,
+        this->_add_contact(first_name, last_name, nickname, phone_number,
                            darkest_secret);
         return (true);
     }
@@ -57,14 +57,14 @@ bool PhoneBook::user_search(void)
 }
 
 void PhoneBook::_add_contact(std::string first_name, std::string last_name,
-                             std::string nick_name, std::string phone_number,
+                             std::string nickname, std::string phone_number,
                              std::string darkest_secret)
 {
     unsigned int index = _get_nr_contacts();
 
     if (index < 8) {
         this->_contact_list[index].fill_contact(
-            index, first_name, last_name, nick_name, phone_number, darkest_secret);
+            index, first_name, last_name, nickname, phone_number, darkest_secret);
         _nr_contacts += 1;
     }
     else {
@@ -72,7 +72,7 @@ void PhoneBook::_add_contact(std::string first_name, std::string last_name,
             this->_contact_list[i] = this->_contact_list[i + 1];
         }
         this->_contact_list[7].fill_contact(
-            index, first_name, last_name, nick_name, phone_number, darkest_secret);
+            index, first_name, last_name, nickname, phone_number, darkest_secret);
         this->_reset_indices();
     }
 }
@@ -108,12 +108,12 @@ unsigned int PhoneBook::_get_nr_contacts(void) const
 
 void PhoneBook::_print_contact_list(void) const
 {
-    std::cout << std::left << std::setw(10) << "index" << "|"
-              << std::setw(10) << "first name" << "|"
-              << std::setw(10) << "last name" << "|"
-              << std::setw(10) << "nick name" << std::endl << std::right;
+    std::cout << std::setw(this->_col_width) << "index" << "|"
+              << std::setw(this->_col_width) << "first name" << "|"
+              << std::setw(this->_col_width) << "last name" << "|"
+              << std::setw(this->_col_width) << "nickname" << std::endl;
     for (unsigned int i = 0; i < _get_nr_contacts(); i++) {
-        this->_contact_list[i].print_contact_line();
+        this->_contact_list[i].print_contact_line(this->_col_width);
     }
 }
 
