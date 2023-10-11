@@ -108,10 +108,10 @@ unsigned int PhoneBook::_get_nr_contacts(void) const
 
 void PhoneBook::_print_contact_list(void) const
 {
-    std::cout << std::setw(10) << "index" << "|"
+    std::cout << std::left << std::setw(10) << "index" << "|"
               << std::setw(10) << "first name" << "|"
               << std::setw(10) << "last name" << "|"
-              << std::setw(10) << "nick name" << std::endl;
+              << std::setw(10) << "nick name" << std::endl << std::right;
     for (unsigned int i = 0; i < _get_nr_contacts(); i++) {
         this->_contact_list[i].print_contact_line();
     }
