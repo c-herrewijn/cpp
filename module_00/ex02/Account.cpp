@@ -4,12 +4,12 @@
 #include <iomanip>
 #include <iostream>
 
-Account::Account(int initial_deposit)
+Account::Account(int initial_deposit) :
+    _accountIndex(Account::getNbAccounts()),
+    _amount(initial_deposit),
+    _nbDeposits(0),
+    _nbWithdrawals(0)
 {
-    this->_accountIndex = Account::getNbAccounts();
-    this->_amount = initial_deposit;
-    this->_nbDeposits = 0;
-    this->_nbWithdrawals = 0;
     Account::_nbAccounts += 1;
     Account::_totalAmount += initial_deposit;
     Account::_displayTimestamp();
@@ -18,13 +18,17 @@ Account::Account(int initial_deposit)
               << "created" << std::endl;
 }
 
-Account::Account(void)
+Account::Account(void) :
+    _accountIndex(Account::getNbAccounts()),
+    _amount(0),
+    _nbDeposits(0),
+    _nbWithdrawals(0)
 {
-    this->_accountIndex = Account::getNbAccounts();
-    this->_amount = 0;
-    this->_nbDeposits = 0;
-    this->_nbWithdrawals = 0;
     Account::_nbAccounts += 1;
+    Account::_displayTimestamp();
+    std::cout << "index:" << this->_accountIndex << ";"
+              << "amount:" << this->checkAmount() << ";"
+              << "created" << std::endl;
 }
 
 Account::~Account(void)
