@@ -1,4 +1,4 @@
-NAME	= phonebook
+NAME	= account
 CFLAGS	= -Wall -Wextra -Werror -std=c++98
 CC		= c++
 INCLUDE = .
