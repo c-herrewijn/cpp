@@ -1,5 +1,6 @@
 #include "Account.hpp"
 #include <ctime>
+#include <iomanip>
 #include <iostream>
 
 Account::Account(int initial_deposit)
@@ -63,5 +64,15 @@ void Account::displayStatus(void) const
 
 void Account::_displayTimestamp(void)
 {
-    std::cout << "[" << "1234" << "]";
+    time_t curr_time_raw;
+    struct tm *t;
+
+    time(&curr_time_raw);
+    t = localtime(&curr_time_raw);
+    std::cout << std::setfill('0') << "[" << t->tm_year + 1900
+              << std::setw(2) << t->tm_mon + 1
+              << std::setw(2) << t->tm_mday << "_"
+              << std::setw(2) << t->tm_hour
+              << std::setw(2) << t->tm_min
+              << std::setw(2) << t->tm_sec << "] ";
 }
