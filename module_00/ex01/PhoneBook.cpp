@@ -46,39 +46,11 @@ bool PhoneBook::search_contact(void)
                 std::cout << "Invalid index!" << std::endl;
             }
             else {
-                _print_contact_at_index((unsigned int)index);
+                _print_contact_at_index((size_t)index);
             }
         }
     }
     return (true);
-}
-
-void PhoneBook::_add_contact(std::string first_name, std::string last_name,
-                             std::string nickname, std::string phone_number,
-                             std::string darkest_secret)
-{
-    unsigned int index = _get_nr_contacts();
-
-    if (index < 8) {
-        this->_contact_list[index].fill_contact(
-            index, first_name, last_name, nickname, phone_number, darkest_secret);
-        _nr_contacts += 1;
-    }
-    else {
-        for (int i = 0; i < 7; i++) {
-            this->_contact_list[i] = this->_contact_list[i + 1];
-        }
-        this->_contact_list[7].fill_contact(
-            index, first_name, last_name, nickname, phone_number, darkest_secret);
-        this->_reset_indices();
-    }
-}
-
-void PhoneBook::_reset_indices(void)
-{
-    for (unsigned int i = 0; i < this->_nr_contacts; i++) {
-        this->_contact_list[i].update_index(i);
-    }
 }
 
 bool PhoneBook::_query_for_input(std::string &attribute,
@@ -98,7 +70,35 @@ bool PhoneBook::_query_for_input(std::string &attribute,
     return (true);
 }
 
-unsigned int PhoneBook::_get_nr_contacts(void) const
+void PhoneBook::_add_contact(std::string first_name, std::string last_name,
+                             std::string nickname, std::string phone_number,
+                             std::string darkest_secret)
+{
+    size_t index = _get_nr_contacts();
+
+    if (index < 8) {
+        this->_contact_list[index].set_contact_attributes(
+            index, first_name, last_name, nickname, phone_number, darkest_secret);
+        _nr_contacts += 1;
+    }
+    else {
+        for (int i = 0; i < 7; i++) {
+            this->_contact_list[i] = this->_contact_list[i + 1];
+        }
+        this->_contact_list[7].set_contact_attributes(
+            index, first_name, last_name, nickname, phone_number, darkest_secret);
+        this->_reset_indices();
+    }
+}
+
+void PhoneBook::_reset_indices(void)
+{
+    for (size_t i = 0; i < this->_nr_contacts; i++) {
+        this->_contact_list[i].set_index(i);
+    }
+}
+
+size_t PhoneBook::_get_nr_contacts(void) const
 {
     return (PhoneBook::_nr_contacts);
 }
@@ -109,7 +109,7 @@ void PhoneBook::_print_contact_list(void) const
               << std::setw(this->_col_width) << "first name" << "|"
               << std::setw(this->_col_width) << "last name" << "|"
               << std::setw(this->_col_width) << "nickname" << std::endl;
-    for (unsigned int i = 0; i < _get_nr_contacts(); i++) {
+    for (size_t i = 0; i < _get_nr_contacts(); i++) {
         this->_contact_list[i].print_contact_line(this->_col_width);
     }
 }
@@ -128,7 +128,7 @@ int PhoneBook::_input_to_index(std::string input) const
     return (index);
 }
 
-void PhoneBook::_print_contact_at_index(unsigned int index) const
+void PhoneBook::_print_contact_at_index(size_t index) const
 {
     if (index >= _nr_contacts) {
         std::cout << "Error: index out of range, no contact at index: " << index <<
