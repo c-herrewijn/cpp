@@ -18,22 +18,22 @@ Account::~Account(void)
 
 int Account::getNbAccounts(void)
 {
-    return (0); // dummy
+    return (Account::_nbAccounts);
 }
 
 int Account::getTotalAmount(void)
 {
-    return (0); // dummy
+    return (Account::_totalAmount);
 }
 
 int Account::getNbDeposits(void)
 {
-    return (0); // dummy
+    return (Account::_totalNbDeposits);
 }
 
 int Account::getNbWithdrawals(void)
 {
-    return (0); // dummy
+    return (Account::_totalNbWithdrawals);
 }
 
 void Account::displayAccountsInfos(void)
