@@ -76,3 +76,8 @@ void Account::_displayTimestamp(void)
               << std::setw(2) << t->tm_min
               << std::setw(2) << t->tm_sec << "] ";
 }
+
+int Account::_nbAccounts = 0;
+int Account::_totalAmount = 0;
+int Account::_totalNbDeposits = 0;
+int Account::_totalNbWithdrawals = 0;
