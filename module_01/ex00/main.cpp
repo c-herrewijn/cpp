@@ -15,12 +15,12 @@ int main()
     z4.announce();
 
     // creating zombies of stack of other function;
-    randomChump("William");   // zombies will be destoyed function termination 
+    randomChump("William"); // zombies will be destoyed on function termination
     randomChump("Alexander");
 
     // freeing zombies on the heap
     delete z1;
     delete z2;
 
-    return (0);  // freeing zombies on the stack
+    return (0); // freeing zombies on the stack
 }
