@@ -6,13 +6,14 @@
 
 class PhoneBook {
 public:
+    PhoneBook(void);
     bool user_add_contact(void);
     bool search_contact(void);
 
 private:
     Contact _contact_list[8];
-    size_t _nr_contacts = 0;
-    size_t _col_width = 10;
+    size_t _nr_contacts;
+    size_t _col_width;
 
     void _add_contact(std::string first_name, std::string last_name,
                       std::string nickname, std::string phone_number,
