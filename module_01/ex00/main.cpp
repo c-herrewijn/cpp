@@ -1,5 +1,8 @@
 #include <Zombie.h>
 
+Zombie *newZombie(std::string name);
+void randomChump(std::string name);
+
 int main()
 {
     // creating zombies on the heap;
