@@ -2,13 +2,27 @@
 #include <fstream>
 #include <string>
 
-std::string find_replace(std::string in_str, std::string find_str,
-                         std::string replace_str)
+std::string findReplace(std::string inStr, std::string find,
+                        std::string replaceBy)
 {
-    (void)in_str; // dummy
-    (void)find_str; // dummy
-    (void)replace_str; // dummy
-    return ("dummy"); // dummy
+    size_t findLen = find.length();
+    std::string outStr = "";
+    std::string subString;
+
+    for (size_t i=0; i<inStr.length(); i++) {
+        subString = inStr.substr(i, findLen);
+        if (i + findLen > inStr.length()) {
+            outStr += inStr.at(i);
+        }
+        else if (subString == find) {
+            outStr += replaceBy;
+            i += (findLen - 1);
+        }
+        else {
+            outStr += inStr.at(i);
+        }
+    };
+    return (outStr);
 }
 
 int main(int argc, char *argv[])
@@ -21,19 +35,19 @@ int main(int argc, char *argv[])
     std::string filename = argv[1];
     std::string s1 = argv[2];
     std::string s2 = argv[3];
-    std::ifstream in_file(filename);
-    if (!in_file) {
+    std::ifstream inFile(filename);
+    if (!inFile) {
         std::cout << "file " << filename << " does not exist" << std::endl;
         return (1);
     }
 
     // create output file
-    std::ofstream out_file(filename + ".replace");
-    std::string line_in;
-    while (std::getline(in_file, line_in)) {
-        out_file << find_replace(line_in, s1, s2) << std::endl;
+    std::ofstream outFile(filename + ".replace");
+    std::string lineIn;
+    while (std::getline(inFile, lineIn)) {
+        outFile << findReplace(lineIn, s1, s2) << std::endl;
     }
-    in_file.close();
-    out_file.close();
+    inFile.close();
+    outFile.close();
     return (0);
 }
