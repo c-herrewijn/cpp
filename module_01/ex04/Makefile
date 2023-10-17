@@ -1,4 +1,4 @@
-NAME	= sed
+NAME	= findreplace
 CFLAGS	= -Wall -Wextra -Werror
 CC		= c++
 INCLUDE = .
@@ -26,7 +26,11 @@ fclean: clean
 
 re: fclean all
 
+test:
+	@chmod +x ./test.sh
+	@./test.sh
+
 lint:
 	astyle --options=../linter.txt ./*.cpp,*.h
 
-.PHONY: all clean fclean re lint
+.PHONY: all clean fclean re test lint
