@@ -1,3 +1,6 @@
+#ifndef ZOMBIE_H
+#define ZOMBIE_H
+
 #include <string>
 
 class Zombie {
@@ -11,3 +14,5 @@ public:
 private:
     std::string name;
 };
+
+#endif
