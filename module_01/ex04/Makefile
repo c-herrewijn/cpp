@@ -26,7 +26,7 @@ fclean: clean
 
 re: fclean all
 
-test:
+test: $(NAME)
 	@chmod +x ./test.sh
 	@./test.sh
 
