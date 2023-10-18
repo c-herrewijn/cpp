@@ -2,19 +2,19 @@
 #include <string>
 #include <iostream>
 
+Harl::t_complainMap Harl::complainMap[] = {
+    {"DEBUG", &Harl::debug},
+    {"INFO", &Harl::info},
+    {"WARNING", &Harl::warning},
+    {"ERROR", &Harl::error},
+};
+
 void Harl::complain(std::string level)
 {
-    t_complainMap complainMap[] = {
-        {"info", &Harl::info},
-        {"debug", &Harl::debug},
-        {"warning", &Harl::warning},
-        {"error", &Harl::error},
-    };
-    size_t nr_complaints = sizeof(complainMap) / sizeof(t_complainMap);
-
-    for (size_t i=0; i<nr_complaints; i++) {
+    size_t nrComplaints = sizeof(Harl::complainMap) / sizeof(Harl::t_complainMap);
+    for (size_t i=0; i<nrComplaints; i++) {
         if (level == complainMap[i].level) {
-            (this->*complainMap[i].complainFunction)();
+            (this->*Harl::complainMap[i].complainFunction)();
         }
     }
 }

@@ -4,15 +4,15 @@ int main()
 {
     Harl myHarl;
 
-    myHarl.complain("debug");
-    myHarl.complain("info");
-    myHarl.complain("warning");
-    myHarl.complain("error");
+    myHarl.complain("DEBUG");
+    myHarl.complain("INFO");
+    myHarl.complain("WARNING");
+    myHarl.complain("ERROR");
     myHarl.complain("non-valid");
 
-    myHarl.complain("debug");
-    myHarl.complain("info");
-    myHarl.complain("warning");
-    myHarl.complain("error");
+    myHarl.complain("DEBUG");
+    myHarl.complain("INFO");
+    myHarl.complain("WARNING");
+    myHarl.complain("ERROR");
     myHarl.complain("non-valid");
 }

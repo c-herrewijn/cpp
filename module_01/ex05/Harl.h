@@ -15,4 +15,5 @@ private:
         std::string level;
         void (Harl::*complainFunction)(void);
     } t_complainMap;
+    static t_complainMap complainMap[];
 };
