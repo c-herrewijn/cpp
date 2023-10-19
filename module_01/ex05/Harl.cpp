@@ -9,7 +9,7 @@ Harl::t_complainMap Harl::complainMap[] = {
     {"ERROR", &Harl::error},
 };
 
-void Harl::complain(std::string level)
+void Harl::complain(std::string level) const
 {
     size_t nrComplaints = sizeof(Harl::complainMap) / sizeof(Harl::t_complainMap);
     for (size_t i=0; i<nrComplaints; i++) {
@@ -19,22 +19,22 @@ void Harl::complain(std::string level)
     }
 }
 
-void Harl::debug(void)
+void Harl::debug(void) const
 {
     std::cout << "Debug line" << std::endl;
 }
 
-void Harl::info(void)
+void Harl::info(void) const
 {
     std::cout << "Info line" << std::endl;
 }
 
-void Harl::warning(void)
+void Harl::warning(void) const
 {
     std::cout << "Warning line" << std::endl;
 }
 
-void Harl::error(void)
+void Harl::error(void) const
 {
     std::cout << "Error line" << std::endl;
 }
