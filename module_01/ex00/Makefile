@@ -1,6 +1,5 @@
 NAME	= zombie
 CFLAGS	= -Wall -Wextra -Werror -std=c++98
-CC		= c++
 INCLUDE = .
 
 SRCS	= main.cpp Zombie.cpp newZombie.cpp randomChump.cpp
@@ -12,11 +11,11 @@ OBJS	= $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) $^ -o $(NAME)
+	$(CXX) $(CFLAGS) $^ -o $(NAME)
 
 $(OBJ_DIR)/%.o: %.cpp
 	mkdir -p $(OBJ_DIR)
-	$(CC) -c $(CFLAGS) -I $(INCLUDE) $< -o $@
+	$(CXX) -c $(CFLAGS) -I $(INCLUDE) $< -o $@
 
 clean:
 	rm -rf $(OBJ_DIR)
