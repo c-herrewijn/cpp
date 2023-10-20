@@ -1,8 +1,12 @@
 .vscode
 **/obj/
+
+# assignment 00
 megaphone
 phonebook
 account
+
+# assignment 01
 zombie
 zombie_horde
 this_is_brain
@@ -10,3 +14,6 @@ unnecessary_violence
 findreplace
 harl
 harlFilter
+
+# assignment 02
+fixed
