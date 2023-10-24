@@ -41,20 +41,14 @@ int main(void)
     std::cout << "m - ar1: " << (m - ar1) << "; 6.7 is expected" << std::endl;
 
     std::cout << "m * ar1: " << (m * ar1) << "; -10.12 is expected" << std::endl;
-    std::cout << "m * ar1: " << (Fixed(10.01f) * Fixed(10.01f)) <<
-              "; 100.2001 is expected" << std::endl;
+    std::cout << "m * ar1: " << (Fixed(10.01f) * Fixed(10.01f)) << "; 100.2001 is expected" << std::endl;
 
     std::cout << "m / ar1: " << (m / ar1) << "; -0.5227 is expected" << std::endl;
-    std::cout << "m / ar1: " << (Fixed(10) / Fixed(3)) << "; 3.333 is expected" <<
-              std::endl;
-    std::cout << "m / ar1: " << (Fixed(7) / Fixed(0.5f)) << "; 14 is expected" <<
-              std::endl;
-    std::cout << "m / ar1: " << (Fixed(5) / Fixed(0)) <<
-              "; (2^23)-1 = 8388607, is expected" << std::endl;
-    std::cout << "m / ar1: " << (Fixed(7000000) / Fixed(2)) <<
-              "; 3500000 is expected" << std::endl;
-    std::cout << "m / ar1: " << (Fixed(70000) / Fixed(2)) << "; 35000 is expected"
-              << std::endl;
+    std::cout << "m / ar1: " << (Fixed(10) / Fixed(3)) << "; 3.333 is expected" << std::endl;
+    std::cout << "m / ar1: " << (Fixed(7) / Fixed(0.5f)) << "; 14 is expected" << std::endl;
+    std::cout << "m / ar1: " << (Fixed(5) / Fixed(0)) << "; (2^23)-1 = 8388607, is expected" << std::endl;
+    std::cout << "m / ar1: " << (Fixed(7000000) / Fixed(2)) << "; 3500000 is expected" << std::endl;
+    std::cout << "m / ar1: " << (Fixed(70000) / Fixed(2)) << "; 35000 is expected" << std::endl;
 
     // testing increment / decrement operators
     Fixed dd;
