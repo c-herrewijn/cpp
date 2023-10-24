@@ -5,43 +5,37 @@
 
 const int Fixed::_nrFractionalBits = 8;
 
-Fixed::Fixed() : _raw(0)
-{
-    // std::cout << "Default constructor called" << std::endl;
-}
+// constructors / destructors
+// -------------------------------
+Fixed::Fixed() : _raw(0) {}
+Fixed::~Fixed() {};
 
 Fixed::Fixed(const int i)
 {
-    // std::cout << "Int constructor called" << std::endl;
-    setRawBits(i << this->_nrFractionalBits);
+    this->setRawBits(i << this->_nrFractionalBits);
 }
 
 Fixed::Fixed(const float f)
 {
-    // std::cout << "Float constructor called" << std::endl;
     int raw = roundf(f * (1 << this->_nrFractionalBits));
-    setRawBits(raw);
+    this->setRawBits(raw);
 }
 
 Fixed::Fixed(const Fixed &obj)
 {
-    // std::cout << "Copy constructor called" << std::endl;
     *this = obj;
 }
 
-Fixed::~Fixed()
-{
-    // std::cout << "Destructor called" << std::endl;
-};
-
+// operator overloads
+// -------------------------------
 Fixed &Fixed::operator=(const Fixed &obj)
 {
-    // std::cout << "Copy assignment operator called" << std::endl;
     this->setRawBits(obj.getRawBits());
     return *this;
 }
 
-// comparion operators
+// comparison operators
+// -------------------------------
 bool Fixed::operator>(const Fixed &obj)
 {
     return (this->getRawBits() > obj.getRawBits());
@@ -73,6 +67,7 @@ bool Fixed::operator!=(const Fixed &obj)
 }
 
 // arithmetic operators
+// -------------------------------
 Fixed Fixed::operator+(const Fixed &obj)
 {
     Fixed sum;
@@ -116,6 +111,50 @@ Fixed Fixed::operator/(const Fixed &obj)
     return (division);
 }
 
+// increment/decrement operators
+// -------------------------------
+// pre-increment
+Fixed &Fixed::operator++()
+{
+    this->setRawBits(this->getRawBits() + 1);
+    return (*this);
+}
+
+// post-increment
+Fixed Fixed::operator++(int dummy)
+{
+    (void)dummy;
+    Fixed orig(*this);
+    this->setRawBits(this->getRawBits() + 1);
+    return (orig);
+}
+
+// pre-decrement
+Fixed &Fixed::operator--()
+{
+    this->setRawBits(this->getRawBits() - 1);
+    return (*this);
+}
+
+// post-decrement
+Fixed Fixed::operator--(int dummy)
+{
+    (void)dummy;
+    Fixed orig(*this);
+    this->setRawBits(this->getRawBits() - 1);
+    return (orig);
+}
+
+// out stream overload
+// -------------------------------
+std::ostream &operator<<(std::ostream &out, const Fixed &obj)
+{
+    out << obj.toFloat();
+    return (out);
+}
+
+// regular member functions
+// -------------------------------
 int Fixed::getRawBits(void) const
 {
     return (this->_raw);
@@ -135,10 +174,4 @@ float Fixed::toFloat(void) const
 int Fixed::toInt(void) const
 {
     return (this->getRawBits() >> this->_nrFractionalBits);
-}
-
-std::ostream &operator<<(std::ostream &out, const Fixed &obj)
-{
-    out << obj.toFloat();
-    return (out);
 }

@@ -9,7 +9,7 @@ public:
     Fixed(const float f);
     Fixed(const Fixed &obj);
     ~Fixed();
-    
+
     Fixed &operator=(const Fixed &obj);
     bool operator>(const Fixed &obj);
     bool operator<(const Fixed &obj);
@@ -21,6 +21,10 @@ public:
     Fixed operator-(const Fixed &obj);
     Fixed operator*(const Fixed &obj);
     Fixed operator/(const Fixed &obj);
+    Fixed &operator++();          // pre-increment
+    Fixed operator++(int dummy);  // post-increment
+    Fixed &operator--();          // pre-decrement
+    Fixed operator--(int dummy);  // post-decrement
 
     int getRawBits(void) const;
     void setRawBits(int const raw);
