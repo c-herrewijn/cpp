@@ -7,7 +7,6 @@
 --suffix=none
 --recursive
 --convert-tabs
---squeeze-ws
 --squeeze-lines=1
 --align-pointer=name
 --align-reference=name

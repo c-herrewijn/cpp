@@ -73,16 +73,33 @@ int main(void)
     std::cout << "dd: " << (--dd) << "; 0 is expected" << std::endl;
     std::cout << "dd: " << (dd) << "; 0 is expected" << std::endl;
 
+    // testing min/max
+    Fixed ee(10.25f);
+    Fixed ff(11);
+    std::cout << "min: " << Fixed::min(ee, ff) << "; 10.25 is expected" << std::endl;
+
+    Fixed gg(10);
+    const Fixed hh(-11);
+    std::cout << "min: " << Fixed::min(gg, hh) << "; -11 is expected" << std::endl;
+
+    Fixed ii(10.25f);
+    Fixed jj(11);
+    std::cout << "min: " << Fixed::min(ii, jj) << "; 10.25 is expected" << std::endl;
+
+    Fixed kk(10);
+    const Fixed mm(-11);
+    std::cout << "min: " << Fixed::min(kk, mm) << "; -11 is expected" << std::endl;
+
     // test cases from subject
-    // Fixed a;
-    // Fixed const b(Fixed(5.05f) * Fixed(2));
-    // std::cout << a << std::endl;
-    // std::cout << ++a << std::endl;
-    // std::cout << a << std::endl;
-    // std::cout << a++ << std::endl;
-    // std::cout << a << std::endl;
-    // std::cout << b << std::endl;
-    // std::cout << Fixed::max(a, b) << std::endl;
+    Fixed a;
+    Fixed const b(Fixed(5.05f) * Fixed(2));
+    std::cout << a << std::endl;
+    std::cout << ++a << std::endl;
+    std::cout << a << std::endl;
+    std::cout << a++ << std::endl;
+    std::cout << a << std::endl;
+    std::cout << b << std::endl;
+    std::cout << Fixed::max(a, b) << std::endl;
 
     return 0;
 }

@@ -36,53 +36,53 @@ Fixed &Fixed::operator=(const Fixed &obj)
 
 // comparison operators
 // -------------------------------
-bool Fixed::operator>(const Fixed &obj)
+bool Fixed::operator>(const Fixed &obj) const
 {
     return (this->getRawBits() > obj.getRawBits());
 }
 
-bool Fixed::operator<(const Fixed &obj)
+bool Fixed::operator<(const Fixed &obj) const
 {
     return (this->getRawBits() < obj.getRawBits());
 }
 
-bool Fixed::operator>=(const Fixed &obj)
+bool Fixed::operator>=(const Fixed &obj) const
 {
     return (this->getRawBits() >= obj.getRawBits());
 }
 
-bool Fixed::operator<=(const Fixed &obj)
+bool Fixed::operator<=(const Fixed &obj) const
 {
     return (this->getRawBits() <= obj.getRawBits());
 }
 
-bool Fixed::operator==(const Fixed &obj)
+bool Fixed::operator==(const Fixed &obj) const
 {
     return (this->getRawBits() == obj.getRawBits());
 }
 
-bool Fixed::operator!=(const Fixed &obj)
+bool Fixed::operator!=(const Fixed &obj) const
 {
     return (this->getRawBits() != obj.getRawBits());
 }
 
 // arithmetic operators
 // -------------------------------
-Fixed Fixed::operator+(const Fixed &obj)
+Fixed Fixed::operator+(const Fixed &obj) const
 {
     Fixed sum;
     sum.setRawBits(this->getRawBits() + obj.getRawBits());
     return (sum);
 }
 
-Fixed Fixed::operator-(const Fixed &obj)
+Fixed Fixed::operator-(const Fixed &obj) const
 {
     Fixed difference;
     difference.setRawBits(this->getRawBits() - obj.getRawBits());
     return (difference);
 }
 
-Fixed Fixed::operator*(const Fixed &obj)
+Fixed Fixed::operator*(const Fixed &obj) const
 {
     long long int prod_raw = this->getRawBits() * obj.getRawBits();
     Fixed product;
@@ -90,7 +90,7 @@ Fixed Fixed::operator*(const Fixed &obj)
     return (product);
 }
 
-Fixed Fixed::operator/(const Fixed &obj)
+Fixed Fixed::operator/(const Fixed &obj) const
 {
     // zero division
     Fixed zero(0);
@@ -174,4 +174,26 @@ float Fixed::toFloat(void) const
 int Fixed::toInt(void) const
 {
     return (this->getRawBits() >> this->_nrFractionalBits);
+}
+
+// static member functions
+// -------------------------------
+Fixed &Fixed::min(Fixed &f1, Fixed &f2)
+{
+    return (f1 < f2 ? f1 : f2);
+}
+
+Fixed &Fixed::max(Fixed &f1, Fixed &f2)
+{
+    return (f1 > f2 ? f1 : f2);
+}
+
+const Fixed &Fixed::min(const Fixed &f1, const Fixed &f2)
+{
+    return (f1 < f2 ? f1 : f2);
+}
+
+const Fixed &Fixed::max(const Fixed &f1, const Fixed &f2)
+{
+    return (f1 > f2 ? f1 : f2);
 }
