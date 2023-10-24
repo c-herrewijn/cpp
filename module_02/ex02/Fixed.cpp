@@ -1,5 +1,6 @@
 #include <iostream>
 #include <Fixed.h>
+#include <limits.h>
 #include <cmath>
 
 const int Fixed::_nrFractionalBits = 8;
@@ -38,6 +39,81 @@ Fixed &Fixed::operator=(const Fixed &obj)
     // std::cout << "Copy assignment operator called" << std::endl;
     this->setRawBits(obj.getRawBits());
     return *this;
+}
+
+// comparion operators
+bool Fixed::operator>(const Fixed &obj)
+{
+    return (this->getRawBits() > obj.getRawBits());
+}
+
+bool Fixed::operator<(const Fixed &obj)
+{
+    return (this->getRawBits() < obj.getRawBits());
+}
+
+bool Fixed::operator>=(const Fixed &obj)
+{
+    return (this->getRawBits() >= obj.getRawBits());
+}
+
+bool Fixed::operator<=(const Fixed &obj)
+{
+    return (this->getRawBits() <= obj.getRawBits());
+}
+
+bool Fixed::operator==(const Fixed &obj)
+{
+    return (this->getRawBits() == obj.getRawBits());
+}
+
+bool Fixed::operator!=(const Fixed &obj)
+{
+    return (this->getRawBits() != obj.getRawBits());
+}
+
+// arithmetic operators
+Fixed Fixed::operator+(const Fixed &obj)
+{
+    Fixed sum;
+    sum.setRawBits(this->getRawBits() + obj.getRawBits());
+    return (sum);
+}
+
+Fixed Fixed::operator-(const Fixed &obj)
+{
+    Fixed difference;
+    difference.setRawBits(this->getRawBits() - obj.getRawBits());
+    return (difference);
+}
+
+Fixed Fixed::operator*(const Fixed &obj)
+{
+    long long int prod_raw = this->getRawBits() * obj.getRawBits();
+    Fixed product;
+    product.setRawBits(prod_raw >> this->_nrFractionalBits);
+    return (product);
+}
+
+Fixed Fixed::operator/(const Fixed &obj)
+{
+    // zero division
+    Fixed zero(0);
+    if (zero == obj) {
+        Fixed inf;
+        if (*this >= 0) {
+            inf.setRawBits(INT_MAX);
+        }
+        else {
+            inf.setRawBits(INT_MIN);
+        }
+        return inf;
+    }
+
+    // normal case
+    float f = (double)this->getRawBits() / (double)obj.getRawBits();
+    Fixed division(f);
+    return (division);
 }
 
 int Fixed::getRawBits(void) const
