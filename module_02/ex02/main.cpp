@@ -41,7 +41,7 @@ int main(void)
     std::cout << "m - ar1: " << (m - ar1) << "; 6.7 is expected" << std::endl;
 
     std::cout << "m * ar1: " << (m * ar1) << "; -10.12 is expected" << std::endl;
-    std::cout << "m * ar1: " << (Fixed(10.01f) * Fixed(10.01f)) << "; 100.2001 is expected" << std::endl;
+    std::cout << "10.25 * 1.25: " << (Fixed(10.25f) * Fixed(1.25f)) << "; 12.8125 is expected" << std::endl;
 
     std::cout << "m / ar1: " << (m / ar1) << "; -0.5227 is expected" << std::endl;
     std::cout << "m / ar1: " << (Fixed(10) / Fixed(3)) << "; 3.333 is expected" << std::endl;
