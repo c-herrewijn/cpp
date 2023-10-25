@@ -10,6 +10,8 @@ public:
     Point(const Point &obj);
     ~Point();
     Point &operator=(const Point &obj);
+    Fixed getX() const;
+    Fixed getY() const;
 
 private:
     Fixed _x;
