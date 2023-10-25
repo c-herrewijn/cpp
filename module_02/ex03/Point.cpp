@@ -1,20 +1,14 @@
 #include <Point.h>
 
-// Point.cpp
 Point::Point() : _x(0), _y(0) {}
-Point::Point(float x, float y) : _x(x), _y(y) {}
-
-Point::Point(const  Point  &obj)
-{
-    *this  =  obj;
-}
-
+Point::Point(const float x, const float y) : _x(x), _y(y) {}
+Point::Point(const Point &obj) : _x(obj.getX()), _y(obj.getY()) {}
 Point::~Point() {}
 
-Point  &Point::operator=(const  Point  &obj)
+// note: the assignment operator can not set const attributes!
+Point  &Point::operator=(const Point &obj)
 {
-    this->_x = obj._x;
-    this->_y = obj._y;
+    (void)obj;
     return *this;
 }
 

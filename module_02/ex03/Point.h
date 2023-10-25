@@ -6,7 +6,7 @@
 class Point {
 public:
     Point();
-    Point(float x, float y);
+    Point(const float x, const float y);
     Point(const Point &obj);
     ~Point();
     Point &operator=(const Point &obj);
@@ -14,8 +14,8 @@ public:
     Fixed getY() const;
 
 private:
-    Fixed _x;
-    Fixed _y;
+    Fixed const _x;
+    Fixed const _y;
 };
 
 #endif
