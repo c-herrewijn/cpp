@@ -8,7 +8,7 @@ const int Fixed::_nrFractionalBits = 8;
 // constructors / destructors
 // -------------------------------
 Fixed::Fixed() : _raw(0) {}
-Fixed::~Fixed() {};
+Fixed::~Fixed() {}
 
 Fixed::Fixed(const int i)
 {
