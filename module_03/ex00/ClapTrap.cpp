@@ -4,24 +4,37 @@
 
 ClapTrap::ClapTrap() :
     _name("MrDefault"), _hitPoints(10), _energyPoints(10), _attackDamage(0)
-{}
+{
+    std::cout << "Default Claptrap Constructor called..." << std::endl;
+}
 
 ClapTrap::ClapTrap(std::string name) :
     _name(name), _hitPoints(10), _energyPoints(10), _attackDamage(0)
-{}
+{
+    std::cout << "Claptrap Constructor called..." << std::endl;
+}
 
 ClapTrap::ClapTrap(const ClapTrap &obj) :
     _name(obj._name),
     _hitPoints(obj._hitPoints),
     _energyPoints(obj._energyPoints),
     _attackDamage(obj._attackDamage)
-{}
+{
+    std::cout << "Claptrap Copy Constructor called..." << std::endl;
+}
 
-ClapTrap::~ClapTrap() {}
+ClapTrap::~ClapTrap()
+{
+    std::cout << "Claptrap Destructor called..." << std::endl;
+}
 
 ClapTrap &ClapTrap::operator=(const ClapTrap &obj)
 {
+    std::cout << "Claptrap Copy Assignment Operator called..." << std::endl;
     this->_name = obj._name;
+    this->_attackDamage = obj._attackDamage;
+    this->_hitPoints = obj._hitPoints;
+    this->_energyPoints = obj._energyPoints;
     return *this;
 }
 

@@ -19,16 +19,16 @@ int main()
     // exhaustion after 10 actions ...
     a.attack("Monter1");
     a.beRepaired(10);
-    std::cout << "--------------" << std::endl;
 
+    std::cout << "--------------" << std::endl;
     std::cout << "Testing taking damage..." << std::endl;
     ClapTrap b("Beatrix");
     b.takeDamage(3);
     b.takeDamage(3);
     b.takeDamage(3);
     b.takeDamage(3);
-    std::cout << "--------------" << std::endl;
 
+    std::cout << "--------------" << std::endl;
     std::cout << "Testing healing..." << std::endl;
     ClapTrap c("Christina");
     c.takeDamage(3);
@@ -39,8 +39,8 @@ int main()
     c.takeDamage(3);
     c.takeDamage(3);
     c.takeDamage(3);
-    std::cout << "--------------" << std::endl;
 
+    std::cout << "--------------" << std::endl;
     std::cout << "Testing extreme cases..." << std::endl;
     ClapTrap d("Diana");
     d.takeDamage(4294967295);  // max unsigned int
@@ -49,14 +49,22 @@ int main()
     std::cout << ".. testing impossible actions..." << std::endl;
     d.attack("Monter2");
     d.beRepaired(10);
-    std::cout << "--------------" << std::endl;
 
+    std::cout << "--------------" << std::endl;
     std::cout << "Testing default ClapTrap..." << std::endl;
     ClapTrap xx;
     xx.attack("Monster3");
     xx.beRepaired(10);
-    
     // note: ClapTrap's health can be more than its initial value
-    xx.takeDamage(12);
+    xx.takeDamage(18);
+
     std::cout << "--------------" << std::endl;
+    std::cout << "Testing copying ClapTraps..." << std::endl;
+    ClapTrap clone1("SuperClone");
+    clone1.beRepaired(1000);
+    ClapTrap clone2;
+    clone2 = clone1;
+    clone2.takeDamage(1000);
+    ClapTrap clone3(clone1);
+    clone3.takeDamage(1000);
 }
