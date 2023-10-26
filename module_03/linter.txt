@@ -1,0 +1,19 @@
+# -------------------------------------------
+# linting rules for c++ projects
+# to be used with "Artistic Style" auto formatter: https://astyle.sourceforge.net/
+# -------------------------------------------
+
+--style=stroustrup
+--suffix=none
+--recursive
+--convert-tabs
+--squeeze-lines=1
+--align-pointer=name
+--align-reference=name
+--add-braces
+--pad-comma
+--pad-header
+--unpad-paren
+--unpad-brackets
+--lineend=linux
+--max-code-length=80
