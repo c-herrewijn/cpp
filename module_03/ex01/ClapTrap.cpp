@@ -14,8 +14,12 @@ ClapTrap::ClapTrap(std::string name) :
     std::cout << "ClapTrap Constructor called..." << std::endl;
 }
 
-ClapTrap::ClapTrap(std::string name, int hitPoints, int energyPoints, int attackDamage) :
-    _name(name), _hitPoints(hitPoints), _energyPoints(energyPoints), _attackDamage(attackDamage)
+ClapTrap::ClapTrap(std::string name, int hitPoints, int energyPoints,
+                   int attackDamage) :
+    _name(name),
+    _hitPoints(hitPoints),
+    _energyPoints(energyPoints),
+    _attackDamage(attackDamage)
 {
     std::cout << "ClapTrap Constructor called..." << std::endl;
 }
