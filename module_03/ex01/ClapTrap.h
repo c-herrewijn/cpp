@@ -17,8 +17,6 @@ public:
 
 protected:
     ClapTrap(std::string name, int hitPoints, int energyPoints, int attackDamage);
-
-private:
     std::string _name;
     int _hitPoints;
     int _energyPoints;

@@ -1,4 +1,3 @@
-#include <ClapTrap.h>
 #include <ScavTrap.h>
 
 #include <string>
@@ -6,6 +5,11 @@
 
 int main()
 {
-    std::cout << "Testing ScavTrap..." << std::endl;
+    std::cout << "Testing exhaustion..." << std::endl;
+    ScavTrap a("Alice");
+    for (int i=0; i<51; i++) {  // exhaustion after 50 actions ...
+        a.attack("Monter1");
+    }
+
     return (0);
 }
