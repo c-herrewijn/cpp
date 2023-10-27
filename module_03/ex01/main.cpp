@@ -1,4 +1,5 @@
 #include <ScavTrap.h>
+#include <ClapTrap.h>
 
 #include <string>
 #include <iostream>
@@ -49,7 +50,6 @@ int main()
     // note: ScavTrap's health can be more than its initial value
     xx.takeDamage(108);
 
-
     std::cout << "--------------" << std::endl;
     std::cout << "Testing copying ScavTraps..." << std::endl;
     ScavTrap clone1("SuperClone");
@@ -63,7 +63,28 @@ int main()
     std::cout << "--------------" << std::endl;
     std::cout << "Testing guarding the gate..." << std::endl;
     clone1.guardGate();
+
     std::cout << "--------------" << std::endl;
-    
+    std::cout << "Testing if ClapTrap still works..." << std::endl;
+
+    ClapTrap o("OldClapper");
+    o.attack("Monster2");
+    o.beRepaired(10);
+    o.attack("Monster2");
+    o.beRepaired(10);
+    o.attack("Monster2");
+    o.beRepaired(10);
+    o.attack("Monster2");
+    o.beRepaired(10);
+    o.attack("Monster2");
+    o.beRepaired(10);
+    // exhausted with 60 hp
+    o.attack("Monster2");
+    o.beRepaired(10);
+
+    o.takeDamage(59);
+    o.takeDamage(5);
+    std::cout << "--------------" << std::endl;
+
     return (0);
 }
