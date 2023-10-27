@@ -51,15 +51,18 @@ ClapTrap &ClapTrap::operator=(const ClapTrap &obj)
 void ClapTrap::attack(const std::string &target)
 {
     if (this->_hitPoints <= 0) {
-        std::cout << this->_name << " can't attack because it is dead!" << std::endl;
+        std::cout << "ClapTrap " << this->_name
+                  << " can't attack because it is dead!" << std::endl;
     }
     else if (this->_energyPoints <= 0) {
-        std::cout << this->_name << " can't attack: no energy left!" << std::endl;
+        std::cout << "ClapTrap " << this->_name
+                  << " can't attack: no energy left!" << std::endl;
     }
     else {
         this->_energyPoints--;
-        std::cout << this->_name << " attacks " << target << " causing "
-                  << this->_attackDamage << " points of damage!" << std::endl;
+        std::cout << "ClapTrap " << this->_name << " attacks " << target
+                  << " causing " << this->_attackDamage << " points of damage!"
+                  << std::endl;
     }
 }
 
