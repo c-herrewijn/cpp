@@ -82,7 +82,7 @@ void ClapTrap::takeDamage(unsigned int amount)
     else {
         std::cout << this->_name << " is hit and takes " << amount
                   << " points of damage!" << std::endl;
-        if ((long long int)amount >= (long long int)std::numeric_limits<int>::max()) {
+        if (amount >= (unsigned int)std::numeric_limits<int>::max()) {
             this->_hitPoints = 0;
         }
         else {
