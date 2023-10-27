@@ -67,4 +67,6 @@ int main()
     clone2.takeDamage(1000);
     ClapTrap clone3(clone1);
     clone3.takeDamage(1000);
+
+    return (0);
 }
