@@ -22,11 +22,10 @@ DiamondTrap::DiamondTrap(std::string name) :
     std::cout << "DiamondTrap Constructor called..." << std::endl;
 }
 
-DiamondTrap::DiamondTrap(DiamondTrap &obj) :
-    ClapTrap(obj._name, obj._hitPoints, obj._energyPoints, obj._attackDamage),
-    _name(obj._name)
+DiamondTrap::DiamondTrap(DiamondTrap &obj)
 {
     std::cout << "DiamondTrap Copy Constructor called..." << std::endl;
+    *this = obj;
 }
 
 DiamondTrap::~DiamondTrap()

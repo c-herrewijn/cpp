@@ -21,9 +21,9 @@ ScavTrap::ScavTrap(std::string name) :
     std::cout << "ScavTrap Constructor called..." << std::endl;
 }
 
-ScavTrap::ScavTrap(ScavTrap &obj) :
-    ClapTrap(obj._name, obj._hitPoints, obj._energyPoints, obj._attackDamage)
+ScavTrap::ScavTrap(ScavTrap &obj)
 {
+    *this = obj;
     std::cout << "ScavTrap Copy Constructor called..." << std::endl;
 }
 
