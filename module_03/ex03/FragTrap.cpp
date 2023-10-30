@@ -4,12 +4,20 @@
 #include <iostream>
 #include <string>
 
-FragTrap::FragTrap() : ClapTrap("MrDefaultFrag", 100, 100, 30)
+int FragTrap::_hitPointsBase = 100;
+int FragTrap::_energyPointsBase = 100;
+int FragTrap::_attackDamageBase = 30;
+
+FragTrap::FragTrap() : ClapTrap("MrDefaultFrag", FragTrap::_hitPointsBase,
+                                    FragTrap::_energyPointsBase,
+                                    FragTrap::_attackDamageBase)
 {
-    std::cout << "Default FragTrap Constructor called..." << std::endl;
+    std::cout << "FragTrap Constructor called..." << std::endl;
 }
 
-FragTrap::FragTrap(std::string name) : ClapTrap(name, 100, 100, 30)
+FragTrap::FragTrap(std::string name) :
+    ClapTrap(name, FragTrap::_hitPointsBase, FragTrap::_energyPointsBase,
+             FragTrap::_attackDamageBase)
 {
     std::cout << "FragTrap Constructor called..." << std::endl;
 }

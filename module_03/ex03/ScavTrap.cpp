@@ -3,12 +3,20 @@
 #include <iostream>
 #include <string>
 
-ScavTrap::ScavTrap() : ClapTrap("MrDefaultScav", 100, 50, 20)
+int ScavTrap::_hitPointsBase = 100;
+int ScavTrap::_energyPointsBase = 50;
+int ScavTrap::_attackDamageBase = 20;
+
+ScavTrap::ScavTrap() : ClapTrap("MrDefaultScav", ScavTrap::_hitPointsBase,
+                                    ScavTrap::_energyPointsBase,
+                                    ScavTrap::_attackDamageBase)
 {
-    std::cout << "Default ScavTrap Constructor called..." << std::endl;
+    std::cout << "ScavTrap Constructor called..." << std::endl;
 }
 
-ScavTrap::ScavTrap(std::string name) : ClapTrap(name, 100, 50, 20)
+ScavTrap::ScavTrap(std::string name) :
+    ClapTrap(name, ScavTrap::_hitPointsBase, ScavTrap::_energyPointsBase,
+             ScavTrap::_attackDamageBase)
 {
     std::cout << "ScavTrap Constructor called..." << std::endl;
 }

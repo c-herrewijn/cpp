@@ -3,7 +3,7 @@
 
 #include <ClapTrap.h>
 
-class FragTrap : public ClapTrap {
+class FragTrap : virtual public ClapTrap {
 public:
     FragTrap();
     FragTrap(std::string name);
@@ -13,6 +13,11 @@ public:
 
     void highFivesGuys(void);
     void attack(const std::string &target);
+
+protected:
+    static int _hitPointsBase;
+    static int _energyPointsBase;
+    static int _attackDamageBase;
 };
 
 #endif
