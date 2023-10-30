@@ -11,13 +11,14 @@
 // attack damage: 30
 int main()
 {
-    std::cout << "Testing whoami..." << std::endl;
-    DiamondTrap a("Alice");
-    a.whoAmI();
+    std::cout << "Testing whoAmI..." << std::endl;
+    DiamondTrap a1("Alex");
+    a1.whoAmI();
 
+    DiamondTrap a2("Alice");
     std::cout << "Testing exhaustion..." << std::endl;
     for (int i=0; i<51; i++) {  // exhaustion after 50 actions ...
-        a.attack("Monter1");
+        a2.attack("Monter1");
     }
 
     std::cout << "--------------" << std::endl;
@@ -57,6 +58,7 @@ int main()
     xx.beRepaired(10);
     // note: DiamondTrap's health can be more than its initial value
     xx.takeDamage(108);
+    xx.whoAmI();
 
     std::cout << "--------------" << std::endl;
     std::cout << "Testing copying DiamondTraps..." << std::endl;
@@ -65,12 +67,10 @@ int main()
     DiamondTrap clone2;
     clone2 = clone1;
     clone2.takeDamage(1000);
+    clone2.whoAmI();
     DiamondTrap clone3(clone1);
     clone3.takeDamage(1000);
-
-    std::cout << "--------------" << std::endl;
-    std::cout << "Testing guarding the gate..." << std::endl;
-    clone1.guardGate();
+    clone3.whoAmI();
 
     std::cout << "--------------" << std::endl;
     std::cout << "Testing if ClapTrap still works..." << std::endl;

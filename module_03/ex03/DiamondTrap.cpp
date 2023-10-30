@@ -62,6 +62,17 @@ void DiamondTrap::beRepaired(unsigned int amount)
 
 void DiamondTrap::whoAmI()
 {
-    std::cout << "Name: " << this->_name << std::endl;
-    std::cout << "ClapTrap name: " << this->ScavTrap::_name << std::endl;
+    if (this->_hitPoints <= 0) {
+        std::cout << "DiamondTrap " << this->_name
+                  << " can't tell its name because it is dead!" << std::endl;
+    }
+    else if (this->_energyPoints <= 0) {
+        std::cout << "DiamondTrap " << this->_name
+                  << " can't tell its name: no energy left!" << std::endl;
+    }
+    else {
+        this->_energyPoints--;
+        std::cout << "Name: " << this->_name << std::endl;
+        std::cout << "ClapTrap name: " << this->ScavTrap::_name << std::endl;
+    }
 }
