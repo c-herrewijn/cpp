@@ -2,7 +2,7 @@ NAME	= animals
 CFLAGS	= -Wall -Wextra -Werror -std=c++98
 INCLUDE = .
 
-SRCS	= main.cpp Animal.cpp Dog.cpp Cat.cpp
+SRCS	= main.cpp Animal.cpp Dog.cpp Cat.cpp WrongAnimal.cpp WrongCat.cpp
 
 OBJ_DIR = obj
 OBJS	= $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
