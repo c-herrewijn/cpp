@@ -20,6 +20,7 @@ Brain::~Brain()
 
 Brain &Brain::operator=(const Brain &obj)
 {
+    std::cout << "Brain Copy Assignement Operator Called" << std::endl;
     for (int i=0; i<(end(this->ideas) - begin(this->ideas)); i++) {
         this->ideas[i] = obj.ideas[i];
     }

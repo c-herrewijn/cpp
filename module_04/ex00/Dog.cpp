@@ -19,6 +19,7 @@ Dog::~Dog()
 
 Dog &Dog::operator=(const Dog &obj)
 {
+    std::cout << "Dog Copy Assignement Operator Called" << std::endl;
     this->type = obj.type;
     return *this;
 }

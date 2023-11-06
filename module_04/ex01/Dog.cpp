@@ -24,16 +24,15 @@ Dog::~Dog()
 
 Dog &Dog::operator=(const Dog &obj)
 {
+    std::cout << "Dog Copy Assignement Operator Called" << std::endl;
     this->type = obj.type;
-    delete this->_brain;
-    this->_brain = new Brain();
     *(this->_brain) = *(obj._brain);
     return *this;
 }
 
 void Dog::makeSound(void) const
 {
-    std::cout << "I am a Dog: meoww!" << std::endl;
+    std::cout << "I am a Dog: woof!" << std::endl;
 }
 
 void Dog::brainDump(void) const

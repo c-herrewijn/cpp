@@ -25,6 +25,7 @@ Animal::~Animal()
 
 Animal &Animal::operator=(const Animal &obj)
 {
+    std::cout << "Animal Copy Assignement Operator Called" << std::endl;
     this->type = obj.type;
     return *this;
 }
