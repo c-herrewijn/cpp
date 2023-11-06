@@ -11,6 +11,8 @@ public:
 
     void brainDump(void) const;
     void updateBrain(size_t index, std::string idea);
+
+private:
     std::string ideas[100];
 };
 
