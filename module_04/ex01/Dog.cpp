@@ -43,10 +43,5 @@ void Dog::brainDump(void) const
 
 void Dog::updateBrain(size_t index, std::string idea)
 {
-    if (index >= (size_t)(end(this->_brain->ideas) - begin(this->_brain->ideas))) {
-        std::cout << "Error: index [" << index << "] out of range!" << std::endl;
-    }
-    else {
-        this->_brain->ideas[index] = idea;
-    }
+    this->_brain->updateBrain(index, idea);
 }

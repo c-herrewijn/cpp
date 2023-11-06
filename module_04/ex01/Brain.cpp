@@ -35,3 +35,13 @@ void Brain::brainDump(void) const
         }
     }
 }
+
+void Brain::updateBrain(size_t index, std::string idea)
+{
+    if (index >= (size_t)(end(this->ideas) - begin(this->ideas))) {
+        std::cout << "Error: index [" << index << "] out of range!" << std::endl;
+    }
+    else {
+        this->ideas[index] = idea;
+    }
+}

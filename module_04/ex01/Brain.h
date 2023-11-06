@@ -10,6 +10,7 @@ public:
     Brain &operator=(const Brain &obj);
 
     void brainDump(void) const;
+    void updateBrain(size_t index, std::string idea);
     std::string ideas[100];
 };
 
