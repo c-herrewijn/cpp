@@ -41,7 +41,7 @@ int main()
     cat3.brainDump();
 
     // tests from exersize
-    std::cout << std::endl << "testing from exercize: " << std::endl;
+    std::cout << std::endl << "tests from exercize: " << std::endl;
     const Animal *j = new Dog();
     const Animal *i = new Cat();
     delete j;
