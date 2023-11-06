@@ -3,7 +3,7 @@
 #include <string>
 #include <iostream>
 
-Dog::Dog() : Animal("Dog")
+Dog::Dog() : AAnimal("Dog")
 {
     std::cout << "Dog Constructor Called" << std::endl;
     this->_brain = new Brain();

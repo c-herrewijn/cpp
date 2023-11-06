@@ -5,7 +5,7 @@
 #include "Animal.h"
 #include "Brain.h"
 
-class Dog : public Animal {
+class Dog : public AAnimal {
 public:
     Dog();
     Dog(const Dog &obj);

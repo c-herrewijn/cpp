@@ -9,7 +9,7 @@ int main()
 {
     // create and delete array with a mix of cats and dogs
     std::cout << "create array with cats and dogs: " << std::endl;
-    Animal *arr[10];
+    AAnimal *arr[10];
     for (int i=0; i<5; i++) {
         arr[i] = new Cat;
     }
@@ -42,8 +42,8 @@ int main()
 
     // tests from exersize
     std::cout << std::endl << "tests from exercize: " << std::endl;
-    const Animal *j = new Dog();
-    const Animal *i = new Cat();
+    const AAnimal *j = new Dog();
+    const AAnimal *i = new Cat();
     delete j;
     delete i;
     std::cout << std::endl << "end of main" << std::endl;

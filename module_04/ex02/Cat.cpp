@@ -3,7 +3,7 @@
 #include <string>
 #include <iostream>
 
-Cat::Cat() : Animal("Cat")
+Cat::Cat() : AAnimal("Cat")
 {
     std::cout << "Cat Constructor Called" << std::endl;
     this->_brain = new Brain();

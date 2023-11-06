@@ -3,17 +3,17 @@
 
 #include <string>
 
-class Animal {
+class AAnimal {
 public:
-    Animal();
-    Animal(std::string type);
-    Animal(const Animal &obj);
-    virtual ~Animal();
-    Animal &operator=(const Animal &obj);
+    AAnimal();
+    AAnimal(std::string type);
+    AAnimal(const AAnimal &obj);
+    virtual ~AAnimal();
+    AAnimal &operator=(const AAnimal &obj);
 
-    virtual void makeSound(void) const;
     std::string getType(void) const;
 
+    virtual void makeSound(void) const = 0;
     virtual void brainDump(void) const = 0;
     virtual void updateBrain(size_t index, std::string idea) = 0;
 
