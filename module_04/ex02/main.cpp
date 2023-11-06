@@ -42,10 +42,16 @@ int main()
 
     // tests from exersize
     std::cout << std::endl << "tests from exercize: " << std::endl;
-    const AAnimal *j = new Dog();
     const AAnimal *i = new Cat();
-    delete j;
+    const AAnimal *j = new Dog();
+
+    // test sounds
+    std::cout << std::endl << "test sounds: " << std::endl;
+    i->makeSound();
+    j->makeSound();
     delete i;
+    delete j;
+
     std::cout << std::endl << "end of main" << std::endl;
     return 0;
 }
