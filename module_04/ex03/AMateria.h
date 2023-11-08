@@ -4,6 +4,8 @@
 #include "ICharacter.h"
 #include <string>
 
+class ICharacter; // foreward declaration, to prevent circular includes
+
 class  AMateria {
 public:
     AMateria();
