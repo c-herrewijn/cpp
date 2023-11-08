@@ -2,12 +2,7 @@
 #include "AMateria.h"
 
 Ice::Ice() : AMateria("ice") {}
-
-Ice::Ice(const Ice &obj)
-{
-    *this = obj;
-}
-
+Ice::Ice(const Ice &obj) : AMateria(obj) {}
 Ice::~Ice() {}
 
 Ice &Ice::operator=(const Ice &obj)

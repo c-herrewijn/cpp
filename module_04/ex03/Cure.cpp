@@ -2,12 +2,7 @@
 #include "AMateria.h"
 
 Cure::Cure() : AMateria("cure") {}
-
-Cure::Cure(const Cure &obj)
-{
-    *this = obj;
-}
-
+Cure::Cure(const Cure &obj) : AMateria(obj) {}
 Cure::~Cure() {}
 
 Cure &Cure::operator=(const Cure &obj)
