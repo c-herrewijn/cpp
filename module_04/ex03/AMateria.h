@@ -6,6 +6,9 @@
 
 class  AMateria {
 public:
+    AMateria();
+    AMateria(std::string const &type);
+    AMateria(const AMateria &obj);
     virtual ~AMateria();
     AMateria &operator=(const AMateria &obj);
 
@@ -14,11 +17,6 @@ public:
     virtual void use(ICharacter &target);
 
 protected:
-    AMateria();
-    AMateria(std::string const &type);
-    AMateria(const AMateria &obj);
-
-private:
     std::string const type;
 };
 
