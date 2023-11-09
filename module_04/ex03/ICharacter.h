@@ -6,7 +6,7 @@
 
 class AMateria; // foreward declaration, to prevent circular includes
 
-class  ICharacter {
+class ICharacter {
 public:
     virtual ~ICharacter() {}
     virtual std::string const &getName() const = 0;

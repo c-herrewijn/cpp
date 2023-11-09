@@ -3,7 +3,7 @@
 
 #include "AMateria.h"
 
-class  Cure : public AMateria {
+class Cure : public AMateria {
 public:
     Cure();
     Cure(const Cure &obj);

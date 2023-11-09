@@ -71,8 +71,8 @@ void Character::equip(AMateria *m)
             return ;
         }
     }
-    std::cout << "Error: no space in inventory left! (materia not equiped)" <<
-              std::endl;
+    std::cout << "Error: no space in inventory left! (materia not equiped)"
+              << std::endl;
 }
 
 void Character::unequip(int idx)

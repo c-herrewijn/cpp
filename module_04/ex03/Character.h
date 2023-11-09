@@ -5,7 +5,7 @@
 #include "ICharacter.h"
 #include "AMateria.h"
 
-class  Character : public ICharacter {
+class Character : public ICharacter {
 public:
     Character();
     Character(std::string name);

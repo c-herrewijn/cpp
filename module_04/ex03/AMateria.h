@@ -6,7 +6,7 @@
 
 class ICharacter; // foreward declaration, to prevent circular includes
 
-class  AMateria {
+class AMateria {
 public:
     AMateria();
     AMateria(std::string const &type);

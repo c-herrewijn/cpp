@@ -3,7 +3,7 @@
 
 #include "AMateria.h"
 
-class  Ice : public AMateria {
+class Ice : public AMateria {
 public:
     Ice();
     Ice(const Ice &obj);
