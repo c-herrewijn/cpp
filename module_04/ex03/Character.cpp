@@ -1,7 +1,5 @@
 #include "Character.h"
 #include "AMateria.h"
-#include "Ice.h"
-#include "Cure.h"
 
 #include <iostream>
 
@@ -29,7 +27,7 @@ Character &Character::operator=(const Character &obj)
 {
     this->name = obj.name;
 
-    // copy inventory, and delete current inventory
+    // clone inventory, and delete current inventory
     int nrSlotsInventory = sizeof(this->inventory) / sizeof(this->inventory[0]);
     for (int i=0; i<nrSlotsInventory; i++) {
         if (this->inventory[i] != NULL) {
@@ -37,12 +35,7 @@ Character &Character::operator=(const Character &obj)
             this->inventory[i] = NULL;
         }
         if (obj.inventory[i] != NULL) {
-            if (obj.inventory[i]->getType() == "ice") {
-                this->inventory[i] = new Ice();
-            }
-            if (obj.inventory[i]->getType() == "cure") {
-                this->inventory[i] = new Cure();
-            }
+            this->inventory[i] = obj.inventory[i]->clone();
         }
     }
     return *this;
@@ -55,6 +48,10 @@ std::string const &Character::getName() const
 
 void Character::equip(AMateria *m)
 {
+    if (m == NULL) {
+        std::cout << "Error: no materia to equip!" <<  std::endl;
+        return ;
+    }
     int nrSlotsInventory = sizeof(this->inventory) / sizeof(this->inventory[0]);
     for (int i=0; i<nrSlotsInventory; i++) {
         if (this->inventory[i] == m) {
