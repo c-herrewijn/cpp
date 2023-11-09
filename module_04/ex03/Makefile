@@ -1,10 +1,8 @@
 NAME	= materia
-# CFLAGS	= -Wall -Wextra -Werror
-CFLAGS	= ""
+CFLAGS	= -Wall -Wextra -Werror
 INCLUDE = .
 
-SRCS	= main.cpp AMateria.cpp Character.cpp Cure.cpp Ice.cpp
-# SRCS	= main.cpp AMateria.cpp Character.cpp Cure.cpp Ice.cpp MateriaSource.cpp
+SRCS	= main.cpp AMateria.cpp Character.cpp Cure.cpp Ice.cpp MateriaSource.cpp
 OBJ_DIR = obj
 OBJS	= $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
 

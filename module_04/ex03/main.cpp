@@ -3,6 +3,8 @@
 #include "AMateria.h"
 #include "Ice.h"
 #include "Cure.h"
+#include "IMateriaSource.h"
+#include "MateriaSource.h"
 
 #include <iostream>
 
@@ -19,7 +21,7 @@ static void cleanFloor()
 
 int main()
 {
-    ICharacter *me = new Character("Chris");
+    ICharacter *player = new Character("Chris");
     ICharacter *harry = new Character("Harry");
 
     std::cout << std::endl << "-- testing Ice (copying and using)..." << std::endl;
@@ -57,12 +59,13 @@ int main()
     delete mc4;
 
     std::cout << std::endl << "-- testing character happy flow" << std::endl;
-    me->equip(new Cure());
-    me->use(0, *harry);
-    me->equip(new Ice());
-    me->use(1, *harry);
-    me->unequip(0);
-    me->unequip(1);
+    player->equip(new Cure());
+    player->use(0, *harry);
+    player->equip(new Ice());
+    player->use(1, *harry);
+    player->unequip(0);
+    player->unequip(1);
+    delete player;
 
     std::cout << std::endl << "-- testing character edge cases" << std::endl;
     ICharacter *mrEdgeCase = new Character("Edgy Eddy");
@@ -87,6 +90,7 @@ int main()
     mrEdgeCase->unequip(4);
     mrEdgeCase->unequip(1);
     mrEdgeCase->unequip(1);
+    cleanFloor();
 
     // // filling the floor
     // cleanFloor();
@@ -95,6 +99,7 @@ int main()
     //     mrEdgeCase->unequip(0);
     // }
     // cleanFloor();
+    delete mrEdgeCase;
 
     std::cout << std::endl << "-- testing deep copies of Characters" << std::endl;
     Character copyHorde0 = Character("mrCopyCat");
@@ -111,12 +116,52 @@ int main()
     copyHorde2 = copyHorde0;
     copyHorde2.use(0, *harry);
     copyHorde2.use(1, *harry);
-
-    // cleanup
-    std::cout << std::endl << "-- cleanup" << std::endl;
-    cleanFloor();
     delete harry;
+
+    std::cout << std::endl << "-- testing Materia Source" << std::endl;
+    MateriaSource matSrc = MateriaSource();
+    matSrc.createMateria("unnknownType");
+    matSrc.createMateria("cure");
+    matSrc.createMateria("ice");
+    matSrc.learnMateria(new Cure());
+    matSrc.createMateria("unnknownType");
+    AMateria *myMateria1 = matSrc.createMateria("cure");
+    matSrc.createMateria("ice");
+    delete myMateria1;
+
+    // fill up materia source
+    matSrc.learnMateria(new Cure());
+    matSrc.learnMateria(new Cure());
+    matSrc.learnMateria(new Cure());
+
+    // memory of materia source is fully filled
+    AMateria *noFit = new Ice();
+    matSrc.learnMateria(noFit);
+    delete noFit;
+
+    // create a deep clone of the materia source
+    std::cout << std::endl << "-- testing Materia deep copy" << std::endl;
+    MateriaSource matSrcCopy = MateriaSource(matSrc);
+    matSrcCopy.createMateria("unnknownType");
+    AMateria *myMateria2 = matSrcCopy.createMateria("cure");
+    matSrcCopy.createMateria("ice");
+    delete myMateria2;
+
+    std::cout << std::endl << "-- tests from subject" << std::endl;
+    IMateriaSource *src = new MateriaSource();
+    src->learnMateria(new Ice());
+    src->learnMateria(new Cure());
+    ICharacter *me = new Character("me");
+    AMateria *tmp;
+    tmp = src->createMateria("ice");
+    me->equip(tmp);
+    tmp = src->createMateria("cure");
+    me->equip(tmp);
+    ICharacter *bob = new Character("bob");
+    me->use(0, *bob);
+    me->use(1, *bob);
+    delete bob;
     delete me;
-    delete mrEdgeCase;
+    delete src;
     return 0;
 }
