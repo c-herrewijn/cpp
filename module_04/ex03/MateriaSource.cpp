@@ -33,8 +33,7 @@ MateriaSource &MateriaSource::operator=(const MateriaSource &obj)
 
 void MateriaSource::learnMateria(AMateria *materiaToLearn)
 {
-    if (materiaToLearn == NULL)
-    {
+    if (materiaToLearn == NULL) {
         std::cout << "Error: no materia to learn!" <<  std::endl;
         return ;
     }
