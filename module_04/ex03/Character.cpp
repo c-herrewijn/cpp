@@ -10,7 +10,7 @@ AMateria *Character::floor[100] = {};
 Character::Character() : name(""), inventory{} {}
 Character::Character(std::string name) : name(name), inventory{} {}
 
-Character::Character(const Character &obj)
+Character::Character(const Character &obj) : inventory{}
 {
     *this = obj;
 }
@@ -66,7 +66,7 @@ void Character::equip(AMateria *m)
     for (int i=0; i<nrSlotsInventory; i++) {
         if (this->inventory[i] == NULL) {
             this->inventory[i] = m;
-            std::cout << "equiping " << m->getType() << " materia in slot: "
+            std::cout << this->name << " equips " << m->getType() << " materia in slot: "
                       << i << std::endl;
             return ;
         }
@@ -92,8 +92,8 @@ void Character::unequip(int idx)
             if (this->floor[i] == NULL) {
                 this->floor[i] = this->inventory[idx];
                 this->inventory[idx]=NULL;
-                std::cout << "Dropped materia of type '" << this->floor[i]->getType()
-                          << "' on the floor!" << std::endl;
+                std::cout << this->name << " drops materia of type '"
+                          << this->floor[i]->getType() << "' on the floor!" << std::endl;
                 return ;
             }
         }

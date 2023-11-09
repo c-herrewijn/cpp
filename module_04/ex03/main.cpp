@@ -88,6 +88,30 @@ int main()
     mrEdgeCase->unequip(1);
     mrEdgeCase->unequip(1);
 
+    // // filling the floor
+    // cleanFloor();
+    // for (int i=0;i<101;i++) {
+    //     mrEdgeCase->equip(new Ice());
+    //     mrEdgeCase->unequip(0);
+    // }
+    // cleanFloor();
+
+    std::cout << std::endl << "-- testing deep copies of Characters" << std::endl;
+    Character copyHorde0 = Character("mrCopyCat");
+    copyHorde0.equip(new Ice());
+    copyHorde0.use(0, *harry);
+    copyHorde0.use(1, *harry);
+    Character copyHorde1 = Character(copyHorde0);
+    copyHorde1.use(0, *harry);
+    copyHorde1.use(1, *harry);
+
+    Character copyHorde2 = Character("mrTempy");
+    copyHorde2.equip(new Cure());
+    copyHorde2.equip(new Cure());
+    copyHorde2 = copyHorde0;
+    copyHorde2.use(0, *harry);
+    copyHorde2.use(1, *harry);
+
     // cleanup
     std::cout << std::endl << "-- cleanup" << std::endl;
     cleanFloor();
