@@ -7,6 +7,7 @@ Cure::~Cure() {}
 
 Cure &Cure::operator=(const Cure &obj)
 {
+    (void)obj;
     return *this;
 }
 

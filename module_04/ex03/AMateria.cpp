@@ -10,6 +10,7 @@ AMateria::~AMateria() {}
 AMateria &AMateria::operator=(const AMateria &obj)
 {
     // note const attribute 'type' can not be copied!
+    (void)obj;
     return *this;
 }
 
