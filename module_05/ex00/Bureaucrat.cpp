@@ -2,15 +2,21 @@
 #include "Bureaucrat.h"
 #include <iostream>
 #include <string>
+#include <stdexcept>
 
 Bureaucrat::Bureaucrat() {}
 Bureaucrat::Bureaucrat(std::string name, int grade) : name(name)
 {
-    if (grade >= 0 && grade <= 150) {
+    if (grade >= 1 && grade <= 150) {
         this->grade = grade;
     }
     else {
-        // todo throw exception!
+        if (grade < 1) {
+            throw std::invalid_argument("grade too low!");
+        }
+        else {
+            throw std::invalid_argument("grade too high!");
+        }
     }
 }
 
@@ -20,6 +26,7 @@ Bureaucrat::~Bureaucrat() {}
 
 Bureaucrat &Bureaucrat::operator=(const Bureaucrat &obj)
 {
+    (void)obj;
     return *this;
 }
 

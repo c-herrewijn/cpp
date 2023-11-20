@@ -3,21 +3,47 @@
 
 int main()
 {
-    Bureaucrat b1("Benny", 10);
-    std::cout << b1;
+    // correct cases
+    try {
+        std::cout << Bureaucrat("Benny", 1);
+    }
+    catch (std::exception &e) {
+        std::cout << "error: " << e.what() << std::endl;
+    }
 
-    Bureaucrat b2("Benny", -10);
-    std::cout << b2;
+    try {
+        std::cout << Bureaucrat("Cenny", 10);
+    }
+    catch (std::exception &e) {
+        std::cout << "error: " << e.what() << std::endl;
+    }
 
-    Bureaucrat b3("Benny", 0);
-    std::cout << b3;
+    try {
+        std::cout << Bureaucrat("Denny", 150);
+    }
+    catch (std::exception &e) {
+        std::cout << "error: " << e.what() << std::endl;
+    }
 
-    Bureaucrat b4("Benny", 1);
-    std::cout << b4;
+    // error cases
+    try {
+        std::cout << Bureaucrat("Benny", -10);
+    }
+    catch (std::exception &e) {
+        std::cout << "error: " << e.what() << std::endl;
+    }
 
-    Bureaucrat b5("Benny", 150);
-    std::cout << b5;
+    try {
+        std::cout << Bureaucrat("Benny", 0);
+    }
+    catch (std::exception &e) {
+        std::cout << "error: " << e.what() << std::endl;
+    }
 
-    Bureaucrat b6("Benny", 151);
-    std::cout << b6;
+    try {
+        std::cout << Bureaucrat("Benny", 151);
+    }
+    catch (std::exception &e) {
+        std::cout << "error: " << e.what() << std::endl;
+    }
 }
