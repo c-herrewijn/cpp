@@ -20,7 +20,8 @@ Bureaucrat::Bureaucrat(std::string name, int grade) : name(name)
     }
 }
 
-Bureaucrat::Bureaucrat(const Bureaucrat &obj) : name(obj.name) {}
+Bureaucrat::Bureaucrat(const Bureaucrat &obj) :
+    grade(obj.grade), name(obj.name) {}
 
 Bureaucrat::~Bureaucrat() {}
 

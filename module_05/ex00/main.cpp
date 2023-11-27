@@ -51,12 +51,12 @@ int main()
 
     // Test Increment grade Happy flow
     std::cout << "testing increment happy case ..." << std::endl;
-    Bureaucrat WimAlex = Bureaucrat("Willem Alexander", 2);
+    Bureaucrat WimAlex("Willem Alexander", 2);
     std::cout << "  " << WimAlex << std::endl;
     WimAlex.incrementGrade();
     std::cout << "  " << WimAlex << std::endl;
 
-    Bureaucrat RisingStar = Bureaucrat("Rising Star", 10);
+    Bureaucrat RisingStar("Rising Star", 10);
     std::cout << "  " << RisingStar << std::endl;
     RisingStar.incrementGrade();
     RisingStar.incrementGrade();
@@ -76,7 +76,7 @@ int main()
 
     // Test Decrement grade Happy flow
     std::cout << "testing decrement happy case ..." << std::endl;
-    Bureaucrat desperado = Bureaucrat("Desperado", 149);
+    Bureaucrat desperado("Desperado", 149);
     std::cout << "  " << desperado << std::endl;
     try {
         desperado.decrementGrade();
