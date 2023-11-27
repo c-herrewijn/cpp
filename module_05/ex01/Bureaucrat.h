@@ -3,16 +3,19 @@
 
 #include <string>
 #include <exception>
+#include "Form.h"
+
+class Form;
 
 class  Bureaucrat {
 public:
     Bureaucrat(std::string name, int grade);
-    Bureaucrat(const Bureaucrat &obj);
     ~Bureaucrat();
     std::string getName() const;
     int getGrade() const;
     void incrementGrade(void);
     void decrementGrade(void);
+    void signForm(Form &form);
     class GradeTooLowException;
     class GradeTooHighException;
 
@@ -20,6 +23,7 @@ private:
     int grade;
     const std::string name;
     Bureaucrat();
+    Bureaucrat(const Bureaucrat &obj);
     Bureaucrat &operator=(const Bureaucrat &obj);
 };
 

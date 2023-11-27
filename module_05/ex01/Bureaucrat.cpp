@@ -1,8 +1,9 @@
 // Bureaucrat.cpp
 #include "Bureaucrat.h"
-#include <iostream>
+#include "Form.h"
 #include <string>
 #include <stdexcept>
+#include <iostream>
 
 Bureaucrat::Bureaucrat() {}
 Bureaucrat::Bureaucrat(std::string name, int grade) : name(name)
@@ -20,7 +21,8 @@ Bureaucrat::Bureaucrat(std::string name, int grade) : name(name)
     }
 }
 
-Bureaucrat::Bureaucrat(const Bureaucrat &obj) : name(obj.name) {}
+Bureaucrat::Bureaucrat(const Bureaucrat &obj) :
+    grade(obj.grade), name(obj.name) {}
 
 Bureaucrat::~Bureaucrat() {}
 
@@ -67,6 +69,18 @@ void Bureaucrat::decrementGrade(void)
     }
     else {
         this->grade = newGrade;
+    }
+}
+
+void Bureaucrat::signForm(Form &form)
+{
+    try {
+        form.beSigned(*this);
+        std::cout << this->name << " signed: " << form.getName() << std::endl;
+    }
+    catch (std::exception &e) {
+        std::cout << this->name << " couldn’t sign: " << form.getName()
+                  << " because " << e.what() << std::endl;
     }
 }
 
