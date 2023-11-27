@@ -12,10 +12,10 @@ Bureaucrat::Bureaucrat(std::string name, int grade) : name(name)
     }
     else {
         if (grade < 1) {
-            throw std::invalid_argument("grade too low!");
+            throw GradeTooHighException();
         }
         else {
-            throw std::invalid_argument("grade too high!");
+            throw GradeTooLowException();
         }
     }
 }
@@ -42,6 +42,40 @@ int Bureaucrat::getGrade() const
 
 std::ostream &operator<<(std::ostream &out, const Bureaucrat &obj)
 {
-    out << obj.getName() << ", bureaucrat grade " << obj.getGrade() << std::endl;
+    out << obj.getName() << ", bureaucrat grade " << obj.getGrade();
     return (out);
+}
+
+// Note: incrementing the grade decremets(!) the value by 1, as per the assignment
+void Bureaucrat::incrementGrade(void)
+{
+    int newGrade = this->grade - 1;
+    if (newGrade < 1) {
+        throw GradeTooHighException();
+    }
+    else {
+        this->grade = newGrade;
+    }
+}
+
+// Note: decrementing the grade increments(!) the value by 1, as per the assignment
+void Bureaucrat::decrementGrade(void)
+{
+    int newGrade = this->grade + 1;
+    if (newGrade > 150) {
+        throw GradeTooLowException();
+    }
+    else {
+        this->grade = newGrade;
+    }
+}
+
+const char *Bureaucrat::GradeTooHighException::what() const throw()
+{
+    return "Grade Too High!";
+}
+
+const char *Bureaucrat::GradeTooLowException::what() const throw()
+{
+    return "Grade Too Low!";
 }
