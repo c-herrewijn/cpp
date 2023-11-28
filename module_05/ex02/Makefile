@@ -2,7 +2,7 @@ NAME	= form
 CFLAGS	= -Wall -Wextra -Werror -std=c++98
 INCLUDE = .
 
-SRCS	= main.cpp Bureaucrat.cpp Form.cpp
+SRCS	= main.cpp Bureaucrat.cpp AForm.cpp
 
 OBJ_DIR = obj
 OBJS	= $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))

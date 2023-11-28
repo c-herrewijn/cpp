@@ -1,5 +1,5 @@
 #include "Bureaucrat.h"
-#include "Form.h"
+#include "AForm.h"
 #include <iostream>
 #include <exception>
 
@@ -11,28 +11,28 @@ int main()
     // todo: invalid form creation
     std::cout << "Testing invalid form creation..." << std::endl;
     try {
-        Form x1("Royal Decree", -1, 1);
+        AForm x1("Royal Decree", -1, 1);
     }
     catch (std::exception &e) {
         std::cout << e.what() << std::endl;
     }
 
     try {
-        Form x2("Noble Decree", 10, 0);
+        AForm x2("Noble Decree", 10, 0);
     }
     catch (std::exception &e) {
         std::cout << e.what() << std::endl;
     }
 
     try {
-        Form x3("Common Decree 1", 100, 151);
+        AForm x3("Common Decree 1", 100, 151);
     }
     catch (std::exception &e) {
         std::cout << e.what() << std::endl;
     }
 
     try {
-        Form x4("Common Decree 2", 151, 150);
+        AForm x4("Common Decree 2", 151, 150);
     }
     catch (std::exception &e) {
         std::cout << e.what() << std::endl;
@@ -40,10 +40,10 @@ int main()
     std::cout << "------------" << std::endl;
 
     std::cout << "Testing valid form creation.." << std::endl;
-    Form f1("Royal Decree", 1, 1);
-    Form f2("Noble Decree", 10, 10);
-    Form f3("Common Decree 1", 100, 150);
-    Form f4("Common Decree 1", 150, 100);
+    AForm f1("Royal Decree", 1, 1);
+    AForm f2("Noble Decree", 10, 10);
+    AForm f3("Common Decree 1", 100, 150);
+    AForm f4("Common Decree 1", 150, 100);
     std::cout << "done" << std::endl;
     std::cout << "------------" << std::endl;
 

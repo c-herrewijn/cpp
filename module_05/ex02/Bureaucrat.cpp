@@ -1,6 +1,6 @@
 // Bureaucrat.cpp
 #include "Bureaucrat.h"
-#include "Form.h"
+#include "AForm.h"
 #include <string>
 #include <stdexcept>
 #include <iostream>
@@ -72,7 +72,7 @@ void Bureaucrat::decrementGrade(void)
     }
 }
 
-void Bureaucrat::signForm(Form &form)
+void Bureaucrat::signForm(AForm &form)
 {
     try {
         form.beSigned(*this);

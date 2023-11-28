@@ -3,9 +3,9 @@
 
 #include <string>
 #include <exception>
-#include "Form.h"
+#include "AForm.h"
 
-class Form;
+class AForm;
 
 class  Bureaucrat {
 public:
@@ -15,7 +15,7 @@ public:
     int getGrade() const;
     void incrementGrade(void);
     void decrementGrade(void);
-    void signForm(Form &form);
+    void signForm(AForm &form);
     class GradeTooLowException;
     class GradeTooHighException;
 
