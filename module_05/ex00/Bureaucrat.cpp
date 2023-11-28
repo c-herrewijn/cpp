@@ -5,10 +5,10 @@
 #include <stdexcept>
 
 Bureaucrat::Bureaucrat() {}
-Bureaucrat::Bureaucrat(std::string name, int grade) : name(name)
+Bureaucrat::Bureaucrat(std::string name, int grade) : _name(name)
 {
     if (grade >= 1 && grade <= 150) {
-        this->grade = grade;
+        this->_grade = grade;
     }
     else {
         if (grade < 1) {
@@ -21,7 +21,7 @@ Bureaucrat::Bureaucrat(std::string name, int grade) : name(name)
 }
 
 Bureaucrat::Bureaucrat(const Bureaucrat &obj) :
-    grade(obj.grade), name(obj.name) {}
+    _grade(obj._grade), _name(obj._name) {}
 
 Bureaucrat::~Bureaucrat() {}
 
@@ -33,12 +33,12 @@ Bureaucrat &Bureaucrat::operator=(const Bureaucrat &obj)
 
 std::string Bureaucrat::getName() const
 {
-    return (this->name);
+    return (this->_name);
 }
 
 int Bureaucrat::getGrade() const
 {
-    return (this->grade);
+    return (this->_grade);
 }
 
 std::ostream &operator<<(std::ostream &out, const Bureaucrat &obj)
@@ -50,24 +50,24 @@ std::ostream &operator<<(std::ostream &out, const Bureaucrat &obj)
 // Note: incrementing the grade decremets(!) the value by 1, as per the assignment
 void Bureaucrat::incrementGrade(void)
 {
-    int newGrade = this->grade - 1;
+    int newGrade = this->_grade - 1;
     if (newGrade < 1) {
         throw GradeTooHighException();
     }
     else {
-        this->grade = newGrade;
+        this->_grade = newGrade;
     }
 }
 
 // Note: decrementing the grade increments(!) the value by 1, as per the assignment
 void Bureaucrat::decrementGrade(void)
 {
-    int newGrade = this->grade + 1;
+    int newGrade = this->_grade + 1;
     if (newGrade > 150) {
         throw GradeTooLowException();
     }
     else {
-        this->grade = newGrade;
+        this->_grade = newGrade;
     }
 }
 
