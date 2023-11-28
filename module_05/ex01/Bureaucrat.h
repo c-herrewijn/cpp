@@ -20,8 +20,8 @@ public:
     class GradeTooHighException;
 
 private:
-    int grade;
-    const std::string name;
+    int _grade;
+    const std::string _name;
     Bureaucrat();
     Bureaucrat(const Bureaucrat &obj);
     Bureaucrat &operator=(const Bureaucrat &obj);

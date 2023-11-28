@@ -20,10 +20,10 @@ public:
     class GradeTooHighException;
 
 private:
-    const std::string name;
-    bool isSigned;
-    int reqGradeToExecute;
-    int reqGradeToSign;
+    const std::string _name;
+    bool _isSigned;
+    const int _reqGradeToExecute;
+    const int _reqGradeToSign;
     Form();
     Form(const Form &obj);
     Form &operator=(const Form &obj);
@@ -34,7 +34,7 @@ public:
     virtual const char *what() const throw();
 };
 
-class Form::GradeTooHighException: public std::exception {
+class Form::GradeTooHighException : public std::exception {
 public:
     virtual const char *what() const throw();
 };

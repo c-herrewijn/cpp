@@ -3,7 +3,10 @@
 #include <iostream>
 
 Form::Form(const std::string name, int reqGradeToExecute, int reqGradeToSign) :
-    name(name)
+    _name(name),
+    _isSigned(false),
+    _reqGradeToExecute(reqGradeToExecute),
+    _reqGradeToSign(reqGradeToSign)
 {
     if (reqGradeToExecute < 1 || reqGradeToSign < 1) {
         throw GradeTooHighException();
@@ -11,46 +14,43 @@ Form::Form(const std::string name, int reqGradeToExecute, int reqGradeToSign) :
     if (reqGradeToExecute > 150 || reqGradeToSign > 150) {
         throw GradeTooLowException();
     }
-    this->isSigned = false;
-    this->reqGradeToExecute = reqGradeToExecute;
-    this->reqGradeToSign = reqGradeToSign;
 }
 
-Form::Form() {}
+Form::Form() : _reqGradeToExecute(1), _reqGradeToSign(1) {}
 
 Form::Form(const Form &obj) :
-    name(obj.name),
-    isSigned(obj.isSigned),
-    reqGradeToExecute(obj.reqGradeToExecute),
-    reqGradeToSign(obj.reqGradeToSign)
+    _name(obj._name),
+    _isSigned(obj._isSigned),
+    _reqGradeToExecute(obj._reqGradeToExecute),
+    _reqGradeToSign(obj._reqGradeToSign)
 {}
 
 Form::~Form() {}
 
 const std::string Form::getName() const
 {
-    return this->name;
+    return this->_name;
 }
 
 bool Form::getIsSigned() const
 {
-    return this->isSigned;
+    return this->_isSigned;
 }
 
 int Form::getReqGradeToExecute() const
 {
-    return this->reqGradeToExecute;
+    return this->_reqGradeToExecute;
 }
 
 int Form::getReqGradeToSign() const
 {
-    return this->reqGradeToSign;
+    return this->_reqGradeToSign;
 }
 
 void Form::beSigned(Bureaucrat &b)
 {
     if (b.getGrade() <= this->getReqGradeToSign()) {
-        this->isSigned = true;
+        this->_isSigned = true;
     }
     else {
         throw Form::GradeTooLowException();
