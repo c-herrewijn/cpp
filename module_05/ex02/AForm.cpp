@@ -2,7 +2,8 @@
 #include "Bureaucrat.h"
 #include <iostream>
 
-AForm::AForm(const std::string name, int reqGradeToExecute, int reqGradeToSign) :
+AForm::AForm(const std::string name, int reqGradeToExecute,
+             int reqGradeToSign) :
     _name(name),
     _isSigned(false),
     _reqGradeToExecute(reqGradeToExecute),

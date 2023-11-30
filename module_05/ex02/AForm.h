@@ -9,7 +9,7 @@ class Bureaucrat;
 class  AForm {
 public:
     AForm(const std::string name, int reqGradeToExecute,
-         int reqGradeToSign);
+          int reqGradeToSign);
     ~AForm();
     const std::string getName() const;
     bool getIsSigned() const;
