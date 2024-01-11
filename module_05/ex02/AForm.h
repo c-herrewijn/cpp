@@ -8,24 +8,30 @@ class Bureaucrat;
 
 class  AForm {
 public:
-    AForm(const std::string name, int reqGradeToExecute,
-          int reqGradeToSign);
+    AForm(const std::string name, int reqGradeToSign, int reqGradeToExecute,
+          std::string target);
+    AForm(const AForm &obj);
     ~AForm();
+
     const std::string getName() const;
     bool getIsSigned() const;
-    int getReqGradeToExecute() const;
     int getReqGradeToSign() const;
+    int getReqGradeToExecute() const;
+    std::string getTarget() const;
     void beSigned(Bureaucrat &b);
+    virtual void beExecuted(Bureaucrat &b) const = 0;
+
     class GradeTooLowException;
     class GradeTooHighException;
+    class UnsignedExecutionException;
 
 private:
     const std::string _name;
     bool _isSigned;
-    const int _reqGradeToExecute;
     const int _reqGradeToSign;
+    const int _reqGradeToExecute;
+    const std::string _target;
     AForm();
-    AForm(const AForm &obj);
     AForm &operator=(const AForm &obj);
 };
 
@@ -35,6 +41,11 @@ public:
 };
 
 class AForm::GradeTooHighException : public std::exception {
+public:
+    virtual const char *what() const throw();
+};
+
+class AForm::UnsignedExecutionException : public std::exception {
 public:
     virtual const char *what() const throw();
 };
