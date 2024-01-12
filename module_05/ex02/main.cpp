@@ -58,10 +58,10 @@ void testError(void)
 
 int main()
 {
-    // testHappy<ShrubberyCreationForm>();
-    // testError<ShrubberyCreationForm>();
-    // testHappy<RobotomyRequestForm>();
-    // testError<RobotomyRequestForm>();
+    testHappy<ShrubberyCreationForm>();
+    testError<ShrubberyCreationForm>();
+    testHappy<RobotomyRequestForm>();
+    testError<RobotomyRequestForm>();
     testHappy<PresidentialPardonForm>();
     testError<PresidentialPardonForm>();
 }

@@ -1,0 +1,21 @@
+#ifndef SHRUBBERYCREATIONFORM_H
+# define  SHRUBBERYCREATIONFORM_H
+
+# include "AForm.h"
+# include <string>
+
+class  ShrubberyCreationForm : public AForm {
+public:
+    ~ShrubberyCreationForm();
+    ShrubberyCreationForm(std::string target);
+    void beExecuted(Bureaucrat &b) const;
+
+private:
+    ShrubberyCreationForm();
+    ShrubberyCreationForm(const ShrubberyCreationForm &obj);
+    ShrubberyCreationForm &operator=(const ShrubberyCreationForm &obj);
+};
+
+std::ostream &operator<<(std::ostream &out, const ShrubberyCreationForm &obj);
+
+#endif
