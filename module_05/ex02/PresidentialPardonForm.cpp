@@ -5,7 +5,7 @@
 PresidentialPardonForm::~PresidentialPardonForm() {}
 
 PresidentialPardonForm::PresidentialPardonForm(std::string target) :
-    AForm("presidential pardon", 25, 5, target)
+    AForm("Presidential Pardon Form", 25, 5, target)
 {}
 
 PresidentialPardonForm::PresidentialPardonForm(const PresidentialPardonForm
@@ -34,8 +34,6 @@ void PresidentialPardonForm::beExecuted(Bureaucrat &b) const
                   << " has been pardoned by Zaphod Beeblebrox." << std::endl;
     }
 }
-
-std::string PresidentialPardonForm::formType = "PresidentialPardonForm";
 
 std::ostream &operator<<(std::ostream &out, const PresidentialPardonForm &obj)
 {

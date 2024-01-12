@@ -9,7 +9,6 @@ public:
     ~PresidentialPardonForm();
     PresidentialPardonForm(std::string target);
     void beExecuted(Bureaucrat &b) const;
-    static std::string formType;
 
 private:
     PresidentialPardonForm();

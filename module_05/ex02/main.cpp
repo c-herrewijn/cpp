@@ -1,6 +1,8 @@
 #include "Bureaucrat.h"
 #include "PresidentialPardonForm.h"
-#include "AForm.h"
+#include "RobotomyRequestForm.h"
+#include "ShrubberyCreationForm.h"
+
 #include <iostream>
 #include <exception>
 
@@ -12,13 +14,13 @@
 template <class T>
 void testHappy(void)
 {
-    std::cout << ANSI_GREEN << T::formType << ": happy flow:" << std::endl
+    T formLuke("Lucky Luke");
+    std::cout << ANSI_GREEN << formLuke.getName() << ": happy flow:" << std::endl
               << ANSI_RESET;
     Bureaucrat queen("Queen Maxima", 5);
     Bureaucrat royalAssistent("Royal Assistent", 25);
     Bureaucrat powerlessPeter("Powerless Peter", 150);
 
-    T formLuke("Lucky Luke");
     std::cout << ANSI_GREY << formLuke << std::endl << ANSI_RESET;
 
     royalAssistent.signForm(formLuke);
@@ -31,14 +33,14 @@ void testHappy(void)
 template <class T>
 void testError(void)
 {
-    std::cout << ANSI_RED << T::formType << ": error cases:" << std::endl
+    T formLeo("Unlucky Leo");
+    std::cout << ANSI_RED << formLeo.getName() << ": error cases:" << std::endl
               << ANSI_RESET;
 
     Bureaucrat queen("Queen Maxima", 5);
     Bureaucrat royalAssistent("Royal Assistent", 25);
     Bureaucrat powerlessPeter("Powerless Peter", 150);
 
-    T formLeo("Unlucky Leo");
     std::cout << ANSI_GREY << formLeo << std::endl << ANSI_RESET;
     powerlessPeter.signForm(formLeo);
     std::cout << ANSI_GREY << formLeo << std::endl << ANSI_RESET;
@@ -56,6 +58,10 @@ void testError(void)
 
 int main()
 {
+    // testHappy<ShrubberyCreationForm>();
+    // testError<ShrubberyCreationForm>();
+    // testHappy<RobotomyRequestForm>();
+    // testError<RobotomyRequestForm>();
     testHappy<PresidentialPardonForm>();
     testError<PresidentialPardonForm>();
 }
