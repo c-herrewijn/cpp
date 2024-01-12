@@ -1,5 +1,6 @@
 #include "PresidentialPardonForm.h"
 #include <iostream>
+#include <string>
 
 PresidentialPardonForm::~PresidentialPardonForm() {}
 
@@ -33,6 +34,8 @@ void PresidentialPardonForm::beExecuted(Bureaucrat &b) const
                   << " has been pardoned by Zaphod Beeblebrox." << std::endl;
     }
 }
+
+std::string PresidentialPardonForm::formType = "PresidentialPardonForm";
 
 std::ostream &operator<<(std::ostream &out, const PresidentialPardonForm &obj)
 {

@@ -1,14 +1,15 @@
 #ifndef PRESIDENTIALPARDONFORM_H
 # define  PRESIDENTIALPARDONFORM_H
 
-#include "AForm.h"
-#include <string>
+# include "AForm.h"
+# include <string>
 
 class  PresidentialPardonForm : public AForm {
 public:
     ~PresidentialPardonForm();
     PresidentialPardonForm(std::string target);
     void beExecuted(Bureaucrat &b) const;
+    static std::string formType;
 
 private:
     PresidentialPardonForm();
