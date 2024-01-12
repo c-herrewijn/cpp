@@ -27,7 +27,9 @@ void PresidentialPardonForm::beExecuted(Bureaucrat &b) const
         throw AForm::GradeTooLowException();
     }
     else {
-        std::cout << "Let it be known! " << this->getName()
+        std::cout << b.getName() << " executed: " << this->getName()
+                  << " for " << this->getTarget() << std::endl;
+        std::cout << "Let it be known! " << this->getTarget()
                   << " has been pardoned by Zaphod Beeblebrox." << std::endl;
     }
 }

@@ -21,11 +21,9 @@ int main()
     PresidentialPardonForm pardonformLuke("Lucky Luke");
     std::cout << ANSI_GREY << pardonformLuke << std::endl << ANSI_RESET;
 
-    std::cout << "signing form..." << std::endl;
     royalAssistent.signForm(pardonformLuke);
     std::cout << ANSI_GREY << pardonformLuke << std::endl << ANSI_RESET;
 
-    std::cout << "executing form..." << std::endl;
     queen.executeForm(pardonformLuke);
     std::cout << ANSI_GREY << pardonformLuke << std::endl << ANSI_RESET;
 

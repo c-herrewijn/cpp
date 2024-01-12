@@ -58,7 +58,8 @@ std::string AForm::getTarget() const
 void AForm::beSigned(Bureaucrat &b)
 {
     if (b.getGrade() <= this->getReqGradeToSign()) {
-
+        std::cout << b.getName() << " signed: " << this->getName()
+                  << " for " << this->getTarget() << std::endl;
         this->_isSigned = true;
     }
     else {
