@@ -19,9 +19,8 @@ RobotomyRequestForm &RobotomyRequestForm::operator=
     return *this;
 }
 
-void RobotomyRequestForm::beExecuted(Bureaucrat &b) const
+void RobotomyRequestForm::Execute(Bureaucrat &b) const
 {
-    this->validateExecution(b);
     std::cout << b.getName() << " executed " << this->getName()
               << " for " << this->getTarget() << std::endl;
     std::cout << "TODO: RobotomyRequestForm!!" << std::endl;

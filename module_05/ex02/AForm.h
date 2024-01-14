@@ -19,16 +19,13 @@ public:
     int getReqGradeToExecute() const;
     std::string getTarget() const;
     void beSigned(Bureaucrat &b);
-    virtual void beExecuted(Bureaucrat &b) const = 0;
-
+    void beExecuted(Bureaucrat &b) const;
     class GradeTooLowException;
     class GradeTooHighException;
     class UnsignedExecutionException;
 
-protected:
-    void validateExecution(Bureaucrat &b) const;
-
 private:
+    virtual void Execute(Bureaucrat &b) const = 0;
     const std::string _name;
     bool _isSigned;
     const int _reqGradeToSign;
