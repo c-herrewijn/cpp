@@ -1,6 +1,8 @@
 #include "ShrubberyCreationForm.h"
+
 #include <iostream>
 #include <string>
+#include <fstream>
 
 ShrubberyCreationForm::~ShrubberyCreationForm() {}
 
@@ -22,7 +24,11 @@ ShrubberyCreationForm &ShrubberyCreationForm::operator=
 void ShrubberyCreationForm::execute(Bureaucrat const &executor) const
 {
     (void)executor;
-    std::cout << "TODO: ShrubberyCreationForm!!" << std::endl;
+    std::string fileName =  this->getTarget() + "_shrubbery";
+    std::ofstream ofs;
+    ofs.open(fileName.c_str());
+    ofs << "ASCII trees" << std::endl;
+    ofs.close();
 }
 
 std::ostream &operator<<(std::ostream &out, const ShrubberyCreationForm &obj)
