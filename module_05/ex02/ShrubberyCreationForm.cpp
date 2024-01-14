@@ -21,8 +21,7 @@ ShrubberyCreationForm &ShrubberyCreationForm::operator=
 
 void ShrubberyCreationForm::execute(Bureaucrat const &executor) const
 {
-    std::cout << executor.getName() << " executed " << this->getName()
-              << " for " << this->getTarget() << std::endl;
+    (void)executor;
     std::cout << "TODO: ShrubberyCreationForm!!" << std::endl;
 }
 
