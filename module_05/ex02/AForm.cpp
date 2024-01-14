@@ -67,6 +67,16 @@ void AForm::beSigned(Bureaucrat &b)
     }
 }
 
+void AForm::validateExecution(Bureaucrat &b) const
+{
+    if (this->getIsSigned() == false) {
+        throw AForm::UnsignedExecutionException();
+    }
+    if (b.getGrade() > this->getReqGradeToExecute()) {
+        throw AForm::GradeTooLowException();
+    }
+}
+
 // disable (i.e. make private) the assignement operator, because it has const attributes
 AForm &AForm::operator=(const AForm &obj)
 {

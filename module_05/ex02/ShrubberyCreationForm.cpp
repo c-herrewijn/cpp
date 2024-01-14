@@ -21,17 +21,10 @@ ShrubberyCreationForm &ShrubberyCreationForm::operator=
 
 void ShrubberyCreationForm::beExecuted(Bureaucrat &b) const
 {
-    if (this->getIsSigned() == false) {
-        throw AForm::UnsignedExecutionException();
-    }
-    else if (b.getGrade() > this->getReqGradeToExecute()) {
-        throw AForm::GradeTooLowException();
-    }
-    else {
-        std::cout << b.getName() << " executed: " << this->getName()
-                  << " for " << this->getTarget() << std::endl;
-        std::cout << "TODO: ShrubberyCreationForm!!" << std::endl;;
-    }
+    this->validateExecution(b);
+    std::cout << b.getName() << " executed " << this->getName()
+              << " for " << this->getTarget() << std::endl;
+    std::cout << "TODO: ShrubberyCreationForm!!" << std::endl;
 }
 
 std::ostream &operator<<(std::ostream &out, const ShrubberyCreationForm &obj)

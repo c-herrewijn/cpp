@@ -25,6 +25,9 @@ public:
     class GradeTooHighException;
     class UnsignedExecutionException;
 
+protected:
+    void validateExecution(Bureaucrat &b) const;
+
 private:
     const std::string _name;
     bool _isSigned;
