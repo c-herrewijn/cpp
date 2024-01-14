@@ -18,14 +18,14 @@ public:
     int getReqGradeToSign() const;
     int getReqGradeToExecute() const;
     std::string getTarget() const;
-    void beSigned(Bureaucrat &b);
-    void beExecuted(Bureaucrat &b) const;
+    void beSigned(Bureaucrat const &signer);
+    void beExecuted(Bureaucrat const &executor) const;
     class GradeTooLowException;
     class GradeTooHighException;
     class UnsignedExecutionException;
 
 private:
-    virtual void Execute(Bureaucrat &b) const = 0;
+    virtual void execute(Bureaucrat const &executor) const = 0;
     const std::string _name;
     bool _isSigned;
     const int _reqGradeToSign;

@@ -55,10 +55,10 @@ std::string AForm::getTarget() const
     return this->_target;
 }
 
-void AForm::beSigned(Bureaucrat &b)
+void AForm::beSigned(Bureaucrat const &signer)
 {
-    if (b.getGrade() <= this->getReqGradeToSign()) {
-        std::cout << b.getName() << " signed: " << this->getName()
+    if (signer.getGrade() <= this->getReqGradeToSign()) {
+        std::cout << signer.getName() << " signed " << this->getName()
                   << " for " << this->getTarget() << std::endl;
         this->_isSigned = true;
     }
@@ -67,15 +67,15 @@ void AForm::beSigned(Bureaucrat &b)
     }
 }
 
-void AForm::beExecuted(Bureaucrat &b) const
+void AForm::beExecuted(Bureaucrat const &executor) const
 {
     if (this->getIsSigned() == false) {
         throw AForm::UnsignedExecutionException();
     }
-    if (b.getGrade() > this->getReqGradeToExecute()) {
+    if (executor.getGrade() > this->getReqGradeToExecute()) {
         throw AForm::GradeTooLowException();
     }
-    this->Execute(b);
+    this->execute(executor);
 }
 
 // disable (i.e. make private) the assignement operator, because it has const attributes

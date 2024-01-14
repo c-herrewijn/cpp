@@ -8,7 +8,7 @@ class  PresidentialPardonForm : public AForm {
 public:
     ~PresidentialPardonForm();
     PresidentialPardonForm(std::string target);
-    void Execute(Bureaucrat &b) const;
+    void execute(Bureaucrat const &executor) const;
 
 private:
     PresidentialPardonForm();

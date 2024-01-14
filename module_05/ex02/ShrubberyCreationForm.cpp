@@ -19,9 +19,9 @@ ShrubberyCreationForm &ShrubberyCreationForm::operator=
     return *this;
 }
 
-void ShrubberyCreationForm::Execute(Bureaucrat &b) const
+void ShrubberyCreationForm::execute(Bureaucrat const &executor) const
 {
-    std::cout << b.getName() << " executed " << this->getName()
+    std::cout << executor.getName() << " executed " << this->getName()
               << " for " << this->getTarget() << std::endl;
     std::cout << "TODO: ShrubberyCreationForm!!" << std::endl;
 }
