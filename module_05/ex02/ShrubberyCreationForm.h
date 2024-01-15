@@ -14,6 +14,7 @@ private:
     ShrubberyCreationForm();
     ShrubberyCreationForm(const ShrubberyCreationForm &obj);
     ShrubberyCreationForm &operator=(const ShrubberyCreationForm &obj);
+    std::string drawShrubbery() const;
 };
 
 std::ostream &operator<<(std::ostream &out, const ShrubberyCreationForm &obj);
