@@ -16,4 +16,5 @@
 --unpad-paren
 --unpad-brackets
 --lineend=linux
+--indent-namespaces
 --max-code-length=80

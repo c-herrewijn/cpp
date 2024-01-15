@@ -1,4 +1,5 @@
 #include "ShrubberyCreationForm.h"
+#include "ASCIItrees.h"
 
 #include <iostream>
 #include <string>
@@ -27,55 +28,8 @@ void ShrubberyCreationForm::execute(Bureaucrat const &executor) const
     std::string fileName =  this->getTarget() + "_shrubbery";
     std::ofstream ofs;
     ofs.open(fileName.c_str());
-    ofs << this->drawShrubbery() << std::endl;
+    ofs << trees::tree1() << trees::tree2() << trees::tree3() << std::endl;
     ofs.close();
-}
-
-std::string ShrubberyCreationForm::drawShrubbery() const
-{
-    std::string trees =
-        "          &&& &&  & && \n"
-        "      && &\\/&\\|& ()|/ @, && \n"
-        "      &\\/(/&/&||/& /_/)_&/_& \n"
-        "   &() &\\/&|()|/&\\/ '%\" & () \n"
-        "  &_\\_&&_\\ |& |&&/&__%_/_& && \n"
-        "&&   && & &| &| /& & % ()& /&& \n"
-        " ()&_---()&\\&\\|&&-&&--%---()~ \n"
-        "     &&     \\||| \n"
-        "             ||| \n"
-        "             ||| \n"
-        "             ||| \n"
-        "       , -=-~  .-^- _ \n"
-        "\n"
-        "\n"
-        "\n"
-        "              v .   ._, |_  ., \n"
-        "           `-._\\/  .  \\ /    |/_ \n"
-        "               \\\\  _\\, y | \\// \n"
-        "         _\\_.___\\\\, \\\\/ -.\\|| \n"
-        "           `7-,--.`._||  / / , \n"
-        "           /'     `-. `./ / |/_.' \n"
-        "                     |    |// \n"
-        "                     |_    / \n"
-        "                     |-   | \n"
-        "                     |   =| \n"
-        "                     |    | \n"
-        "--------------------/ ,  . \\--------._ \n"
-        "\n"
-        "\n"
-        "\n"
-        "           \\/ |    |/\n"
-        "        \\/ / \\||/  /_/___/_\n"
-        "         \\/   |/ \\/\n"
-        "    _\\__\\_\\   |  /_____/_\n"
-        "           \\  | /          /\n"
-        "  __ _-----`  |{,-----------~\n"
-        "            \\ }{\n"
-        "             }{{\n"
-        "             }}{\n"
-        "             {{}\n"
-        "       , -=-~{ .-^- _\n";
-    return trees;
 }
 
 std::ostream &operator<<(std::ostream &out, const ShrubberyCreationForm &obj)

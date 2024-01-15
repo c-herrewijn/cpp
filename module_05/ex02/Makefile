@@ -3,7 +3,8 @@ CFLAGS	= -Wall -Wextra -Werror -std=c++98
 INCLUDE = .
 
 SRCS	= main.cpp Bureaucrat.cpp AForm.cpp \
-		  PresidentialPardonForm.cpp RobotomyRequestForm.cpp ShrubberyCreationForm.cpp
+		  PresidentialPardonForm.cpp RobotomyRequestForm.cpp ShrubberyCreationForm.cpp \
+		  ASCIItrees.cpp
 
 OBJ_DIR = obj
 OBJS	= $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
