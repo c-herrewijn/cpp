@@ -1,9 +1,8 @@
 #include "RobotomyRequestForm.h"
 #include <iostream>
 #include <string>
-#include <ctime>
-#include <cstdlib>
-#include <sys/time.h>
+#include <chrono>
+#include <random>
 
 RobotomyRequestForm::~RobotomyRequestForm() {}
 
@@ -25,13 +24,11 @@ RobotomyRequestForm &RobotomyRequestForm::operator=
 void RobotomyRequestForm::execute(Bureaucrat const &executor) const
 {
     (void)executor;
-    // get random nr. between 0 and 1
-    struct timeval currTime;
-    gettimeofday(&currTime, NULL);
-    srand(currTime.tv_usec);
-    float randnr = ((float)std::rand() / (float)RAND_MAX);
+    unsigned int seed = std::chrono::steady_clock::now().time_since_epoch().count();
+    srand(seed);
 
     std::cout << "Drrrill drrrrrillll brrr krrr kggggr!!" << std::endl;
+    float randnr = ((float)std::rand() / (float)RAND_MAX);
     if (randnr > 0.5) {
         std::cout << this->getTarget() << " has been robotomized successfully!"
                   << std::endl;
