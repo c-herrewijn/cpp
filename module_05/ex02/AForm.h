@@ -11,7 +11,7 @@ public:
     AForm(const std::string name, int reqGradeToSign, int reqGradeToExecute,
           std::string target);
     AForm(const AForm &obj);
-    ~AForm();
+    virtual ~AForm();
 
     const std::string getName() const;
     bool getIsSigned() const;
