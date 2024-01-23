@@ -31,4 +31,3 @@ void ShrubberyCreationForm::execute(Bureaucrat const &executor) const
     ofs << trees::tree1() << trees::tree2() << trees::tree3() << std::endl;
     ofs.close();
 }
-

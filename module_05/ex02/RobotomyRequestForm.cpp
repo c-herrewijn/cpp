@@ -38,4 +38,3 @@ void RobotomyRequestForm::execute(Bureaucrat const &executor) const
                   << std::endl;
     }
 }
-
