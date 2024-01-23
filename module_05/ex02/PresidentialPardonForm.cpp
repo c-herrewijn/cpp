@@ -26,12 +26,3 @@ void PresidentialPardonForm::execute(Bureaucrat const &executor) const
               << " has been pardoned by Zaphod Beeblebrox." << std::endl;
 }
 
-std::ostream &operator<<(std::ostream &out, const PresidentialPardonForm &obj)
-{
-    out << "Form name: " << obj.getName() << std::endl
-        << " - target: " << obj.getTarget() << std::endl
-        << " - isSigned:" << obj.getIsSigned() << std::endl
-        << " - required Grade to Execute: " << obj.getReqGradeToExecute() << std::endl
-        << " - required Grade to sign: " << obj.getReqGradeToSign();
-    return (out);
-}

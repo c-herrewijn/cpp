@@ -102,9 +102,10 @@ const char *AForm::UnsignedExecutionException::what() const throw()
 
 std::ostream &operator<<(std::ostream &out, const AForm &obj)
 {
-    out << "Form name: " << obj.getName()
-        << "; isSigned:" << obj.getIsSigned()
-        << "; required Grade to sign: " << obj.getReqGradeToSign()
-        << "; required Grade to execute: " << obj.getReqGradeToExecute();
+    out << "Form name: " << obj.getName() << std::endl
+        << " - target: " << obj.getTarget() << std::endl
+        << " - isSigned: " << obj.getIsSigned() << std::endl
+        << " - required Grade to Execute: " << obj.getReqGradeToExecute() << std::endl
+        << " - required Grade to sign: " << obj.getReqGradeToSign();
     return (out);
 }

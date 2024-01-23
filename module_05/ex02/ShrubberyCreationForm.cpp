@@ -32,12 +32,3 @@ void ShrubberyCreationForm::execute(Bureaucrat const &executor) const
     ofs.close();
 }
 
-std::ostream &operator<<(std::ostream &out, const ShrubberyCreationForm &obj)
-{
-    out << "Form name: " << obj.getName() << std::endl
-        << " - target: " << obj.getTarget() << std::endl
-        << " - isSigned: " << obj.getIsSigned() << std::endl
-        << " - required Grade to Execute: " << obj.getReqGradeToExecute() << std::endl
-        << " - required Grade to sign: " << obj.getReqGradeToSign();
-    return (out);
-}
