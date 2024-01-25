@@ -10,6 +10,11 @@ public:
     ~Intern();
     Intern &operator=(const Intern &obj);
     AForm *makeForm(std::string formName, std::string formTarget);
+
+private:
+    static AForm *newPresidentialPardonForm(std::string formTarget);
+    static AForm *newRobotomyRequestForm(std::string formTarget);
+    static AForm *newShrubberyCreationForm(std::string formTarget);
 };
 
 #endif

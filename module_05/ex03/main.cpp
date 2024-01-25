@@ -9,6 +9,7 @@ int main()
     AForm *rrf;
 
     rrf = someRandomIntern.makeForm("robotomy request", "Bender");
+    delete rrf;
 
     // todo: add tests
 }
