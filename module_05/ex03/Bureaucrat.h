@@ -1,5 +1,5 @@
 #ifndef BUREAUCRAT_H
-# define  BUREAUCRAT_H
+# define BUREAUCRAT_H
 
 #include <string>
 #include <exception>
@@ -7,7 +7,7 @@
 
 class AForm;
 
-class  Bureaucrat {
+class Bureaucrat {
 public:
     Bureaucrat(std::string name, int grade);
     ~Bureaucrat();

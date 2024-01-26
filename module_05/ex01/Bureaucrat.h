@@ -1,5 +1,5 @@
 #ifndef BUREAUCRAT_H
-# define  BUREAUCRAT_H
+# define BUREAUCRAT_H
 
 #include <string>
 #include <exception>
@@ -7,7 +7,7 @@
 
 class Form;
 
-class  Bureaucrat {
+class Bureaucrat {
 public:
     Bureaucrat(std::string name, int grade);
     ~Bureaucrat();
@@ -16,8 +16,6 @@ public:
     void incrementGrade(void);
     void decrementGrade(void);
     void signForm(Form &form);
-    class GradeTooLowException;
-    class GradeTooHighException;
 
 private:
     int _grade;
@@ -25,6 +23,8 @@ private:
     Bureaucrat();
     Bureaucrat(const Bureaucrat &obj);
     Bureaucrat &operator=(const Bureaucrat &obj);
+    class GradeTooLowException;
+    class GradeTooHighException;
 };
 
 class Bureaucrat::GradeTooLowException : public std::exception {

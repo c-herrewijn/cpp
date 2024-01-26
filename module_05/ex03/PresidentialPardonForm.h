@@ -1,10 +1,10 @@
 #ifndef PRESIDENTIALPARDONFORM_H
-# define  PRESIDENTIALPARDONFORM_H
+# define PRESIDENTIALPARDONFORM_H
 
 # include "AForm.h"
 # include <string>
 
-class  PresidentialPardonForm : public AForm {
+class PresidentialPardonForm : public AForm {
 public:
     ~PresidentialPardonForm();
     PresidentialPardonForm(std::string target);

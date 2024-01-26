@@ -1,12 +1,12 @@
 #ifndef FORM_H
-# define  FORM_H
+# define FORM_H
 
 #include <string>
 #include "Bureaucrat.h"
 
 class Bureaucrat;
 
-class  Form {
+class Form {
 public:
     Form(const std::string name, int reqGradeToSign, int reqGradeToExecute);
     ~Form();

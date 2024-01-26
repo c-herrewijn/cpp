@@ -43,7 +43,7 @@ AForm *Intern::makeForm(std::string formName, std::string formTarget)
         "shrubbery creation"
     };
 
-    typedef  AForm *(*newFormFuncPtr)(std::string formTarget);
+    typedef AForm *(*newFormFuncPtr)(std::string formTarget);
     newFormFuncPtr creators[nrForms] = {
         Intern::newPresidentialPardonForm,
         Intern::newRobotomyRequestForm,
