@@ -1,12 +1,12 @@
 #ifndef FORM_H
-# define  FORM_H
+# define FORM_H
 
 #include <string>
 #include "Bureaucrat.h"
 
 class Bureaucrat;
 
-class  AForm {
+class AForm {
 public:
     AForm(const std::string name, int reqGradeToSign, int reqGradeToExecute,
           std::string target);
@@ -20,9 +20,6 @@ public:
     std::string getTarget() const;
     void beSigned(Bureaucrat const &signer);
     void beExecuted(Bureaucrat const &executor) const;
-    class GradeTooLowException;
-    class GradeTooHighException;
-    class UnsignedExecutionException;
 
 private:
     virtual void execute(Bureaucrat const &executor) const = 0;
@@ -33,6 +30,9 @@ private:
     const std::string _target;
     AForm();
     AForm &operator=(const AForm &obj);
+    class GradeTooLowException;
+    class GradeTooHighException;
+    class UnsignedExecutionException;
 };
 
 class AForm::GradeTooLowException : public std::exception {
