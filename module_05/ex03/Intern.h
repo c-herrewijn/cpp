@@ -1,6 +1,7 @@
 #ifndef INTERN_H
 # define INTERN_H
 # include <string>
+# include <stdexcept>
 # include "AForm.h"
 
 class Intern {
@@ -18,9 +19,9 @@ private:
     class InvalidFormnameException;
 };
 
-class Intern::InvalidFormnameException : public std::exception {
+class Intern::InvalidFormnameException : public std::logic_error {
 public:
-    virtual const char *what() const throw();
+    InvalidFormnameException(const std::string &message);
 };
 
 #endif

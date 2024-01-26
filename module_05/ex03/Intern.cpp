@@ -60,12 +60,14 @@ AForm *Intern::makeForm(std::string formName, std::string formTarget)
         i++;
     }
     if (newform == nullptr) {
-        throw Intern::InvalidFormnameException();
+        std::string errorstr = "Form not created. Form: '" + formName +
+                               "' is not a valid form!";
+        throw Intern::InvalidFormnameException(errorstr);
     }
     return newform;
 };
 
-const char *Intern::InvalidFormnameException::what() const throw()
-{
-    return "Invalid Form Name";
-}
+// constructor of exception class with initialization list
+Intern::InvalidFormnameException::InvalidFormnameException(const std::string &message)
+    : std::logic_error(message)
+{}
