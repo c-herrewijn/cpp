@@ -15,6 +15,12 @@ private:
     static AForm *newPresidentialPardonForm(std::string formTarget);
     static AForm *newRobotomyRequestForm(std::string formTarget);
     static AForm *newShrubberyCreationForm(std::string formTarget);
+    class InvalidFormnameException;
+};
+
+class Intern::InvalidFormnameException : public std::exception {
+public:
+    virtual const char *what() const throw();
 };
 
 #endif
