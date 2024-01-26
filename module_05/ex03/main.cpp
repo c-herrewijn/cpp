@@ -1,15 +1,37 @@
 #include "Intern.h"
+#include "Bureaucrat.h"
 #include "AForm.h"
 #include <iostream>
 #include <exception>
 
-int main()
+void startTests(Bureaucrat &b)
 {
     Intern someRandomIntern;
-    AForm *rrf;
+    AForm *rrf = someRandomIntern.makeForm("robotomy request", "Rick");
+    AForm *scf = someRandomIntern.makeForm("shrubbery creation", "Sonia");
+    AForm *ppf = someRandomIntern.makeForm("presidential pardon", "Peter");
 
-    rrf = someRandomIntern.makeForm("robotomy request", "Bender");
+    b.signForm(*rrf);
+    b.executeForm(*rrf);
     delete rrf;
 
-    // todo: add tests
+    b.signForm(*scf);
+    b.executeForm(*scf);
+    delete scf;
+
+    b.signForm(*ppf);
+    b.executeForm(*ppf);
+    delete ppf;
+}
+
+int main()
+{
+    try {
+        Bureaucrat b("PowerUser", 1);
+        startTests(b);
+    }
+    catch (std::exception &e) {
+        std::cout << "An error occured: " << e.what() << std::endl;
+        exit(1);
+    }
 }
