@@ -1,10 +1,10 @@
 #ifndef SHRUBBERYCREATIONFORM_H
-# define  SHRUBBERYCREATIONFORM_H
+# define SHRUBBERYCREATIONFORM_H
 
 # include "AForm.h"
 # include <string>
 
-class  ShrubberyCreationForm : public AForm {
+class ShrubberyCreationForm : public AForm {
 public:
     ~ShrubberyCreationForm();
     ShrubberyCreationForm(std::string target);
