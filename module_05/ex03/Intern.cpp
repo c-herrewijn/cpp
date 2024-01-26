@@ -1,9 +1,9 @@
 #include "Intern.h"
+#include "AForm.h"
+#include "PresidentialPardonForm.h"
+#include "RobotomyRequestForm.h"
+#include "ShrubberyCreationForm.h"
 #include <iostream>
-#include <AForm.h>
-#include <PresidentialPardonForm.h>
-#include <RobotomyRequestForm.h>
-#include <ShrubberyCreationForm.h>
 
 Intern::Intern() {}
 Intern::~Intern() {}
@@ -43,8 +43,8 @@ AForm *Intern::makeForm(std::string formName, std::string formTarget)
         "shrubbery creation"
     };
 
-    typedef  AForm *(*newForm)(std::string formTarget);
-    newForm creators[nrForms] = {
+    typedef  AForm *(*newFormFuncPtr)(std::string formTarget);
+    newFormFuncPtr creators[nrForms] = {
         Intern::newPresidentialPardonForm,
         Intern::newRobotomyRequestForm,
         Intern::newShrubberyCreationForm
