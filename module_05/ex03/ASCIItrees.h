@@ -8,4 +8,5 @@ namespace trees {
     std::string tree2();
     std::string tree3();
 }
+
 #endif

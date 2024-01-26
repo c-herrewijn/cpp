@@ -17,8 +17,6 @@ public:
     void decrementGrade(void);
     void signForm(AForm &form);
     void executeForm(AForm const &form);
-    class GradeTooLowException;
-    class GradeTooHighException;
 
 private:
     int _grade;
@@ -26,6 +24,8 @@ private:
     Bureaucrat();
     Bureaucrat(const Bureaucrat &obj);
     Bureaucrat &operator=(const Bureaucrat &obj);
+    class GradeTooLowException;
+    class GradeTooHighException;
 };
 
 class Bureaucrat::GradeTooLowException : public std::exception {
