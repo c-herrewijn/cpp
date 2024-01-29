@@ -34,7 +34,7 @@ AForm *Intern::makeForm(std::string formName, std::string formTarget)
     creatorFuncPtr creators[nrForms] = {
         +[](std::string formTarget) {return (AForm *) new PresidentialPardonForm(formTarget);},
         +[](std::string formTarget) {return (AForm *) new RobotomyRequestForm(formTarget);},
-        +[](std::string formTarget) {return (AForm *) new PresidentialPardonForm(formTarget);}
+        +[](std::string formTarget) {return (AForm *) new ShrubberyCreationForm(formTarget);}
     };
 
     // select and execute correct creator function
