@@ -19,23 +19,9 @@ Intern &Intern::operator=(const Intern &obj)
     return *this;
 }
 
-AForm *Intern::newPresidentialPardonForm(std::string formTarget)
-{
-    return new PresidentialPardonForm(formTarget);
-}
-
-AForm *Intern::newRobotomyRequestForm(std::string formTarget)
-{
-    return new RobotomyRequestForm(formTarget);
-}
-
-AForm *Intern::newShrubberyCreationForm(std::string formTarget)
-{
-    return new ShrubberyCreationForm(formTarget);
-}
-
 AForm *Intern::makeForm(std::string formName, std::string formTarget)
 {
+    // supported form names
     const int nrForms = 3;
     std::string formNames[nrForms] = {
         "presidential pardon",
@@ -43,13 +29,15 @@ AForm *Intern::makeForm(std::string formName, std::string formTarget)
         "shrubbery creation"
     };
 
-    typedef AForm *(*newFormFuncPtr)(std::string formTarget);
-    newFormFuncPtr creators[nrForms] = {
-        Intern::newPresidentialPardonForm,
-        Intern::newRobotomyRequestForm,
-        Intern::newShrubberyCreationForm
+    // matching creator functions per formame (pointers to lambda functions)
+    typedef AForm *(*creatorFuncPtr)(std::string formTarget);
+    creatorFuncPtr creators[nrForms] = {
+        +[](std::string formTarget) {return (AForm *) new PresidentialPardonForm(formTarget);},
+        +[](std::string formTarget) {return (AForm *) new RobotomyRequestForm(formTarget);},
+        +[](std::string formTarget) {return (AForm *) new PresidentialPardonForm(formTarget);}
     };
 
+    // select and execute correct creator function
     int i = 0;
     AForm *newform = nullptr;
     while (i < nrForms) {
