@@ -29,7 +29,7 @@ AForm *Intern::makeForm(std::string formName, std::string formTarget)
         "shrubbery creation"
     };
 
-    // matching creator functions per formame (pointers to lambda functions)
+    // matching creator functions per form name (pointers to lambda functions)
     typedef AForm *(*creatorFuncPtr)(std::string formTarget);
     creatorFuncPtr creators[nrForms] = {
         +[](std::string formTarget) {return (AForm *) new PresidentialPardonForm(formTarget);},
