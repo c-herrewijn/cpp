@@ -1,5 +1,5 @@
 NAME	= converter
-CFLAGS	= -Wall -Wextra -Werror -std=c++98
+CFLAGS	= -Wall -Wextra -Werror -std=c++11
 INCLUDE = .
 
 SRCS	= main.cpp ScalarConverter.cpp
