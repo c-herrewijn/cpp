@@ -1,234 +1,187 @@
 #include "ScalarConverter.hpp"
 #include <string>
-#include <limits>
-#include <cmath>
-#include <sstream>
 #include <iostream>
-#include <iomanip>
+#include <cctype>
+#include <limits>
 
-// anonymous namespace: only visible inside the file-scope
 namespace {
-    typedef enum floatPrecision {
-        SINGLE,
-        DOUBLE
-    } floatPrecision_e;
+    typedef enum inputType_e {
+        CHAR,
+        INT,
+        FLOAT,
+        DOUBLE,
+        NONE_TYPE
+    } inputType_t;
 
-    typedef enum scalarType {
-        CHAR_TYPE,
-        INT_TYPE,
-        FLOAT_TYPE,
-        DOUBLE_TYPE,
-        NONE_TYPE  // undefined
-    } scalarType_e;
-
-    typedef struct scalarSet_s {
-        unsigned char c;
+    typedef struct conversions_s {
+        char c;
+        std::string cMessage;
         int i;
+        std::string iMessage;
         float f;
+        std::string fMessage;
         double d;
-        scalarType_e inputType;
-    } scalarSet_t;
+        std::string dMessage;
+    } conversions_t;
 }
 
-// valid input: single quoted char
-static void parseAsChar(std::string str, scalarSet_t &scalarSet)
+// valid chars: single quoted chars, or non-numeric printable chars
+static bool isChar(std::string str, conversions_t &conversions)
 {
-    if (str.length() == 3
-            && (str.c_str()[0] == '\'')
-            && std::isprint(str.c_str()[1])
-            && (str.c_str()[2] == '\'')) {
-        scalarSet.inputType = CHAR_TYPE;
-        scalarSet.c = str.c_str()[1];
+    char c;
+
+    if (str.length() == 3 && str[0] == '\'' && std::isprint(str[1])
+            && str[2] == '\'') {
+        c = str[1];
     }
-}
-
-// valid input: numerical value in range [INT_MIN, INT_MAX]
-static void parseAsInt(std::string str, scalarSet_t &scalarSet)
-{
-    try {
-        int num = std::stoi(str);
-        if (std::to_string(num) == str) {
-            scalarSet.inputType = INT_TYPE;
-            scalarSet.i = static_cast<int>(num);
-        }
-    }
-    catch (std::invalid_argument &e) {}
-    catch (std::out_of_range &e) {}
-}
-
-static void parseAsDouble(std::string str, scalarSet_t &scalarSet)
-{
-    floatPrecision_e fPrecision;
-    if (str.back() == 'f' && str != "inf" && str != "-inf") {
-        str.pop_back();
-        fPrecision = SINGLE;
+    else if (str.length() == 1 && std::isprint(str[0])
+             && std::isdigit(str[0]) == false) {
+        c = str[0];
     }
     else {
-        fPrecision = DOUBLE;
+        return false;
     }
-
-    // special values
-    double num;
-    if (str == "nan" || str == "inf" || str == "-inf") {
-        if (str == "nan") {
-            num = std::numeric_limits<double>::quiet_NaN();
-        }
-        if (str == "inf") {
-            num = std::numeric_limits<double>::infinity();
-        }
-        if (str == "-inf") {
-            num = -std::numeric_limits<double>::infinity();
-        }
-        scalarSet.d = num;
-        if (fPrecision == SINGLE) {
-            scalarSet.inputType = FLOAT_TYPE;
-            scalarSet.f = static_cast<float>(num);
-        }
-        if (fPrecision == DOUBLE) {
-            scalarSet.inputType = DOUBLE_TYPE;
-        }
-        scalarSet.d = num;
-    }
-
-    // special values
-    if (scalarSet.inputType == NONE_TYPE) {
-        try {
-            if (fPrecision == SINGLE) {
-                num = std::stof(str);
-                scalarSet.inputType = FLOAT_TYPE;
-                scalarSet.f = static_cast<float>(num);
-            }
-            if (fPrecision == DOUBLE) {
-                num = std::stod(str);
-                scalarSet.inputType = DOUBLE_TYPE;
-            }
-            scalarSet.d = num;
-        }
-        catch (std::invalid_argument &e) {}
-        catch (std::out_of_range &e) {}
-    }
+    conversions.c = c;
+    return (true);
 }
 
-static void parseInput(std::string str, scalarSet_t &scalarSet)
+static bool isInt(std::string str, conversions_t &conversions)
 {
-    if (scalarSet.inputType == NONE_TYPE) {
-        parseAsChar(str, scalarSet);
+    int sign = str[0] == '-' ? -1 : 1;
+    if (sign == -1) {
+        str.erase(str.begin());
     }
-    if (scalarSet.inputType == NONE_TYPE) {
-        parseAsInt(str, scalarSet);
+    if (str.length() > std::numeric_limits<int>::digits10 + 1) {
+        return false;
     }
-    if (scalarSet.inputType == NONE_TYPE) {
-        parseAsDouble(str, scalarSet);
+    for (char c : str) {
+        if (std::isdigit(c) == false) {
+            return false;
+        }
     }
+    long li = sign * std::stol(str);
+    if (li > std::numeric_limits<int>::max()
+            || li < std::numeric_limits<int>::min()) {
+        return false;
+    }
+    conversions.i = static_cast<int>(li);
+    return (true);
 }
 
-// converts all to doubles, and char also to int
-static void convertScalars(scalarSet_t &scalarSet)
+static bool isFloat(std::string str, conversions_t &conversions)
 {
-    if (scalarSet.inputType == INT_TYPE) {
-        scalarSet.d = static_cast<double>(scalarSet.i);
-    }
-    if (scalarSet.inputType == CHAR_TYPE) {
-        scalarSet.d = static_cast<double>(scalarSet.c);
-        scalarSet.i = static_cast<int>(scalarSet.c);
-    }
-    if (scalarSet.inputType == FLOAT_TYPE) {
-        scalarSet.d = static_cast<double>(scalarSet.f);
-    }
+    return false;
 }
 
-static void printScalars(scalarSet_t &scalarSet)
+static bool isDouble(std::string str, conversions_t &conversions)
 {
-    std::string charStr = "";
-    std::string intStr = "";
-    std::string floatStr = "";
-    std::string doubleStr = "";
+    return false;
+}
 
-    // impossible
-    if (scalarSet.inputType == NONE_TYPE) {
-        charStr = "impossible";
-        intStr = "impossible";
-        floatStr = "impossible";
-        doubleStr = "impossible";
+static void convertChar(std::string scalarStr, conversions_t &conversions)
+{
+    conversions.i = static_cast<int>(conversions.c);
+    conversions.f = static_cast<float>(conversions.c);
+    conversions.d = static_cast<double>(conversions.c);
+}
+
+static void convertInt(std::string scalarStr, conversions_t &conversions)
+{
+
+    if (conversions.i > std::numeric_limits<char>::max()
+            || conversions.i < std::numeric_limits<char>::min()) {
+        conversions.cMessage = "impossible";
     }
-
-    // inf, -inf, nan
-    else if (scalarSet.d == std::numeric_limits<double>::infinity()
-             || scalarSet.d == -std::numeric_limits<double>::infinity()
-             || std::isnan(scalarSet.d)) {
-        charStr = "impossible";
-        intStr = "impossible";
-    }
-
-    // not fitting in floats
-    else if (scalarSet.d > std::numeric_limits<float>::max()
-             || scalarSet.d < -std::numeric_limits<float>::max()
-             || (fabs(scalarSet.d) < std::numeric_limits<float>::min()
-                 && scalarSet.d != 0)) {
-        charStr = "impossible";
-        intStr = "impossible";
-        floatStr = "impossible";
-    }
-
-    // not fitting in int
-    else if (scalarSet.d > std::numeric_limits<int>::max()
-             || scalarSet.d < std::numeric_limits<int>::min()) {
-        charStr = "impossible";
-        intStr = "impossible";
+    else if (std::isprint(static_cast<char>(conversions.i)) == false) {
+        conversions.cMessage = "Non displayable";
     }
     else {
-        // within int range
-        scalarSet.i = static_cast<int>(scalarSet.d);
-        intStr = std::to_string(scalarSet.i);
-
-        // displayable:
-        if (scalarSet.i <= 255 && scalarSet.i >= 0 && std::isprint(scalarSet.i)) {
-            charStr = "'";
-            charStr += scalarSet.i;
-            charStr += "'";
-        }
-        else {
-            if (scalarSet.i <= 255 && scalarSet.i >= 0) {
-                charStr = "Non displayable";
-            }
-            else {
-                charStr = "impossible";
-            }
-        }
+        conversions.c = static_cast<char>(conversions.i);
     }
+    conversions.f = static_cast<float>(conversions.i);
+    conversions.d = static_cast<double>(conversions.i);
+}
 
-    // normal double value
-    if (doubleStr == "") {
-        std::stringstream ss;
-        if (scalarSet.d == scalarSet.i && fabs(scalarSet.d) < 1e6) {
-            ss << std::fixed << std::setprecision(1) << scalarSet.d;
-        }
-        else {
-            ss << scalarSet.d;
-        }
-        doubleStr = ss.str();
-        if (floatStr == "") {
-            floatStr = doubleStr;
-            if (fabs(scalarSet.d) < 1e6 || floatStr == "inf" || floatStr == "-inf"
-                    || floatStr == "nan") {
-                floatStr += 'f';
-            }
-        }
+static void convertFloat(std::string scalarStr, conversions_t &conversions)
+{
+
+}
+
+static void convertDouble(std::string scalarStr, conversions_t &conversions)
+{
+
+}
+
+static void printConversions(conversions_t &conversions)
+{
+    if (conversions.cMessage == "") {
+        std::cout << "char: '" << conversions.c << "'" << std::endl;
     }
-    std::cout << "char: " << charStr << std::endl
-              << "int: " << intStr << std::endl
-              << "float: " << floatStr << std::endl
-              << "double: " << doubleStr << std::endl;
+    else {
+        std::cout << "char: " << conversions.cMessage << std::endl;
+    }
+    if (conversions.iMessage == "") {
+        std::cout << "int: " << conversions.i << std::endl;
+    }
+    else {
+        std::cout << "int: " << conversions.iMessage << std::endl;
+    }
+    if (conversions.fMessage == "") {
+        std::cout << "float: " << conversions.f << std::endl;
+    }
+    else {
+        std::cout << "float: "<< conversions.fMessage << std::endl;
+    }
+    if (conversions.dMessage == "") {
+        std::cout << "double: " << conversions.d << std::endl;
+    }
+    else {
+        std::cout << "double: "<< conversions.dMessage << std::endl;
+    }
 }
 
 void ScalarConverter::convert(std::string scalarStr)
 {
-    scalarSet_t scalarSet;
-    scalarSet.inputType = NONE_TYPE;
+    inputType_t inputType;
+    conversions_t conversions = {};
 
-    parseInput(scalarStr, scalarSet);
-    convertScalars(scalarSet);
-    printScalars(scalarSet);
+    // general validation
+    if (scalarStr == "") {
+        inputType = NONE_TYPE;
+    }
+
+    // detect input type
+    else if (isChar(scalarStr, conversions)) {
+        inputType = CHAR;
+    }
+    else if (isInt(scalarStr, conversions)) {
+        inputType = INT;
+    }
+    else if (isFloat(scalarStr, conversions)) {
+        inputType = FLOAT;
+    }
+    else if (isDouble(scalarStr, conversions)) {
+        inputType = DOUBLE;
+    }
+    else {
+        inputType = NONE_TYPE;
+    }
+
+    // convert input type
+    if (inputType == CHAR) {
+        convertChar(scalarStr, conversions);
+    }
+    if (inputType == INT) {
+        convertInt(scalarStr, conversions);
+    }
+
+    // print
+    if (inputType != NONE_TYPE) {
+        printConversions(conversions);
+    }
+    else {
+        std::cout << "invalid input" << std::endl;
+    }
 }
 
 ScalarConverter::ScalarConverter() {}
