@@ -7,90 +7,8 @@
 #include <cmath>
 #include <sstream>
 
-namespace {
-    typedef enum floatingType_e {
-        SINGLE_PRECISION,
-        DOUBLE_PRECISION
-    } floatingType_t;
-
-    typedef struct conversions_s {
-        char c;
-        std::string cMessage;
-        int i;
-        std::string iMessage;
-        float f;
-        std::string fMessage;
-        double d;
-        std::string dMessage;
-        int numDigitsBehindDecimalPoint = 0;
-    } conversions_t;
-
-    typedef struct floatingStrLiteral_s {
-        floatingType_t type;
-        int numDigits;
-        bool hasRadixPoint;
-        int sign;
-        int numDigitsBehindDecimalPoint;
-        std::string warning;
-    } floatingStrLiteral_t;
-}
-
-static void convertIntToChar(conversions_t &conversions)
-{
-    if (conversions.iMessage != ""
-        ||conversions.i > std::numeric_limits<char>::max()
-        || conversions.i < std::numeric_limits<char>::min()) {
-        conversions.cMessage = "impossible";
-    }
-    else if (std::isprint(static_cast<char>(conversions.i)) == false) {
-        conversions.cMessage = "Non displayable";
-    }
-    else {
-        conversions.c = static_cast<char>(conversions.i);
-    }
-}
-
-static void convertIntToFloat(conversions_t &conversions) {
-    float f = static_cast<float>(conversions.i);
-    if (static_cast<double>(f) != static_cast<double>(conversions.i)) {
-        conversions.fMessage = " (integer can not be exactly represented in float)";
-    }
-    conversions.f = f;
-}
-
-static std::string floatingTypeToString(conversions_t &conversions, floatingType_t type) {
-    std::stringstream ss;
-    const int defaultPrecision = static_cast<int>(std::cout.precision());
-    int precision = (conversions.numDigitsBehindDecimalPoint == 0) ? 1 : conversions.numDigitsBehindDecimalPoint;
-
-    if (type == SINGLE_PRECISION)
-        ss << std::fixed << std::setprecision(precision) << conversions.f << std::setprecision(defaultPrecision);
-    else
-        ss << std::fixed << std::setprecision(precision) << conversions.d << std::setprecision(defaultPrecision);
-    return ss.str();
-}
-
-static void convertDoubleToFloat(conversions_t &conversions) {
-    float f = static_cast<float>(conversions.d);
-    conversions.f = f;
-    if (floatingTypeToString(conversions, SINGLE_PRECISION) != floatingTypeToString(conversions, DOUBLE_PRECISION)) {
-        conversions.fMessage = " (differs because exact representation is not possible)";
-    }
-}
-
-static void convertDoubleToInt(conversions_t &conversions)
-{
-    if (conversions.d > std::numeric_limits<int>::max()
-            || conversions.d < std::numeric_limits<int>::min()) {
-        conversions.iMessage = "impossible (floating point input is outside the integer range)";
-    }
-    else {
-        conversions.i = static_cast<int>(conversions.d);
-    }
-}
-
 // valid chars: single quoted chars, or non-numeric chars
-static bool parseChar(std::string str, conversions_t &conversions)
+bool ScalarConverter::_parseChar(std::string str, conversions_t &conversions)
 {
     char c = '\0';
     bool charInput = false;
@@ -112,7 +30,7 @@ static bool parseChar(std::string str, conversions_t &conversions)
 }
 
 // valid inputs are within range [INT_MIN and INT_MAX], no decimal point allowed
-static bool parseInt(std::string str, conversions_t &conversions)
+bool ScalarConverter::_parseInt(std::string str, conversions_t &conversions)
 {
     int sign = str[0] == '-' ? -1 : 1;
     if (sign == -1) {
@@ -132,13 +50,51 @@ static bool parseInt(std::string str, conversions_t &conversions)
         return false;
     }
     conversions.i = static_cast<int>(li);
-    convertIntToChar(conversions);
-    convertIntToFloat(conversions);
+    _convertIntToChar(conversions);
+    _convertIntToFloat(conversions);
     conversions.d = static_cast<double>(conversions.i);
     return (true);
 }
 
-static bool parseNaNOrInf(std::string str, conversions_t &conversions) {
+/*
+FORMAT:
+decimal format or 'nan', 'inf', or '-inf'. Exponential format is not supported
+floats shoud append an extra 'f', also for the special formats: 'nanf', 'inff', or '-inff'
+decimals should contain a decimal separator '.', and should contain max 18 digits
+NOTE: float and doubles do not guarantee exact representation
+*/
+bool ScalarConverter::_parseFloatDouble(std::string str, conversions_t &conversions)
+{
+    floatingStrLiteral_t num;
+    if (str.back() == 'f') {
+        str.pop_back();
+        num.type = SINGLE_PRECISION;
+    }
+    else
+        num.type = DOUBLE_PRECISION;
+
+    if (_parseNaNOrInf(str, conversions))
+        return true;
+    if (_validDecimalFormat(str, num)) {
+        conversions.numDigitsBehindDecimalPoint = num.numDigitsBehindDecimalPoint;
+        if (num.type == SINGLE_PRECISION) {
+            conversions.f = static_cast<float>(num.sign) * std::stof(str);
+            conversions.fMessage = num.warning;
+            conversions.d = static_cast<double>(conversions.f);
+        }
+        else {
+            conversions.d = static_cast<double>(num.sign) * std::stod(str);
+            conversions.dMessage = num.warning;
+            _convertDoubleToFloat(conversions);
+        }
+        _convertDoubleToInt(conversions);
+        _convertIntToChar(conversions);
+        return true;
+    }
+    return (false);
+}
+
+bool ScalarConverter::_parseNaNOrInf(std::string str, conversions_t &conversions) {
     if (str == "nan" || str == "inf" || str == "-inf") {
         if (str == "nan") {
             conversions.f = std::numeric_limits<float>::quiet_NaN();
@@ -159,7 +115,95 @@ static bool parseNaNOrInf(std::string str, conversions_t &conversions) {
     return false;
 }
 
-static bool validDecimalFormat(std::string &str, floatingStrLiteral_t &n)
+void ScalarConverter::_convertIntToChar(conversions_t &conversions)
+{
+    if (conversions.iMessage != ""
+        ||conversions.i > std::numeric_limits<char>::max()
+        || conversions.i < std::numeric_limits<char>::min()) {
+        conversions.cMessage = "impossible";
+    }
+    else if (std::isprint(static_cast<char>(conversions.i)) == false) {
+        conversions.cMessage = "Non displayable";
+    }
+    else {
+        conversions.c = static_cast<char>(conversions.i);
+    }
+}
+
+void ScalarConverter::_convertIntToFloat(conversions_t &conversions) {
+    float f = static_cast<float>(conversions.i);
+    if (static_cast<double>(f) != static_cast<double>(conversions.i)) {
+        conversions.fMessage = " (integer can not be exactly represented in float)";
+    }
+    conversions.f = f;
+}
+
+void ScalarConverter::_convertDoubleToFloat(conversions_t &conversions) {
+    float f = static_cast<float>(conversions.d);
+    conversions.f = f;
+    if (_floatingTypeToString(conversions, SINGLE_PRECISION) != _floatingTypeToString(conversions, DOUBLE_PRECISION)) {
+        conversions.fMessage = " (differs because exact representation is not possible)";
+    }
+}
+
+void ScalarConverter::_convertDoubleToInt(conversions_t &conversions)
+{
+    if (conversions.d > std::numeric_limits<int>::max()
+            || conversions.d < std::numeric_limits<int>::min()) {
+        conversions.iMessage = "impossible (floating point input is outside the integer range)";
+    }
+    else {
+        conversions.i = static_cast<int>(conversions.d);
+    }
+}
+
+void ScalarConverter::_printConversions(conversions_t &conversions)
+{
+    // char
+    if (conversions.cMessage == "") {
+        if (std::isprint(conversions.c))
+            std::cout << "char: '" << conversions.c << "'" << std::endl;
+        else
+            std::cout << "char: Non displayable" << std::endl;
+    }
+    else {
+        std::cout << "char: " << conversions.cMessage << std::endl;
+    }
+
+    // int
+    if (conversions.iMessage == "")
+        std::cout << "int: " << conversions.i << std::endl;
+    else
+        std::cout << "int: " << conversions.iMessage << std::endl;
+
+    // float
+    if (conversions.fMessage == "")
+        std::cout << "float: " << _floatingTypeToString(conversions, SINGLE_PRECISION) << "f" << std::endl;
+    else if (conversions.fMessage == "impossible")
+        std::cout << "float: " << conversions.fMessage << std::endl;
+    else
+        std::cout << "float: " << _floatingTypeToString(conversions, SINGLE_PRECISION) << "f" << conversions.fMessage << std::endl;
+
+    // double
+    if (conversions.dMessage == "")
+        std::cout << "double: " << _floatingTypeToString(conversions, DOUBLE_PRECISION) << std::endl;
+    else
+        std::cout << "double: " << _floatingTypeToString(conversions, DOUBLE_PRECISION) << conversions.dMessage << std::endl;
+}
+
+std::string ScalarConverter::_floatingTypeToString(conversions_t &conversions, floatingType_t type) {
+    std::stringstream ss;
+    const int defaultPrecision = static_cast<int>(std::cout.precision());
+    int precision = (conversions.numDigitsBehindDecimalPoint == 0) ? 1 : conversions.numDigitsBehindDecimalPoint;
+
+    if (type == SINGLE_PRECISION)
+        ss << std::fixed << std::setprecision(precision) << conversions.f << std::setprecision(defaultPrecision);
+    else
+        ss << std::fixed << std::setprecision(precision) << conversions.d << std::setprecision(defaultPrecision);
+    return ss.str();
+}
+
+bool ScalarConverter::_validDecimalFormat(std::string &str, floatingStrLiteral_t &n)
 {
     n.numDigits = 0;
     n.hasRadixPoint = false;
@@ -189,86 +233,14 @@ static bool validDecimalFormat(std::string &str, floatingStrLiteral_t &n)
     return true;
 }
 
-/*
-FORMAT:
-decimal format or 'nan', 'inf', or '-inf'. Exponential format is not supported
-floats shoud append an extra 'f', also for the special formats: 'nanf', 'inff', or '-inff'
-decimals should contain a decimal separator '.', and should contain max 18 digits
-NOTE: float and doubles do not guarantee exact representation
-*/
-static bool parseFloatDouble(std::string str, conversions_t &conversions)
-{
-    floatingStrLiteral_t num;
-    if (str.back() == 'f') {
-        str.pop_back();
-        num.type = SINGLE_PRECISION;
-    }
-    else
-        num.type = DOUBLE_PRECISION;
-
-    if (parseNaNOrInf(str, conversions))
-        return true;
-    if (validDecimalFormat(str, num)) {
-        conversions.numDigitsBehindDecimalPoint = num.numDigitsBehindDecimalPoint;
-        if (num.type == SINGLE_PRECISION) {
-            conversions.f = static_cast<float>(num.sign) * std::stof(str);
-            conversions.fMessage = num.warning;
-            conversions.d = static_cast<double>(conversions.f);
-        }
-        else {
-            conversions.d = static_cast<double>(num.sign) * std::stod(str);
-            conversions.dMessage = num.warning;
-            convertDoubleToFloat(conversions);
-        }
-        convertDoubleToInt(conversions);
-        convertIntToChar(conversions);
-        return true;
-    }
-    return (false);
-}
-
-static void printConversions(conversions_t &conversions)
-{
-    // char
-    if (conversions.cMessage == "") {
-        if (std::isprint(conversions.c))
-            std::cout << "char: '" << conversions.c << "'" << std::endl;
-        else
-            std::cout << "char: Non displayable" << std::endl;
-    }
-    else {
-        std::cout << "char: " << conversions.cMessage << std::endl;
-    }
-
-    // int
-    if (conversions.iMessage == "")
-        std::cout << "int: " << conversions.i << std::endl;
-    else
-        std::cout << "int: " << conversions.iMessage << std::endl;
-
-    // float
-    if (conversions.fMessage == "")
-        std::cout << "float: " << floatingTypeToString(conversions, SINGLE_PRECISION) << "f" << std::endl;
-    else if (conversions.fMessage == "impossible")
-        std::cout << "float: " << conversions.fMessage << std::endl;
-    else
-        std::cout << "float: " << floatingTypeToString(conversions, SINGLE_PRECISION) << "f" << conversions.fMessage << std::endl;
-
-    // double
-    if (conversions.dMessage == "")
-        std::cout << "double: " << floatingTypeToString(conversions, DOUBLE_PRECISION) << std::endl;
-    else
-        std::cout << "double: " << floatingTypeToString(conversions, DOUBLE_PRECISION) << conversions.dMessage << std::endl;
-}
-
 void ScalarConverter::convert(std::string scalarStr)
 {
     conversions_t conversions = {};
-    if (scalarStr != "" && (parseChar(scalarStr, conversions)
-                            || parseInt(scalarStr, conversions)
-                            || parseFloatDouble(scalarStr, conversions)))
+    if (scalarStr != "" && (_parseChar(scalarStr, conversions)
+                            || _parseInt(scalarStr, conversions)
+                            || _parseFloatDouble(scalarStr, conversions)))
     {
-        printConversions(conversions);
+        _printConversions(conversions);
     }
     else {
         std::cout << "invalid input" << std::endl;
