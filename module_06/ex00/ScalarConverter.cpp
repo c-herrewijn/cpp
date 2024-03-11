@@ -31,13 +31,15 @@ namespace {
         bool hasRadixPoint;
         int sign;
         int numDigitsBehindDecimalPoint;
+        std::string warning;
     } floatingStrLiteral_t;
 }
 
 static void convertIntToChar(conversions_t &conversions)
 {
-    if (conversions.i > std::numeric_limits<char>::max()
-            || conversions.i < std::numeric_limits<char>::min()) {
+    if (conversions.iMessage != ""
+        ||conversions.i > std::numeric_limits<char>::max()
+        || conversions.i < std::numeric_limits<char>::min()) {
         conversions.cMessage = "impossible";
     }
     else if (std::isprint(static_cast<char>(conversions.i)) == false) {
@@ -80,7 +82,7 @@ static void convertDoubleToInt(conversions_t &conversions)
 {
     if (conversions.d > std::numeric_limits<int>::max()
             || conversions.d < std::numeric_limits<int>::min()) {
-        conversions.iMessage = "impossible";
+        conversions.iMessage = "impossible (floating point input is outside the integer range)";
     }
     else {
         conversions.i = static_cast<int>(conversions.d);
@@ -109,6 +111,7 @@ static bool parseChar(std::string str, conversions_t &conversions)
     return (true);
 }
 
+// valid inputs are within range [INT_MIN and INT_MAX], no decimal point allowed
 static bool parseInt(std::string str, conversions_t &conversions)
 {
     int sign = str[0] == '-' ? -1 : 1;
@@ -128,8 +131,6 @@ static bool parseInt(std::string str, conversions_t &conversions)
             || li < std::numeric_limits<int>::min()) {
         return false;
     }
-
-    // conversions
     conversions.i = static_cast<int>(li);
     convertIntToChar(conversions);
     convertIntToFloat(conversions);
@@ -158,19 +159,12 @@ static bool parseNaNOrInf(std::string str, conversions_t &conversions) {
     return false;
 }
 
-static bool parseDecimalFormat(std::string &str, floatingStrLiteral_t &n)
+static bool validDecimalFormat(std::string &str, floatingStrLiteral_t &n)
 {
     n.numDigits = 0;
     n.hasRadixPoint = false;
     n.sign = (str[0] == '-') ? -1 : 1;
     n.numDigitsBehindDecimalPoint = 0;
-
-    int digits10;
-    if (n.type == SINGLE_PRECISION)
-        digits10 = std::numeric_limits<float>::digits10;
-    else
-        digits10 = std::numeric_limits<double>::digits10;
-
     if (n.sign == -1) {
         str.erase(str.begin());
     }
@@ -185,15 +179,24 @@ static bool parseDecimalFormat(std::string &str, floatingStrLiteral_t &n)
         else
             return false;
     }
-    if (n.hasRadixPoint == false || n.numDigits == 0 || n.numDigits > digits10) {
+    int digits10 = (n.type == SINGLE_PRECISION)
+        ? std::numeric_limits<float>::digits10
+        : std::numeric_limits<double>::digits10;
+    if (n.hasRadixPoint == false || n.numDigits == 0 || n.numDigits > std::numeric_limits<long double>::digits10)
         return false;
-    }
+    if (n.numDigits > digits10)
+        n.warning = " (only " + std::to_string(digits10) + " digits of precision can be guaranteed)";
     return true;
 }
 
-
-// is decimal number within range of float. NOTE: this does NOT guarantee exact representation
-static bool parseFloatOrDouble(std::string str, conversions_t &conversions)
+/*
+FORMAT:
+decimal format or 'nan', 'inf', or '-inf'. Exponential format is not supported
+floats shoud append an extra 'f', also for the special formats: 'nanf', 'inff', or '-inff'
+decimals should contain a decimal separator '.', and should contain max 18 digits
+NOTE: float and doubles do not guarantee exact representation
+*/
+static bool parseFloatDouble(std::string str, conversions_t &conversions)
 {
     floatingStrLiteral_t num;
     if (str.back() == 'f') {
@@ -205,15 +208,16 @@ static bool parseFloatOrDouble(std::string str, conversions_t &conversions)
 
     if (parseNaNOrInf(str, conversions))
         return true;
-
-    if (parseDecimalFormat(str, num)) {
+    if (validDecimalFormat(str, num)) {
         conversions.numDigitsBehindDecimalPoint = num.numDigitsBehindDecimalPoint;
         if (num.type == SINGLE_PRECISION) {
             conversions.f = static_cast<float>(num.sign) * std::stof(str);
+            conversions.fMessage = num.warning;
             conversions.d = static_cast<double>(conversions.f);
         }
         else {
             conversions.d = static_cast<double>(num.sign) * std::stod(str);
+            conversions.dMessage = num.warning;
             convertDoubleToFloat(conversions);
         }
         convertDoubleToInt(conversions);
@@ -239,10 +243,8 @@ static void printConversions(conversions_t &conversions)
     // int
     if (conversions.iMessage == "")
         std::cout << "int: " << conversions.i << std::endl;
-    else if (conversions.iMessage == "impossible")
-        std::cout << "int: " << conversions.iMessage << std::endl;
     else
-        std::cout << "int: " << conversions.i << conversions.iMessage << std::endl;
+        std::cout << "int: " << conversions.iMessage << std::endl;
 
     // float
     if (conversions.fMessage == "")
@@ -256,7 +258,7 @@ static void printConversions(conversions_t &conversions)
     if (conversions.dMessage == "")
         std::cout << "double: " << floatingTypeToString(conversions, DOUBLE_PRECISION) << std::endl;
     else
-        std::cout << "double: "<< conversions.dMessage << std::endl;
+        std::cout << "double: " << floatingTypeToString(conversions, DOUBLE_PRECISION) << conversions.dMessage << std::endl;
 }
 
 void ScalarConverter::convert(std::string scalarStr)
@@ -264,7 +266,7 @@ void ScalarConverter::convert(std::string scalarStr)
     conversions_t conversions = {};
     if (scalarStr != "" && (parseChar(scalarStr, conversions)
                             || parseInt(scalarStr, conversions)
-                            || parseFloatOrDouble(scalarStr, conversions)))
+                            || parseFloatDouble(scalarStr, conversions)))
     {
         printConversions(conversions);
     }
