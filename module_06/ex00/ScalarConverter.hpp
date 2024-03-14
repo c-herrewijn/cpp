@@ -57,7 +57,8 @@ private:
 
     // utils
     static bool _validDecimalFormat(std::string &str, floatingStrLiteral_t &n);
-    static std::string _floatingTypeToString(conversions_t &conversions, floatingType_t type);
+    static std::string _floatingTypeToString(conversions_t &conversions,
+        floatingType_t type);
 };
 
 #endif
