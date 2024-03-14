@@ -1,11 +1,9 @@
 #include "ScalarConverter.hpp"
-#include <string>
-#include <iostream>
 #include <iomanip>
-#include <cctype>
+#include <iostream>
 #include <limits>
-#include <cmath>
 #include <sstream>
+#include <string>
 
 // valid chars: single quoted chars, or non-numeric chars
 bool ScalarConverter::_parseChar(std::string str, conversions_t &conversions)
