@@ -11,8 +11,6 @@
 bool ScalarConverter::_parseChar(std::string str, conversions_t &conversions)
 {
     char c = '\0';
-    bool charInput = false;
-
     if (str.length() == 3 && str[0] == '\'' && str[2] == '\'') {
         c = str[1];
     }
