@@ -65,7 +65,7 @@ bool ScalarConverter::_parseFloatDouble(std::string str,
                                         conversions_t &conversions)
 {
     floatingStrLiteral_t num;
-    if (str.back() == 'f') {
+    if (str.back() == 'f' && str != "inf" && str != "-inf") {
         str.pop_back();
         num.type = SINGLE_PRECISION;
     }
