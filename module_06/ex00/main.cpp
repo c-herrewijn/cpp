@@ -15,11 +15,6 @@
 #define  ANSI_RESET  "\x1b[0m"
 
 // static void testCases();
-// static void test(std::string str)
-// {
-//     std::cout << ANSI_GREEN << "\ninput: " << str << ANSI_RESET << std::endl;
-//     ScalarConverter::convert(str);
-// }
 
 int main(int argc, char *argv[])
 {
@@ -31,6 +26,12 @@ int main(int argc, char *argv[])
         // testCases();
     }
 }
+
+// static void test(std::string str)
+// {
+//     std::cout << ANSI_GREEN << "\ninput: " << str << ANSI_RESET << std::endl;
+//     ScalarConverter::convert(str);
+// }
 
 // static void testCases(void)
 // {
