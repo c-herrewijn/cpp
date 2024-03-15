@@ -10,3 +10,17 @@ Data *Serializer::deserialize(uintptr_t raw)
 {
     return reinterpret_cast<Data *>(raw);
 }
+
+Serializer::Serializer() {}
+Serializer::~Serializer() {}
+
+Serializer::Serializer(const Serializer &obj)
+{
+    *this = obj;
+}
+
+Serializer &Serializer::operator=(const Serializer &obj)
+{
+    (void)obj;
+    return *this;
+}
