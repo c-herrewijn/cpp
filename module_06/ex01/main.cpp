@@ -1,8 +1,6 @@
 #include "Serializer.hpp"
 #include "Data.hpp"
 #include <iostream>
-#include <string>
-#include <sstream>
 
 #define  ANSI_GREEN  "\x1b[32m"
 #define  ANSI_RESET  "\x1b[0m"
@@ -18,18 +16,17 @@ int main()
 
     // uintptr_t is an integer that holds an 'unspecified' pointer, comparable to to void*
     uintptr_t serializedData = Serializer::serialize(&myData);
-    Data myData2 = *(Serializer::deserialize(serializedData));
+    Data *myDataPtr = Serializer::deserialize(serializedData);
 
     std::cout << ANSI_GREEN << "compare values:" << ANSI_RESET << std::endl;
-    std::cout << myData2.str << std::endl
-              << myData2.chars[0] << myData2.chars[1] << myData2.chars[2] << std::endl
-              << myData2.b << std::endl;
+    std::cout << myDataPtr->str << std::endl
+              << myDataPtr->chars[0] << myDataPtr->chars[1] << myDataPtr->chars[2] << std::endl
+              << myDataPtr->b << std::endl;
 
     //compare pointers
     std::cout << ANSI_GREEN << "compare pointers:" << ANSI_RESET << std::endl;
-    std::cout << "uintptr_t        " << serializedData << std::endl;
-    std::cout << "Data*            " << &myData << std::endl;
-    std::stringstream ss;
-    ss << &myData;
-    std::cout << "Data* in decimal " << std::stol(ss.str(), 0, 16) << std::endl;
+    std::cout << "&myData            " << &myData << std::endl;
+    std::cout << "myDataPtr          " << myDataPtr << std::endl;
+    std::cout << "serializedData     " << serializedData << std::endl;
+    std::cout << "&myData in decimal " << reinterpret_cast<unsigned long>(&myData) << std::endl;
 }
