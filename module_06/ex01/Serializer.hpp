@@ -1,11 +1,8 @@
-#include <cstdint>
-#include <string>
+#ifndef SERIALIZER_H
+# define SERIALIZER_H
 
-struct Data {
-    std::string str;
-    unsigned char chars[12];
-    bool b;
-};
+#include <cstdint>
+#include "Data.hpp"
 
 class Serializer {
 public:
@@ -18,3 +15,5 @@ private:
     Serializer(const Serializer &obj);
     Serializer &operator=(const Serializer &obj);
 };
+
+#endif
