@@ -1,5 +1,5 @@
 #include <iostream>
-#include "templates.h"
+#include "templates.hpp"
 
 int main( void ) {
     int a = 2;
