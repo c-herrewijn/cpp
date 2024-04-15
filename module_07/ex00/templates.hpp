@@ -4,7 +4,7 @@
 template <typename T>
 void swap(T &x, T &y)
 {
-    T &temp = x;
+    T temp = x;
     x = y;
     y = temp;
 }
