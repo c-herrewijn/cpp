@@ -7,13 +7,14 @@ public:
     Array<T>();
     Array<T>(unsigned int n);
     ~Array();
-    Array<T>(Array<T> &object);
-    Array<T> &operator=(Array<T> const &object);
-    Array<T> &operator[](int index);
-    unsigned int size(void) const;
+    Array<T>(const Array<T> &object);
+    Array<T> &operator=(const Array<T> &object);
+    T &operator[](size_t index) const;
+    size_t size(void) const;
 
-    T *_data;
-    unsigned int _size;
+private:
+    const size_t _size;
+    T *const _data;
 };
 
 #include "Array.tpp"
