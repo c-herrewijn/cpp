@@ -1,6 +1,5 @@
 NAME	= array
-CFLAGS	= -Wall -Wextra -Werror -std=c++98
-INCLUDE = .
+CFLAGS	= -Wall -Wextra -Werror -std=c++11
 
 SRCS	= main.cpp
 OBJ_DIR = obj
@@ -14,7 +13,7 @@ $(NAME): $(OBJS)
 
 $(OBJ_DIR)/%.o: %.cpp
 	mkdir -p $(OBJ_DIR)
-	$(CXX) -c $(CFLAGS) -I $(INCLUDE) $< -o $@
+	$(CXX) -c $(CFLAGS) $< -o $@
 
 clean:
 	rm -rf $(OBJ_DIR)
