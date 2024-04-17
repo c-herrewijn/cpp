@@ -45,7 +45,7 @@ void testConstructors()
     myArr[1] = 18;
     printArray(myArr);
 
-    std::cout << " - make a copy: \n   - ";
+    std::cout << " - make a copy with copy constructor: \n   - ";
     Array<int>copyArr(myArr);
     printArray(copyArr);
 
@@ -55,6 +55,33 @@ void testConstructors()
     std::cout << "   - original array (adjusted): ";
     printArray(myArr);
     std::cout << "   - copy array (not adjusted): ";
+    printArray(copyArr);
+}
+
+void testCopyAssignmentOperator()
+{
+    std::cout << ANSI_GREEN << "testing assignement operator:\n" << ANSI_RESET;
+
+    // original array
+    unsigned int size = 5;
+    Array<int> myArr(size);
+    myArr[0] = 31;
+    myArr[1] = 32;
+    std::cout << "Original array: ";
+    printArray(myArr);
+
+    std::cout << "Copy via assignement operator: ";
+    Array<int>copyArr = myArr;
+    printArray(copyArr);
+
+    std::cout << "adjust some values of the copy, the origianl should stay unchanged\n";
+    copyArr[0] += 100;
+    copyArr[1] += 100;
+    copyArr[2] += 100;
+    std::cout << "contents of both arrays:\n";
+    std::cout << " - original array (adjusted): ";
+    printArray(myArr);
+    std::cout << " - copy array (not adjusted): ";
     printArray(copyArr);
 }
 
@@ -112,6 +139,7 @@ void testIndexInvalid()
 int main()
 {
     testConstructors();
+    testCopyAssignmentOperator();
     testIndexValid();
     testIndexInvalid();
 }
