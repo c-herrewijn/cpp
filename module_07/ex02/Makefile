@@ -24,6 +24,6 @@ fclean: clean
 re: fclean all
 
 lint:
-	astyle --options=../linter.txt ./*.cpp,*.hpp
+	astyle --options=../linter.txt ./*.cpp,*.hpp,*.tpp
 
 .PHONY: all clean fclean re lint

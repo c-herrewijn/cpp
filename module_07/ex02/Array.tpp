@@ -6,14 +6,18 @@ template<typename T>
 Array<T>::Array() : _size(0), _data(nullptr) {}
 
 template<typename T>
-Array<T>::Array(unsigned int n) : _size(n), _data(new T[this->_size]{}) {}
+Array<T>::Array(unsigned int n) : _size(n), _data(new T[this->_size] {}) {}
 
 template<typename T>
-Array<T>::Array(const Array<T> &obj) : _size(obj.size()), _data(_initCopy(obj)) {}
+Array<T>::Array(const Array<T> &obj) :
+    _size(obj.size()),
+    _data(_initCopy(obj))
+{}
 
 template<typename T>
-T * Array<T>::_initCopy(const Array<T> &obj) {
-    T * copyData = new T[this->_size];
+T *Array<T>::_initCopy(const Array<T> &obj)
+{
+    T *copyData = new T[this->_size];
     for (size_t i=0; i<this->_size; i++) {
         copyData[i] = obj._data[i];
     }
@@ -21,13 +25,14 @@ T * Array<T>::_initCopy(const Array<T> &obj) {
 }
 
 template<typename T>
-Array<T>::~Array() {
+Array<T>::~Array()
+{
     delete [] this->_data;
 }
 
-
 template<typename T>
-Array<T> &Array<T>::operator=(const Array<T> &object) {
+Array<T> &Array<T>::operator=(const Array<T> &object)
+{
     for (size_t i=0; i<object.size(); i++) {
         this->_data[i] = object._data[i];
     }
@@ -35,7 +40,8 @@ Array<T> &Array<T>::operator=(const Array<T> &object) {
 }
 
 template<typename T>
-T &Array<T>::operator[](size_t index) const {
+T &Array<T>::operator[](size_t index) const
+{
     if (index >= this->_size) {
         std::string errMsg = "index (" + std::to_string(index) + ") out of range";
         throw std::out_of_range(errMsg);
@@ -44,6 +50,7 @@ T &Array<T>::operator[](size_t index) const {
 }
 
 template<typename T>
-size_t Array<T>::size(void) const {
+size_t Array<T>::size(void) const
+{
     return (this->_size);
 }
