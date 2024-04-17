@@ -63,24 +63,6 @@ void testConstructors(T initalVal1, T initalVal2, T deltaTest)
 }
 
 template <typename T>
-void testConstructorsConst()
-{
-    std::cout << ANSI_GREEN << "testing constructors:\n" << ANSI_RESET;
-
-    // default construtor (size 0):
-    std::cout << "default constructor (empty)\n";
-    Array<T> emptyArr;
-    std::cout << " - size empty array: " << emptyArr.size() << "\n";
-
-    // fixed length constructor
-    std::cout << "constructor fixed length\n";
-    unsigned int size = 5;
-    Array<T> myArr(size);
-    std::cout << " - size initialized array: " << myArr.size() << "\n - ";
-    printArray(myArr);
-}
-
-template <typename T>
 void testCopyAssignmentOperator(T initalVal1, T initalVal2, T deltaTest)
 {
     std::cout << ANSI_GREEN << "testing assignement operator:\n" << ANSI_RESET;
@@ -162,6 +144,28 @@ void testIndexInvalid(T testVal)
     }
 }
 
+template <typename T>
+void testConstData()
+{
+    std::cout << ANSI_GREEN << "testing constructors:\n" << ANSI_RESET;
+    // default construtor (size 0):
+    std::cout << "default constructor (empty)\n";
+    Array<T> emptyArr;
+    std::cout << " - size empty array: " << emptyArr.size() << "\n";
+
+    // fixed length constructor
+    std::cout << "constructor fixed length\n";
+    unsigned int size = 5;
+    Array<T> myArr(size);
+    std::cout << " - size initialized array: " << myArr.size() << "\n - ";
+    printArray(myArr);
+
+    // index access
+    std::cout << ANSI_GREEN << "testing valid index access:\n" << ANSI_RESET;
+    std::cout << "initial value [0]: " << myArr[0] << "\n";
+    std::cout << "initial value: [4]: " << myArr[4] << "\n";
+}
+
 int main()
 {
     // test integers
@@ -172,7 +176,7 @@ int main()
     testIndexInvalid(42);
 
     // test strings
-    std::cout << ANSI_CYAN << "Tesing strings" << ANSI_RESET << std::endl;
+    std::cout << ANSI_CYAN << "\nTesing strings" << ANSI_RESET << std::endl;
     std::string s1 = "cat";
     std::string s2 = "dog";
     std::string s3 = "-adjusted";
@@ -180,4 +184,8 @@ int main()
     testCopyAssignmentOperator(s1, s2, s3);
     testIndexValid(s1, s2, s3);
     testIndexInvalid(s1);
+
+    // test const
+    std::cout << ANSI_CYAN << "\nTesing const values" << ANSI_RESET << std::endl;
+    testConstData<const int>();
 }
