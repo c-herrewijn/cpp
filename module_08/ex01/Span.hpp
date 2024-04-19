@@ -1,7 +1,6 @@
 #ifndef SPAN_HPP
 # define SPAN_HPP
 
-# include <array>
 # include <set>
 
 class Span {

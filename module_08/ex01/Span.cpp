@@ -5,7 +5,11 @@
 
 Span::Span() : _maxSize(0), _size(0), _data(std::multiset<int>()) {}
 
-Span::Span(unsigned int n) : _maxSize(n), _size(0), _data(std::multiset<int>()) {}
+Span::Span(unsigned int n) :
+    _maxSize(n),
+    _size(0),
+    _data(std::multiset<int>())
+{}
 
 Span::Span(const Span &obj) :
     _maxSize(obj._maxSize),
@@ -15,14 +19,16 @@ Span::Span(const Span &obj) :
 
 Span::~Span() {}
 
-Span &Span::operator=(const Span &obj) {
+Span &Span::operator=(const Span &obj)
+{
     this->_maxSize = obj._maxSize;
     this->_size = obj._size;
     this->_data = obj._data;
     return *this;
 }
 
-void Span::addNumber(int n) {
+void Span::addNumber(int n)
+{
     if (this->_size < this->_maxSize) {
         this->_data.emplace(n);
         this->_size++;
@@ -32,10 +38,40 @@ void Span::addNumber(int n) {
     }
 }
 
-unsigned int Span::shortestSpan() {
-    return 42; // dummy
+unsigned int Span::shortestSpan()
+{
+    bool spanFound = false;
+    int shortestSpan;
+
+    if (_data.size() < 2) {
+        std::string errStr = "no span found, span length = "
+                             + std::to_string(_data.size()) + "!";
+        throw std::logic_error(errStr);
+    }
+    for (auto it=this->_data.begin(); it != this->_data.end(); it++) {
+
+        if (_data.count(*it) > 1) {
+            return 0;
+        }
+        auto nextIt = std::next(it, 1);
+        if (nextIt != _data.end()) {
+            if (spanFound == false || *nextIt - *it < shortestSpan) {
+                spanFound = true;
+                shortestSpan = *nextIt - *it;
+            }
+        }
+    }
+    return static_cast<unsigned int>(shortestSpan);
 }
 
-unsigned int Span::longestSpan() {
-    return 42; // dummy
+unsigned int Span::longestSpan()
+{
+    if (_data.size() < 2) {
+        std::string errStr = "no span found, span length = "
+                             + std::to_string(_data.size()) + "!";
+        throw std::logic_error(errStr);
+    }
+    else {
+        return static_cast<unsigned int>(*this->_data.rbegin() - *this->_data.begin());
+    }
 }
