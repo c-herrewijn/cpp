@@ -2,9 +2,11 @@
 # define SPAN_HPP
 
 # include <array>
+# include <set>
 
 class Span {
 public:
+    Span();
     Span(unsigned int n);
     Span(const Span &obj);
     Span &operator=(const Span &obj);
@@ -15,10 +17,9 @@ public:
     unsigned int longestSpan();
 
 private:
-    Span();
     unsigned int _maxSize;
     unsigned int _size;
-    int *_data;
+    std::multiset<int> _data;
 };
 
 #endif
