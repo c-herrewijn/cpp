@@ -2,6 +2,7 @@
 # define SPAN_HPP
 
 # include <set>
+# include <vector>
 
 class Span {
 public:
@@ -12,6 +13,7 @@ public:
     ~Span();
 
     void addNumber(int n);
+    void insertFromVector(std::vector<int> &vect);
     unsigned int shortestSpan();
     unsigned int longestSpan();
 

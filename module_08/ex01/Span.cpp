@@ -38,6 +38,10 @@ void Span::addNumber(int n)
     }
 }
 
+void Span::insertFromVector(std::vector<int> &vect) {
+    this->_data.insert(vect.begin(), vect.end());
+}
+
 unsigned int Span::shortestSpan()
 {
     bool spanFound = false;

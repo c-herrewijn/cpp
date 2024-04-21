@@ -14,27 +14,16 @@
 #define ANSI_CYAN  "\x1b[36m"
 #define ANSI_RESET "\x1b[0m"
 
-void testRangeError()
-{
-    std::cout << ANSI_RED << "\ntesting range error: " << ANSI_RESET << std::endl;
-    Span sp = Span(3);
-    try {
-        sp.addNumber(3);
-        sp.addNumber(1);
-        sp.addNumber(4);
-        sp.addNumber(9);
-    }
-    catch (std::range_error &e) {
-        std::cout << e.what() << std::endl;
-    }
+void createRandomNumbers(std::vector<int> &randNumVector, size_t n) {
+    randNumVector.reserve(n);
+    unsigned int scaleFactor = 1 + (UINT_MAX / (static_cast<long long unsigned int>(100) + 100 * pow(n, 2)));
+    for (size_t i=0; i<n; i++)
+        randNumVector.emplace_back(rand() / scaleFactor );
 }
 
-void createRandomNumbers(Span &sp, std::vector<int> &randNumVector, size_t n) {
+void addNumbers(Span &sp, std::vector<int> &randNumVector) {
     try {
-        unsigned int scaleFactor = 1 + (UINT_MAX / (static_cast<long long unsigned int>(100) + 100 * pow(n, 2)));
-        for (size_t i=0; i<n; i++)
-            randNumVector.emplace_back(rand() / scaleFactor );
-        for (size_t i=0; i<n; i++)
+        for (size_t i=0; i<randNumVector.size(); i++)
         {
             sp.addNumber(randNumVector[i]);
         }
@@ -90,13 +79,30 @@ void testSpanLen(size_t n)
     std::cout << ANSI_CYAN << "\nn = " << n << ANSI_RESET << std::endl;
     Span sp(n);
     std::vector<int> randNumVector;
-    randNumVector.reserve(n);
-
-    createRandomNumbers(sp, randNumVector, n);
+    createRandomNumbers(randNumVector, n);
+    if (n < 100)
+        addNumbers(sp, randNumVector);
+    else
+        sp.insertFromVector(randNumVector);
     if (n < 100)
         printExtraInfo(randNumVector, n);
     testShortestSpan(sp, n);
     testLongestSpan(sp, n);
+}
+
+void testRangeError()
+{
+    std::cout << ANSI_RED << "\ntesting range error: " << ANSI_RESET << std::endl;
+    Span sp = Span(3);
+    try {
+        sp.addNumber(3);
+        sp.addNumber(1);
+        sp.addNumber(4);
+        sp.addNumber(9);
+    }
+    catch (std::range_error &e) {
+        std::cout << e.what() << std::endl;
+    }
 }
 
 int main()
