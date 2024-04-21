@@ -1,7 +1,7 @@
 #ifndef MUTANTSTACK_HPP
 # define MUTANTSTACK_HPP
 
-# include <stack>
+# include <list>
 
 template <typename T>
 class MutantStack {
@@ -10,19 +10,30 @@ public:
     MutantStack(const MutantStack &obj);
     ~MutantStack();
 
+    class iterator; // nested class
+
     MutantStack &operator=(const MutantStack &obj);
-    T &top() const;
+    const T &top() const;
     bool empty() const;
     size_t size() const;
-    void push( const T &value );
+    void push(const T &value);
     void pop();
-    class iterator {
-        T *begin(); // getter
-        T *end(); // getter
-    };
+    iterator begin();
+    iterator end();
+
 
 private:
-    std::stack<T> _data;
+    std::list<T> _data;
+};
+
+template <typename T>
+class MutantStack<T>::iterator {
+public:
+    iterator(T *ptr); // constructor
+    T &operator*() const;
+
+private:
+    T *_ptr;
 };
 
 #include "MutantStack.tpp"
