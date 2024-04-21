@@ -54,7 +54,7 @@ void printExtraInfo(std::vector<int> &randNumVector, size_t n)
     std::cout << std::endl;
 }
 
-void testShortestSpan(Span &sp, size_t n){
+void testShortestSpan(Span &sp){
     try {
         std::cout << "shortest span... : " << std::flush;
         std::cout << sp.shortestSpan() << std::endl;
@@ -64,7 +64,7 @@ void testShortestSpan(Span &sp, size_t n){
     }
 }
 
-void testLongestSpan(Span &sp, size_t n){
+void testLongestSpan(Span &sp){
     try {
         std::cout << "longest span.... : " << std::flush;
         std::cout << sp.longestSpan() << std::endl;
@@ -86,8 +86,8 @@ void testSpanLen(size_t n)
         sp.insertFromVector(randNumVector);
     if (n < 100)
         printExtraInfo(randNumVector, n);
-    testShortestSpan(sp, n);
-    testLongestSpan(sp, n);
+    testShortestSpan(sp);
+    testLongestSpan(sp);
 }
 
 void testRangeError()
