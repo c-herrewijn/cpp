@@ -38,8 +38,14 @@ void Span::addNumber(int n)
     }
 }
 
-void Span::insertFromVector(std::vector<int> &vect) {
-    this->_data.insert(vect.begin(), vect.end());
+void Span::insertFromVector(std::vector<int> &vect)
+{
+    if (this->_size + vect.size() <= this->_maxSize) {
+        this->_data.insert(vect.begin(), vect.end());
+    }
+    else {
+        throw std::range_error("no space in span to add all numbers in vector");
+    }
 }
 
 unsigned int Span::shortestSpan()
