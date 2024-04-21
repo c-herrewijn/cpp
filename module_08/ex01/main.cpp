@@ -14,17 +14,20 @@
 #define ANSI_CYAN  "\x1b[36m"
 #define ANSI_RESET "\x1b[0m"
 
-void createRandomNumbers(std::vector<int> &randNumVector, size_t n) {
+void createRandomNumbers(std::vector<int> &randNumVector, size_t n)
+{
     randNumVector.reserve(n);
-    unsigned int scaleFactor = 1 + (UINT_MAX / (static_cast<long long unsigned int>(100) + 100 * pow(n, 2)));
-    for (size_t i=0; i<n; i++)
-        randNumVector.emplace_back(rand() / scaleFactor );
+    unsigned int scaleFactor = 1 + (UINT_MAX / (static_cast<long long unsigned int>
+                                    (100) + 100 * pow(n, 2)));
+    for (size_t i=0; i<n; i++) {
+        randNumVector.emplace_back(rand() / scaleFactor);
+    }
 }
 
-void addNumbers(Span &sp, std::vector<int> &randNumVector) {
+void addNumbers(Span &sp, std::vector<int> &randNumVector)
+{
     try {
-        for (size_t i=0; i<randNumVector.size(); i++)
-        {
+        for (size_t i=0; i<randNumVector.size(); i++) {
             sp.addNumber(randNumVector[i]);
         }
     }
@@ -36,16 +39,14 @@ void addNumbers(Span &sp, std::vector<int> &randNumVector) {
 void printExtraInfo(std::vector<int> &randNumVector, size_t n)
 {
     std::cout << ANSI_GREEN << "created numbers: " << ANSI_RESET << std::flush;
-    for (size_t i=0; i<n; i++)
-    {
+    for (size_t i=0; i<n; i++) {
         std::cout << randNumVector[i] << ", ";
     }
     std::cout << std::endl;
 
     std::cout << ANSI_GREEN << "ordered:         " << ANSI_RESET << std::flush;
     std::multiset<int> orderedMultiSet;
-    for (size_t i=0; i<n; i++)
-    {
+    for (size_t i=0; i<n; i++) {
         orderedMultiSet.emplace(randNumVector[i]);
     }
     for (auto it = orderedMultiSet.begin(); it != orderedMultiSet.end(); it++) {
@@ -54,7 +55,8 @@ void printExtraInfo(std::vector<int> &randNumVector, size_t n)
     std::cout << std::endl;
 }
 
-void testShortestSpan(Span &sp){
+void testShortestSpan(Span &sp)
+{
     try {
         std::cout << "shortest span... : " << std::flush;
         std::cout << sp.shortestSpan() << std::endl;
@@ -64,7 +66,8 @@ void testShortestSpan(Span &sp){
     }
 }
 
-void testLongestSpan(Span &sp){
+void testLongestSpan(Span &sp)
+{
     try {
         std::cout << "longest span.... : " << std::flush;
         std::cout << sp.longestSpan() << std::endl;
@@ -74,18 +77,21 @@ void testLongestSpan(Span &sp){
     }
 }
 
-void testSpanLen(size_t n)
+void testSpanLen(unsigned int n)
 {
     std::cout << ANSI_CYAN << "\nn = " << n << ANSI_RESET << std::endl;
     Span sp(n);
     std::vector<int> randNumVector;
     createRandomNumbers(randNumVector, n);
-    if (n < 100)
+    if (n < 100) {
         addNumbers(sp, randNumVector);
-    else
+    }
+    else {
         sp.insertFromVector(randNumVector);
-    if (n < 100)
+    }
+    if (n < 100) {
         printExtraInfo(randNumVector, n);
+    }
     testShortestSpan(sp);
     testLongestSpan(sp);
 }
