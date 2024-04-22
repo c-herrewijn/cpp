@@ -2,6 +2,7 @@
 # define MUTANTSTACK_HPP
 
 # include <list>
+# include <stack>
 
 template <typename T>
 class MutantStack {
@@ -18,9 +19,14 @@ public:
     size_t size() const;
     void push(const T &value);
     void pop();
-    iterator begin();
-    iterator end();
-
+    iterator begin(); // first element
+    iterator end(); // past the last element
+    // operator int() const { return 7; }
+    operator std::stack<T>() const // conversion operator
+    {
+        std::stack<T> a; // todo return actual stack in correct order
+        return a;
+    }
 
 private:
     std::list<T> _data;
@@ -29,11 +35,18 @@ private:
 template <typename T>
 class MutantStack<T>::iterator {
 public:
-    iterator(T *ptr); // constructor
+    iterator(T *ptr, MutantStack<T> &stack);
+    iterator(const iterator &obj);
+    // ~MutantStack();
+
     T &operator*() const;
+    iterator &operator++(); // pre-increment
+    iterator operator++(int dummy); // post-increment
+    bool operator!=(const iterator &rhs);
 
 private:
     T *_ptr;
+    MutantStack<T> &_stack;
 };
 
 #include "MutantStack.tpp"

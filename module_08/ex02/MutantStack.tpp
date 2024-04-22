@@ -1,3 +1,6 @@
+#include <list>
+#include <stdint.h>
+
 template<typename T>
 MutantStack<T>::MutantStack() {}
 
@@ -50,26 +53,68 @@ void MutantStack<T>::pop()
 template<typename T>
 typename MutantStack<T>::iterator MutantStack<T>::begin()
 {
-
-    MutantStack<T>::iterator it(&(this->_data.front()));
+    MutantStack<T>::iterator it(&(this->_data.front()), *this);
     return it;
 }
 
 template<typename T>
 typename MutantStack<T>::iterator MutantStack<T>::end()
 {
-
-    MutantStack<T>::iterator it(&(this->_data.back()));
-    return it;
+    MutantStack<T>::iterator it(&(this->_data.back()), *this);
+    return (++it); // end is after last element
 }
 
 // ITERATOR //
 
 template<typename T>
-MutantStack<T>::iterator::iterator(T *ptr) : _ptr(ptr) {} // constructor
+MutantStack<T>::iterator::iterator(T *ptr, MutantStack<T> &stack) :
+    _ptr(ptr),
+    _stack(stack)
+{}
+
+template<typename T>
+MutantStack<T>::iterator::iterator(const MutantStack<T>::iterator &obj) :
+    _ptr(obj._ptr),
+    _stack(obj._stack)
+{}
 
 template<typename T>
 T &MutantStack<T>::iterator::operator*() const
 {
     return (*(this->_ptr));
+}
+
+template<typename T>
+bool MutantStack<T>::iterator::operator!=(const MutantStack<T>::iterator &rhs)
+{
+    return (this->_ptr != rhs._ptr);
+}
+
+// pre-increment
+template<typename T>
+typename MutantStack<T>::iterator &MutantStack<T>::iterator::operator++()
+{
+    std::list<T> &lst = this->_stack._data;
+    for (typename std::list<T>::iterator it=lst.begin(); it != lst.end(); it++) {
+        if (&*it == this->_ptr) {
+            this->_ptr = &*(++it);
+        }
+    }
+    return (*this);
+}
+
+// post-increment
+template<typename T>
+typename MutantStack<T>::iterator MutantStack<T>::iterator::operator++
+(int dummy)
+{
+    (void)dummy;
+    iterator orig(*this);
+    std::list<T> &lst = this->_stack._data;
+    for (typename std::list<T>::iterator it=lst.begin(); it != lst.end(); it++) {
+        if (&*it == this->_ptr) {
+            this->_ptr = &*(++it);
+        }
+    }
+    return (orig);
 }
