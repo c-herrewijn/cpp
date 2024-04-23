@@ -146,7 +146,7 @@ typename MutantStack<T>::iterator MutantStack<T>::iterator::operator--(int dummy
     std::list<T> &lst = this->_stack._data;
     for (typename std::list<T>::iterator it=lst.begin(); it != lst.end(); it++) {
         if (&*it == this->_ptr) {
-            this->_ptr = &*(++it);
+            this->_ptr = &*(--it);
         }
     }
     return (orig);
