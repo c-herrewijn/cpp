@@ -17,7 +17,7 @@ MutantStack<T>::~MutantStack() {}
 template<typename T>
 MutantStack<T> &MutantStack<T>::operator=(const MutantStack &obj)
 {
-    this->_data = obj.data;
+    this->_data = obj._data;
     return *this;
 }
 
