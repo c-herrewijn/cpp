@@ -42,7 +42,10 @@ public:
     T &operator*() const;
     iterator &operator++(); // pre-increment
     iterator operator++(int dummy); // post-increment
+    iterator &operator--(); // pre-decrement
+    iterator operator--(int dummy); // post-decrement
     bool operator!=(const iterator &rhs);
+    bool operator==(const iterator &rhs);
 
 private:
     T *_ptr;

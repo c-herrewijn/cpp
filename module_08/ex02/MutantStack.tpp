@@ -90,6 +90,12 @@ bool MutantStack<T>::iterator::operator!=(const MutantStack<T>::iterator &rhs)
     return (this->_ptr != rhs._ptr);
 }
 
+template<typename T>
+bool MutantStack<T>::iterator::operator==(const MutantStack<T>::iterator &rhs)
+{
+    return (this->_ptr == rhs._ptr);
+}
+
 // pre-increment
 template<typename T>
 typename MutantStack<T>::iterator &MutantStack<T>::iterator::operator++()
@@ -105,8 +111,35 @@ typename MutantStack<T>::iterator &MutantStack<T>::iterator::operator++()
 
 // post-increment
 template<typename T>
-typename MutantStack<T>::iterator MutantStack<T>::iterator::operator++
-(int dummy)
+typename MutantStack<T>::iterator MutantStack<T>::iterator::operator++(int dummy)
+{
+    (void)dummy;
+    iterator orig(*this);
+    std::list<T> &lst = this->_stack._data;
+    for (typename std::list<T>::iterator it=lst.begin(); it != lst.end(); it++) {
+        if (&*it == this->_ptr) {
+            this->_ptr = &*(++it);
+        }
+    }
+    return (orig);
+}
+
+// pre-decrement
+template<typename T>
+typename MutantStack<T>::iterator &MutantStack<T>::iterator::operator--()
+{
+    std::list<T> &lst = this->_stack._data;
+    for (typename std::list<T>::iterator it=lst.begin(); it != lst.end(); it++) {
+        if (&*it == this->_ptr) {
+            this->_ptr = &*(--it);
+        }
+    }
+    return (*this);
+}
+
+// post-decrement
+template<typename T>
+typename MutantStack<T>::iterator MutantStack<T>::iterator::operator--(int dummy)
 {
     (void)dummy;
     iterator orig(*this);
