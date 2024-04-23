@@ -48,7 +48,9 @@ void MutantStack<T>::push(const T &value)
 template<typename T>
 void MutantStack<T>::pop()
 {
-    this->_data.pop_front();
+    if (this->_data.size() > 0) {
+        this->_data.pop_front();
+    }
 }
 
 template<typename T>
