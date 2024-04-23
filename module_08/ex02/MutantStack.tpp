@@ -1,5 +1,6 @@
 #include <list>
 #include <stdint.h>
+#include <vector>
 
 template<typename T>
 MutantStack<T>::MutantStack() {}
@@ -63,6 +64,25 @@ typename MutantStack<T>::iterator MutantStack<T>::end()
     MutantStack<T>::iterator it(&(this->_data.back()), *this);
     return (++it); // end is after last element
 }
+
+template<typename T>
+MutantStack<T>::operator std::stack<T>()
+{
+    std::vector<T> temp;
+    std::stack<T> st;
+    for (iterator it=(this->begin()); it!=(this->end()); it++)
+    {
+        temp.push_back(*it);
+    }
+    if (temp.size() > 0) {
+        for (int i=temp.size()-1; i>=0; i--)
+        {
+            st.push(temp[i]);
+        }
+    }
+    return st;
+}
+
 
 // ITERATOR //
 

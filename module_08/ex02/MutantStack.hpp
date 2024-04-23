@@ -21,12 +21,7 @@ public:
     void pop();
     iterator begin(); // first element
     iterator end(); // past the last element
-    // operator int() const { return 7; }
-    operator std::stack<T>() const // conversion operator
-    {
-        std::stack<T> a; // todo return actual stack in correct order
-        return a;
-    }
+    operator std::stack<T>(); // conversion operator
 
 private:
     std::list<T> _data;
