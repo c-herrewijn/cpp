@@ -21,16 +21,14 @@ int main()
     ++it;
     --it;
     std::cout << "test iteration" << std::endl;
-    while (it != ite)
-    {
+    while (it != ite) {
         std::cout << *it << std::endl;
         ++it;
     }
     std::stack<int> s(mstack);
 
     std::cout << "converted into stack" << std::endl;
-    while (!s.empty())
-    {
+    while (!s.empty()) {
         std::cout << s.top() << std::endl;
         s.pop();
     }

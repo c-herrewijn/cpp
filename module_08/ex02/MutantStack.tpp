@@ -70,19 +70,16 @@ MutantStack<T>::operator std::stack<T>()
 {
     std::vector<T> temp;
     std::stack<T> st;
-    for (iterator it=(this->begin()); it!=(this->end()); it++)
-    {
+    for (iterator it=(this->begin()); it!=(this->end()); it++) {
         temp.push_back(*it);
     }
     if (temp.size() > 0) {
-        for (int i=temp.size()-1; i>=0; i--)
-        {
+        for (int i=temp.size()-1; i>=0; i--) {
             st.push(temp[i]);
         }
     }
     return st;
 }
-
 
 // ITERATOR //
 
@@ -134,9 +131,9 @@ typename MutantStack<T>::iterator &MutantStack<T>::iterator::operator++()
 
 // post-increment
 template<typename T>
-typename MutantStack<T>::iterator MutantStack<T>::iterator::operator++(int dummy)
+typename MutantStack<T>::iterator MutantStack<T>::iterator::operator++(int dum)
 {
-    (void)dummy;
+    (void)dum;
     iterator orig(*this);
     std::list<T> &lst = this->_stack._data;
     for (typename std::list<T>::iterator it=lst.begin(); it != lst.end(); it++) {
@@ -162,9 +159,9 @@ typename MutantStack<T>::iterator &MutantStack<T>::iterator::operator--()
 
 // post-decrement
 template<typename T>
-typename MutantStack<T>::iterator MutantStack<T>::iterator::operator--(int dummy)
+typename MutantStack<T>::iterator MutantStack<T>::iterator::operator--(int dum)
 {
-    (void)dummy;
+    (void)dum;
     iterator orig(*this);
     std::list<T> &lst = this->_stack._data;
     for (typename std::list<T>::iterator it=lst.begin(); it != lst.end(); it++) {
