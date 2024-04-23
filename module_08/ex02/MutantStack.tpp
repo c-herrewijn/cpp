@@ -101,6 +101,14 @@ template<typename T>
 MutantStack<T>::iterator::~iterator() {}
 
 template<typename T>
+typename MutantStack<T>::iterator &MutantStack<T>::iterator::operator=(const iterator &obj)
+{
+    this->_ptr = obj._ptr;
+    this->_stack = obj._stack;
+    return (*this);
+}
+
+template<typename T>
 T &MutantStack<T>::iterator::operator*() const
 {
     return (*(this->_ptr));

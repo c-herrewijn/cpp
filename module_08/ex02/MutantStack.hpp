@@ -34,6 +34,7 @@ public:
     iterator(const iterator &obj);
     ~iterator();
 
+    iterator &operator=(const iterator &obj);
     T &operator*() const;
     iterator &operator++(); // pre-increment
     iterator operator++(int dummy); // post-increment
