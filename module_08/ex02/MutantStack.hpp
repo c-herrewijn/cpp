@@ -37,7 +37,7 @@ class MutantStack<T>::iterator {
 public:
     iterator(T *ptr, MutantStack<T> &stack);
     iterator(const iterator &obj);
-    // ~MutantStack();
+    ~iterator();
 
     T &operator*() const;
     iterator &operator++(); // pre-increment
