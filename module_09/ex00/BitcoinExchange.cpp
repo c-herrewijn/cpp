@@ -11,8 +11,20 @@ bool priceValid(std::string dateStr);
 bool openFile(std::string dataFile, std::ifstream &ifstr);
 bool validateHeader(std::ifstream &ifstr, std::string headerExpected);
 
-// constructor
 BitcoinExchange::BitcoinExchange() {}
+
+BitcoinExchange::BitcoinExchange(const BitcoinExchange &obj)
+{
+    *this = obj;
+}
+
+BitcoinExchange::~BitcoinExchange() {}
+
+BitcoinExchange &BitcoinExchange::operator=(const BitcoinExchange &obj)
+{
+    this->_exchangeRates = obj._exchangeRates;
+    return *this;
+}
 
 bool BitcoinExchange::readPriceDatabase()
 {

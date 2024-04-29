@@ -8,6 +8,9 @@
 class BitcoinExchange {
 public:
     BitcoinExchange();
+    BitcoinExchange(const BitcoinExchange &obj);
+    ~BitcoinExchange();
+    BitcoinExchange &operator=(const BitcoinExchange &obj);
     double getExchangeRate(std::string date) const;
     bool readPriceDatabase();
 
