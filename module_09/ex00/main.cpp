@@ -122,17 +122,12 @@ static void calcBitcoinValue(BitcoinExchange &exchange, std::string csv_line)
         else if (amount < 0) {
             std::cerr << "Error: not a positive number" << std::endl;
         }
-        else if (amount > INT32_MAX) {
+        else if (amount > 1000) {
             std::cerr << "Error: number too large" << std::endl;
         }
         else {
-            try {
-                double price = exchange.getExchangeRate(date);
-                std::cout << date << " => " << amount << " = " << (price * amount) << std::endl;
-            }
-            catch (std::range_error &e) {
-                std::cerr << "Error: " << e.what() << " for date " << date << std::endl;
-            }
+            double price = exchange.getExchangeRate(date);
+            std::cout << date << " => " << amount << " = " << (price * amount) << std::endl;
         }
     }
 }

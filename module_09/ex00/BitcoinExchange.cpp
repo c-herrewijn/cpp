@@ -52,11 +52,12 @@ double BitcoinExchange::getExchangeRate(std::string date) const
     if (this->_exchangeRates.find(date) != this->_exchangeRates.end()) {
         return this->_exchangeRates.at(date);
     }
-
+    if (this->_exchangeRates.size() == 0) {
+        return (0);
+    }
     auto it_upper = this->_exchangeRates.upper_bound(date);
-    if (it_upper == this->_exchangeRates.begin()
-            || it_upper == this->_exchangeRates.end()) {
-        throw std::range_error("no exchange rate found");
+    if (it_upper == this->_exchangeRates.begin()) {
+        return (*it_upper).second;
     }
     return (*(--it_upper)).second;
 }
