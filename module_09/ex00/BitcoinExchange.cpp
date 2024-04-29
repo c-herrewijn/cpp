@@ -10,6 +10,8 @@
 // utils
 bool dateValid(std::string dateStr);
 bool priceValid(std::string dateStr);
+bool openFile(std::string dataFile, std::ifstream &ifstr);
+bool validateHeader(std::ifstream &ifstr, std::string headerExpected);
 
 // constructor
 BitcoinExchange::BitcoinExchange() {}
@@ -17,41 +19,10 @@ BitcoinExchange::BitcoinExchange() {}
 bool BitcoinExchange::readPriceDatabase(std::string dataFile)
 {
     std::ifstream ifstr;
-    if (this->_fileReadable(dataFile, ifstr) == false) {
-        return false;
-    }
-    if (this->_headerValid(ifstr) == false) {
+    if (openFile(dataFile, ifstr) == false
+            || validateHeader(ifstr, "date,exchange_rate") == false
+            || this->_addPricesFromStream(ifstr) == false) {
         ifstr.close();
-        return false;
-    }
-    if (this->_addPricesFromStream(ifstr) == false) {
-        ifstr.close();
-        return false;
-    }
-    return true;
-}
-
-bool BitcoinExchange::_fileReadable(std::string dataFile, std::ifstream &ifstr)
-{
-    if (dataFile == "") {
-        std::cerr << "datafile not found or not readable" << std::endl;
-        return false;
-    }
-    ifstr.open(dataFile);
-    if (!ifstr) {
-        std::cerr << "datafile not found or not readable" << std::endl;
-        return false;
-    }
-    return true;
-}
-
-bool BitcoinExchange::_headerValid(std::ifstream &ifstr)
-{
-    std::string header;
-    std::getline(ifstr, header);
-    std::string headerExpected = "date,exchange_rate";
-    if (headerExpected != header) {
-        std::cerr << "incorrect header in data file" << std::endl;
         return false;
     }
     return true;
@@ -85,7 +56,7 @@ double BitcoinExchange::getExchangeRate(std::string date) const
     auto it_upper = this->_exchangeRates.upper_bound(date);
     if (it_upper == this->_exchangeRates.begin()
             || it_upper == this->_exchangeRates.end()) {
-        throw std::range_error("no exchange rate found!");
+        throw std::range_error("no exchange rate found");
     }
     return (*(--it_upper)).second;
 }

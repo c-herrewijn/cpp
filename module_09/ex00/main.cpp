@@ -2,6 +2,9 @@
 #include <iostream>
 #include <stdexcept>
 #include <sstream>
+#include <fstream>
+#include <algorithm>
+#include <stdexcept>
 
 #include "BitcoinExchange.hpp"
 
@@ -55,31 +58,103 @@ bool priceValid(std::string dateStr)
            );
 }
 
-bool inputValid(int argc, char *argv[])
+bool openFile(std::string dataFile, std::ifstream &ifstr)
 {
-    // todo: also validate argv[2]
-    if (argc != 2) {
-        if (argc < 2) {
-            std::cerr << "Error: invalid number of argumets, no datafile provided\n";
-        }
-        else {
-            std::cerr << "Error: invalid number of argumets\n";
-        }
+    ifstr.open(dataFile);
+    if (!ifstr) {
+        std::cerr << "file '" + dataFile + "' not found or not readable" << std::endl;
         return false;
     }
+    return true;
+}
+
+bool validateHeader(std::ifstream &ifstr, std::string headerExpected)
+{
+    std::string header;
+    std::getline(ifstr, header);
+    if (headerExpected != header) {
+        std::cerr << "incorrect header in data file" << std::endl;
+        return false;
+    }
+    return true;
+}
+
+// trim string from end (in place)
+static void rtrim(std::string &s)
+{
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](char ch) {
+        return !std::isspace(ch);
+    }).base(), s.end());
+}
+
+static bool inputValid(int argc, char *argv[], std::ifstream &inputStream)
+{
+    if (argc != 2) {
+        std::cerr << "Error: invalid number of argumets\n";
+        return false;
+    }
+    if (openFile(argv[1], inputStream) == false
+            || validateHeader(inputStream, "date | value") == false) {
+        inputStream.close();
+        return false;
+    }
+    return true;
+}
+
+static void calcBitcoinValue(BitcoinExchange &exchange, std::string csv_line)
+{
+    std::istringstream ss(csv_line);
+    std::string date;
+    double amount;
+    getline(ss, date, '|');
+    rtrim(date);
+    if (ss.eof() == true) {
+        std::cerr << "Error: bad input => " << csv_line << std::endl;
+    }
     else {
-        return true;
+        ss >> amount;
+        if (ss.eof() == false) {
+            std::cerr << "Error: bad input => " << csv_line << std::endl;
+        }
+        else if (dateValid(date) == false) {
+            std::cerr << "Error: bad input => " << csv_line << std::endl;
+        }
+        else if (amount < 0) {
+            std::cerr << "Error: not a positive number" << std::endl;
+        }
+        else if (amount > INT32_MAX) {
+            std::cerr << "Error: number too large" << std::endl;
+        }
+        else {
+            try {
+                double price = exchange.getExchangeRate(date);
+                std::cout << date << " => " << amount << " = " << (price * amount) << std::endl;
+            }
+            catch (std::range_error &e) {
+                std::cerr << "Error: " << e.what() << " for date " << date << std::endl;
+            }
+        }
+    }
+}
+
+static void calcBitcoinValuesFromFile(BitcoinExchange &exchange,
+                                      std::ifstream &inputAmounts)
+{
+    for (std::string csv_line; std::getline(inputAmounts, csv_line);) {
+        calcBitcoinValue(exchange, csv_line);
     }
 }
 
 int main(int argc, char *argv[])
 {
-    BitcoinExchange exchange;
-    if (inputValid(argc, argv) == false) {
+    std::ifstream inputAmounts;
+    if (inputValid(argc, argv, inputAmounts) == false) {
         exit(EXIT_FAILURE);
     }
-
+    BitcoinExchange exchange;
     if (exchange.readPriceDatabase("data.csv") == false) {
         exit(EXIT_FAILURE);
     }
+    calcBitcoinValuesFromFile(exchange, inputAmounts);
+    inputAmounts.close();
 }
