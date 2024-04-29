@@ -62,7 +62,8 @@ bool openFile(std::string dataFile, std::ifstream &ifstr)
 {
     ifstr.open(dataFile);
     if (!ifstr) {
-        std::cerr << "file '" + dataFile + "' not found or not readable" << std::endl;
+        std::cerr << "Error: file '" + dataFile + "' not found or not readable" <<
+                  std::endl;
         return false;
     }
     return true;
@@ -73,7 +74,7 @@ bool validateHeader(std::ifstream &ifstr, std::string headerExpected)
     std::string header;
     std::getline(ifstr, header);
     if (headerExpected != header) {
-        std::cerr << "incorrect header in data file" << std::endl;
+        std::cerr << "Error: incorrect header in data file" << std::endl;
         return false;
     }
     return true;

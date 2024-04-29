@@ -25,6 +25,12 @@ bool BitcoinExchange::readPriceDatabase()
         ifstr.close();
         return false;
     }
+    if (this->_exchangeRates.size() == 0) {
+        std::cerr << "Error: no prices could be stored" << std::endl;
+        ifstr.close();
+        return false;
+    }
+    ifstr.close();
     return true;
 }
 
@@ -39,7 +45,7 @@ bool BitcoinExchange::_addPricesFromStream(std::ifstream &ifstr)
         if (ss.eof() == false
                 || dateValid(date) == false
                 || priceValid(exchangeRateStr) == false) {
-            std::cerr << "invalid csv file" << std::endl;
+            std::cerr << "Error: invalid csv file" << std::endl;
             return false;
         }
         this->_exchangeRates.emplace(date, std::stod(exchangeRateStr));
