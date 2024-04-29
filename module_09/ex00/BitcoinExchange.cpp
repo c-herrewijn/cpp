@@ -1,10 +1,8 @@
 
 #include "BitcoinExchange.hpp"
-#include <stdexcept>
 #include <fstream>
 #include <string>
 #include <sstream>
-
 #include <iostream>
 
 // utils
