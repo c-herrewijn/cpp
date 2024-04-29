@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
         exit(EXIT_FAILURE);
     }
     BitcoinExchange exchange;
-    if (exchange.readPriceDatabase("data.csv") == false) {
+    if (exchange.readPriceDatabase() == false) {
         exit(EXIT_FAILURE);
     }
     calcBitcoinValuesFromFile(exchange, inputAmounts);

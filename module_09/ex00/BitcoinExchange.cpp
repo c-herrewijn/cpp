@@ -16,10 +16,10 @@ bool validateHeader(std::ifstream &ifstr, std::string headerExpected);
 // constructor
 BitcoinExchange::BitcoinExchange() {}
 
-bool BitcoinExchange::readPriceDatabase(std::string dataFile)
+bool BitcoinExchange::readPriceDatabase()
 {
     std::ifstream ifstr;
-    if (openFile(dataFile, ifstr) == false
+    if (openFile(DATABASE, ifstr) == false
             || validateHeader(ifstr, "date,exchange_rate") == false
             || this->_addPricesFromStream(ifstr) == false) {
         ifstr.close();
