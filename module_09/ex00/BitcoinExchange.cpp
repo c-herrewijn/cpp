@@ -75,5 +75,8 @@ double BitcoinExchange::getExchangeRate(std::string date) const
     if (it_upper == this->_exchangeRates.begin()) {
         return (*it_upper).second;
     }
+    if (it_upper == this->_exchangeRates.end()) {
+        return (*(std::prev(it_upper))).second;
+    }
     return (*(--it_upper)).second;
 }
