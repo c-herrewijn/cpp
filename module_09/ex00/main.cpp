@@ -74,14 +74,12 @@ bool inputValid(int argc, char *argv[])
 
 int main(int argc, char *argv[])
 {
+    BitcoinExchange exchange;
     if (inputValid(argc, argv) == false) {
         exit(EXIT_FAILURE);
     }
-    try {
-        BitcoinExchange exchange("data.csv");
-    }
-    catch (std::runtime_error &e) {
-        std::cerr << e.what() << "\n";
+
+    if (exchange.readPriceDatabase("data.csv") == false) {
         exit(EXIT_FAILURE);
     }
 }

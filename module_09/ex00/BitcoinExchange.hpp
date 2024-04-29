@@ -7,8 +7,9 @@
 
 class BitcoinExchange {
 public:
-    BitcoinExchange(std::string dataFile);
-    double getExchangeRate(std::string date);
+    BitcoinExchange();
+    double getExchangeRate(std::string date) const;
+    bool readPriceDatabase(std::string dataFile);
 
 private:
     std::map<std::string, double>_exchangeRates;
