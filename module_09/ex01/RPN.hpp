@@ -12,12 +12,12 @@ public:
     ~RPN();
     RPN &operator=(const RPN &obj);
 
-    bool runInput(std::string);
-    int32_t getResult();
+    bool runInput(std::string const inputStr, std::string &errString);
+    int32_t getResult() const;
 
 private:
-    bool _executeOperator(char o);
     std::stack<int32_t> _stack;
+    bool _executeOperator(char o, std::string &errString);
 };
 
 #endif

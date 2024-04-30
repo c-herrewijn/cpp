@@ -4,17 +4,19 @@
 
 int main(int argc, char *argv[])
 {
+    RPN rpn;
+    std::string errString = "";
+
     if (argc != 2) {
-        std::cout << "invalid number of arguments" << std::endl;
+        std::cout << "Error: invalid number of arguments" << std::endl;
         return EXIT_FAILURE;
     }
-    RPN rpn;
-    if (rpn.runInput(argv[1]) == true) {
+    if (rpn.runInput(argv[1], errString) == true) {
         std::cout << rpn.getResult() << std::endl;
         return EXIT_SUCCESS;
     }
     else {
-        std::cerr << "Error" << std::endl;
+        std::cerr << "Error: " << errString << std::endl;
         return EXIT_FAILURE;
     }
 }
