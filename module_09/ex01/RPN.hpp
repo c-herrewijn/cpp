@@ -3,6 +3,7 @@
 
 # include <stack>
 # include <cstdint>
+# include <string>
 
 class RPN {
 public:
@@ -11,12 +12,11 @@ public:
     ~RPN();
     RPN &operator=(const RPN &obj);
 
-    void addNumberToStack(int32_t n);
-    bool executeOperator(char o);
-    bool verifyResult();
+    bool runInput(std::string);
     int32_t getResult();
 
 private:
+    bool _executeOperator(char o);
     std::stack<int32_t> _stack;
 };
 
