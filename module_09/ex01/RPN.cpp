@@ -24,7 +24,7 @@ bool RPN::runInput(std::string inputString, std::string &errString)
     std::istringstream ss(inputString);
     for (std::string tokenString; ss >> tokenString;) {
         if (tokenString.size() != 1) {
-            errString = "invalid input: '" + tokenString + "'; should be space separated single chars";
+            errString = "invalid input: '" + tokenString + "'; expecting space separated single chars";
             return false;
         }
         char c = tokenString[0];
@@ -88,7 +88,7 @@ bool RPN::_executeOperator(char c, std::string &errString)
         return false;
     }
     if (res > INT32_MAX) {
-        errString = "(in between) result larger then INT32_MAX";
+        errString = "result (or in between result) larger then INT32_MAX";
         return false;
     }
     this->_stack.emplace(static_cast<int32_t>(res));
