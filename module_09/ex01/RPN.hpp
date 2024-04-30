@@ -2,17 +2,7 @@
 # define RPN_HPP
 
 # include <stack>
-
-typedef enum tokentype_e {
-    OPERATOR,
-    VALUE
-} tokentype_t;
-
-typedef struct token_s {
-    tokentype_t type;
-    char operation;
-    unsigned int value;
-} token_t;
+# include <cstdint>
 
 class RPN {
 public:
@@ -21,9 +11,13 @@ public:
     ~RPN();
     RPN &operator=(const RPN &obj);
 
-    std::stack<token_t> stack;
-private:
+    void addNumberToStack(int32_t n);
+    bool executeOperator(char o);
+    bool verifyResult();
+    int32_t getResult();
 
+private:
+    std::stack<int32_t> _stack;
 };
 
 #endif
