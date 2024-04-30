@@ -72,7 +72,7 @@ bool RPN::_executeOperator(char c, std::string &errString)
         res = i2 - i1;
         break;
     case '*' :
-        res = i2 * i1;
+        res = static_cast<int64_t>(i2) * static_cast<int64_t>(i1);
         break;
     case '/' :
         if (i1 == 0) {
