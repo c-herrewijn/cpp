@@ -10,9 +10,9 @@ bool isPositiveIteger(std::string s);
 class PmergeMe {
 public:
     PmergeMe();
-    PmergeMe(const PmergeMe &obj);
+    PmergeMe(const PmergeMe &rhs);
     ~PmergeMe();
-    PmergeMe &operator=(const PmergeMe &obj);
+    PmergeMe &operator=(const PmergeMe &rhs);
 
     class Pair;
     bool parseInput(int argc, char *argv[]);
@@ -30,10 +30,14 @@ class PmergeMe::Pair {
 public:
     Pair();
     Pair(unsigned int first, unsigned int second);
+    Pair(const Pair &rhs);
+    ~Pair();
+
+    Pair &operator=(const Pair &rhs);
+    bool operator<(Pair &rhs) const;
 
     unsigned int first;
     unsigned int second;
-    bool operator<(Pair &rhs) const;
 };
 
 #endif

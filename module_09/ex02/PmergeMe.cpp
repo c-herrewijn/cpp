@@ -6,17 +6,16 @@
 
 PmergeMe::PmergeMe() {}
 
-PmergeMe::PmergeMe(const PmergeMe &obj)
+PmergeMe::PmergeMe(const PmergeMe &rhs)
 {
-    *this = obj;
+    *this = rhs;
 }
 
 PmergeMe::~PmergeMe() {}
 
-PmergeMe &PmergeMe::operator=(const PmergeMe &obj)
+PmergeMe &PmergeMe::operator=(const PmergeMe &rhs)
 {
-    // TODO: copy all attributes
-    this->_inputList = obj._inputList;
+    this->_inputList = rhs._inputList;
     return *this;
 }
 
@@ -73,8 +72,20 @@ void PmergeMe::sortList()
 
 PmergeMe::Pair::Pair() {}
 
+PmergeMe::Pair::Pair(const Pair &rhs)
+    : first(rhs.first), second(rhs.second) {}
+
 PmergeMe::Pair::Pair(unsigned int first, unsigned int second)
     : first(first), second(second) {}
+
+PmergeMe::Pair::~Pair() {}
+
+PmergeMe::Pair &PmergeMe::Pair::operator=(const Pair &rhs)
+{
+    this->first = rhs.first;
+    this->second = rhs.second;
+    return *this;
+}
 
 bool PmergeMe::Pair::operator<(Pair &rhs) const
 {
