@@ -16,19 +16,24 @@ public:
 
     class Pair;
     bool parseInput(int argc, char *argv[]);
+    void sortList();
 
 // private:
     bool _convertInputToList(std::string s);
+    void _createPairList();
     std::list<int> _inputList;
+    std::list<Pair> _pairList;
+    int _oddNumber;
 };
 
 class PmergeMe::Pair {
 public:
+    Pair();
+    Pair(unsigned int first, unsigned int second);
+
     unsigned int first;
     unsigned int second;
-
     bool operator<(Pair &rhs) const;
-    bool operator>(Pair &rhs) const;
 };
 
 #endif

@@ -29,6 +29,12 @@ int main(int argc, char *argv[])
     if (sorter.parseInput(argc, argv) == false) {
         return EXIT_FAILURE;
     }
+    sorter.sortList();
+
+    // test pair creation
+    for (auto pair : sorter._pairList) {
+        std::cout << pair.first << ", " << pair.second << std::endl;
+    }
 
     // test parsing
     std::cout << sorter._inputList.size() << std::endl;

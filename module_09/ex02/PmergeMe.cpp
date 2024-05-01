@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include <sstream>
 
@@ -44,11 +45,38 @@ bool PmergeMe::parseInput(int argc, char *argv[])
     return true;
 }
 
+void PmergeMe::_createPairList()
+{
+    if (this->_inputList.size() % 2 == 1) {
+        this->_oddNumber = this->_inputList.front();
+        this->_inputList.pop_front();
+    }
+    else {
+        this->_oddNumber = -1;
+    }
+    for (auto it=this->_inputList.begin(); it!=this->_inputList.end();
+            std::advance(it, 2)) {
+        this->_pairList.emplace_back(
+                           Pair(std::max(*it, *std::next(it, 1)),
+                                std::min(*it, *std::next(it, 1))
+                               ));
+    }
+    this->_pairList.sort();
+}
+
+void PmergeMe::sortList()
+{
+    this->_createPairList();
+
+    // to do...
+}
+
+PmergeMe::Pair::Pair() {}
+
+PmergeMe::Pair::Pair(unsigned int first, unsigned int second)
+    : first(first), second(second) {}
+
 bool PmergeMe::Pair::operator<(Pair &rhs) const
 {
     return (this->first < rhs.first);
-}
-bool PmergeMe::Pair::operator>(Pair &rhs) const
-{
-    return (this->first > rhs.first);
 }
