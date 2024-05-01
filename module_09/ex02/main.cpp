@@ -17,42 +17,21 @@ bool isPositiveIteger(std::string s)
             && std::stol(s) <= INT32_MAX);
 }
 
+// works for n in range [0 - 30]
 unsigned int getJacobstahlNr(unsigned int n)
 {
     return (n % 2 == 0) ? ((1<<n)-1)/3 : ((1<<n)+1)/3;
 }
 
-bool convertInputToList(std::string inputString, std::list<int> &inputList)
-{
-    std::istringstream ss(inputString);
-    for (std::string token; ss >> token;) {
-        if (isPositiveIteger(token) == false) {
-            return false;
-        }
-        inputList.emplace_back(stoi(token));
-    }
-    return true;
-}
-
-bool parseInput(int argc, char *argv[], std::list<int> &inputList)
-{
-    if (argc != 2) {
-        std::cerr << "Error: invalid number of arguments" << std::endl;
-        return false;
-    }
-    if (convertInputToList(argv[1], inputList) == false) {
-        std::cerr << "Error: invalid input" << std::endl;
-        return false;
-    }
-    return true;
-}
-
 int main(int argc, char *argv[])
 {
-    std::list<int> inputList;
-    if (parseInput(argc, argv, inputList) == false) {
+    PmergeMe sorter;
+    if (sorter.parseInput(argc, argv) == false) {
         return EXIT_FAILURE;
     }
+
+    // test parsing
+    std::cout << sorter._inputList.size() << std::endl;
 
     // test Jacobstahl
     for (int i=0; i<10; i++) {
@@ -60,7 +39,7 @@ int main(int argc, char *argv[])
     }
 
     // test Pair
-    Pair p1, p2;
+    PmergeMe::Pair p1, p2;
     p1.first = 3;
     p1.second = 4;
     p2.first = 5;
