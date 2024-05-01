@@ -8,11 +8,11 @@ OBJS	= $(addprefix $(OBJ_DIR)/, $(SRCS:.cpp=.o))
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CXX) $(CFLAGS) $^ -o $(NAME)
+	c++ $(CFLAGS) $^ -o $(NAME)
 
 $(OBJ_DIR)/%.o: %.cpp
 	mkdir -p $(OBJ_DIR)
-	$(CXX) -c $(CFLAGS) $< -o $@
+	c++ -c $(CFLAGS) $< -o $@
 
 clean:
 	rm -rf $(OBJ_DIR)
