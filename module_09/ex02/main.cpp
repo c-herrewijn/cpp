@@ -17,10 +17,10 @@ bool isPositiveIteger(std::string s)
             && std::stol(s) <= INT32_MAX);
 }
 
-// works for n in range [0 - 30]
+// works for n in range [0 - 33]
 unsigned int getJacobstahlNr(unsigned int n)
 {
-    return (n % 2 == 0) ? ((1<<n)-1)/3 : ((1<<n)+1)/3;
+    return (n % 2 == 0) ? ((1UL<<n)-1)/3 : ((1UL<<n)+1)/3;
 }
 
 int main(int argc, char *argv[])
