@@ -19,25 +19,24 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &rhs)
     return *this;
 }
 
-bool PmergeMe::_convertInputToList(std::string inputString)
+bool PmergeMe::_convertInputToList(int argc, char *argv[])
 {
-    std::istringstream ss(inputString);
-    for (std::string token; ss >> token;) {
-        if (isPositiveIteger(token) == false) {
+    for (int i=1; i<argc; i++) {
+        if (isPositiveIteger(argv[i]) == false) {
             return false;
         }
-        this->_inputList.emplace_back(stoi(token));
+        this->_inputList.emplace_back(std::atoi(argv[i]));
     }
     return true;
 }
 
 bool PmergeMe::parseInput(int argc, char *argv[])
 {
-    if (argc != 2) {
-        std::cerr << "Error: invalid number of arguments" << std::endl;
+    if (argc < 2) {
+        std::cerr << "Error: no numbers to sort" << std::endl;
         return false;
     }
-    if (this->_convertInputToList(argv[1]) == false) {
+    if (this->_convertInputToList(argc, argv) == false) {
         std::cerr << "Error: invalid input" << std::endl;
         return false;
     }

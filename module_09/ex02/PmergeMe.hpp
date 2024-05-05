@@ -19,7 +19,7 @@ public:
     void sortList();
 
 // private:
-    bool _convertInputToList(std::string s);
+    bool _convertInputToList(int argc, char *argv[]);
     void _createPairList();
     std::list<int> _inputList;
     std::list<Pair> _pairList;
