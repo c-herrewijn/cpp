@@ -65,45 +65,4 @@ int main(int argc, char *argv[])
     std::cout << "Time to process " << argc - 1 << " elements with std::list : "
               << std::chrono::duration_cast<std::chrono::microseconds>(t1 - t0).count()
               << " us" << std::endl;
-
-    // testing
-    std::cout << "sorted list: ";
-    for (auto i : sorter._sortedList) {
-        std::cout << i << ", ";
-    }
-    std::cout << std::endl;
-
-    // test pair creation
-    for (auto pair : sorter._pairList) {
-        std::cout << pair._first << ", " << pair._second << std::endl;
-    }
-
-    // test binary list insertion
-    std::list<int> lst;
-    lst.emplace_back(3);
-    lst.emplace_back(3);
-    lst.emplace_back(5);
-    lst.emplace_back(7);
-    lst.emplace_back(100);
-    binaryListInsertion(42, lst, 0, lst.size());
-    for (int num : lst) {
-        std::cout << num << ", ";
-    }
-    std::cout << std::endl;
-
-    // test parsing
-    std::cout << sorter._inputList.size() << std::endl;
-
-    // test Jacobstahl
-    for (int i=0; i<10; i++) {
-        std::cout << i << ": " << getJacobstahlNr(i) << std::endl;
-    }
-
-    // test Pair
-    PmergeMe::Pair p1, p2;
-    p1._first = 3;
-    p1._second = 4;
-    p2._first = 5;
-    p1._second = 7;
-    std::cout << (p1 < p2) << std::endl;
 }
