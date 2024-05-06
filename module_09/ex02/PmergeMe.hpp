@@ -3,11 +3,14 @@
 
 #include <string>
 #include <list>
+#include <vector>
 
 // utils
 bool isPositiveIteger(std::string s);
 unsigned int getJacobstahlNr(unsigned int n);
 void binaryListInsertion(int nrToInsert, std::list<int> &lst, int minIndex,
+                         int maxIndex);
+void binaryVectInsertion(int nrToInsert, std::vector<int> &v, int minIndex,
                          int maxIndex);
 
 class PmergeMe {
@@ -16,14 +19,23 @@ public:
     PmergeMe(const PmergeMe &rhs);
     ~PmergeMe();
     PmergeMe &operator=(const PmergeMe &rhs);
-
     bool parseInput(int argc, char *argv[]);
+
+    // list
     void sortList();
     void printInputList();
     void printSortedList();
 
+    // vector
+    void sortVect();
+    void printInputVect();
+    void printSortedVect();
+
 private:
     class Pair;
+    int _numberCount;
+
+    // list
     bool _convertInputToList(int argc, char *argv[]);
     void _createPairList();
     void _mergeFirstIntoList();
@@ -31,7 +43,15 @@ private:
     std::list<int> _inputList;
     std::list<int> _sortedList;
     std::list<Pair> _pairList;
-    int _numberCount;
+
+    // vector
+    bool _convertInputToVect(int argc, char *argv[]);
+    void _createPairVect();
+    void _mergeFirstIntoVect();
+    void _insertSecondIntoVect();
+    std::vector<int> _inputVect;
+    std::vector<int> _sortedVect;
+    std::vector<Pair> _pairVect;
 };
 
 class PmergeMe::Pair {

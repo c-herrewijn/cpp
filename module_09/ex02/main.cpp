@@ -51,6 +51,32 @@ void binaryListInsertion(int nrToInsert, std::list<int> &lst, int minIndex,
     }
 }
 
+/*
+NOTE:
+- when calling this function, 'maxIndex' should be lst.size().
+- this function assumes the list is sorted
+*/
+void binaryVectInsertion(int nrToInsert, std::vector<int> &v, int minIndex,
+                         int maxIndex)
+{
+    if (minIndex == maxIndex) {
+        auto it = v.begin();
+        std::advance(it, minIndex);
+        v.insert(it, nrToInsert);
+    }
+    else {
+        int midIndex = minIndex + (maxIndex - minIndex) / 2;
+        auto itMid = v.begin();
+        std::advance(itMid, midIndex);
+        if (nrToInsert < *itMid) {
+            binaryVectInsertion(nrToInsert, v, minIndex, midIndex);
+        }
+        else {
+            binaryVectInsertion(nrToInsert, v, midIndex+1, maxIndex);
+        }
+    }
+}
+
 int main(int argc, char *argv[])
 {
     PmergeMe sorter;
@@ -58,11 +84,22 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
     sorter.printInputList();
-    const auto t0 = std::chrono::steady_clock::now();
+
+    // sorting with std::list
+    const auto t0_l = std::chrono::steady_clock::now();
     sorter.sortList();
-    const auto t1 = std::chrono::steady_clock::now();
+    const auto t1_l = std::chrono::steady_clock::now();
     sorter.printSortedList();
     std::cout << "Time to process " << argc - 1 << " elements with std::list : "
-              << std::chrono::duration_cast<std::chrono::microseconds>(t1 - t0).count()
+              << std::chrono::duration_cast<std::chrono::microseconds>(t1_l - t0_l).count()
+              << " us" << std::endl;
+
+    // sorting with std::vector
+    const auto t0_v = std::chrono::steady_clock::now();
+    sorter.sortVect();
+    const auto t1_v = std::chrono::steady_clock::now();
+    // sorter.printSortedVect();
+    std::cout << "Time to process " << argc - 1 << " elements with std::vector : "
+              << std::chrono::duration_cast<std::chrono::microseconds>(t1_v - t0_v).count()
               << " us" << std::endl;
 }

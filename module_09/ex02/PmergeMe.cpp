@@ -16,6 +16,11 @@ PmergeMe::~PmergeMe() {}
 PmergeMe &PmergeMe::operator=(const PmergeMe &rhs)
 {
     this->_inputList = rhs._inputList;
+    this->_sortedList = rhs._sortedList;
+    this->_pairList = rhs._pairList;
+    this->_inputVect = rhs._inputVect;
+    this->_sortedVect = rhs._sortedVect;
+    this->_pairVect = rhs._pairVect;
     return *this;
 }
 
@@ -25,7 +30,15 @@ bool PmergeMe::parseInput(int argc, char *argv[])
         std::cerr << "Error: no numbers to sort" << std::endl;
         return false;
     }
+    this->_numberCount = argc - 1;
     if (this->_convertInputToList(argc, argv) == false) {
+        std::cerr << "Error: invalid input" << std::endl;
+        return false;
+    }
+    this->_inputVect.reserve(this->_numberCount);
+    this->_sortedVect.reserve(this->_numberCount);
+    this->_pairVect.reserve((this->_numberCount + 1)/2);
+    if (this->_convertInputToVect(argc, argv) == false) {
         std::cerr << "Error: invalid input" << std::endl;
         return false;
     }
@@ -65,7 +78,6 @@ bool PmergeMe::_convertInputToList(int argc, char *argv[])
         }
         this->_inputList.emplace_back(std::atoi(argv[i]));
     }
-    this->_numberCount = argc - 1;
     return true;
 }
 
@@ -118,6 +130,99 @@ void PmergeMe::_insertSecondIntoList()
                 auto it = this->_pairList.begin();
                 std::advance(it, pairIndex);
                 binaryListInsertion(it->second, this->_sortedList, 0,
+                                    pairIndex + nums_inserted);
+                nums_inserted++;
+            }
+            pairIndex--;
+        }
+        IndexlastPairSorted = jacobstahlNr - 1;
+    }
+}
+
+void PmergeMe::printInputVect()
+{
+    std::cout << "Before: ";
+    for (int i : this->_inputVect) {
+        std::cout << " " << i;
+    }
+    std::cout << std::endl;
+}
+
+void PmergeMe::printSortedVect()
+{
+    std::cout << "After:  ";
+    for (int i : this->_sortedVect) {
+        std::cout << " " << i;
+    }
+    std::cout << std::endl;
+}
+
+void PmergeMe::sortVect()
+{
+    this->_createPairVect();
+    this->_mergeFirstIntoVect();
+    this->_insertSecondIntoVect();
+}
+
+bool PmergeMe::_convertInputToVect(int argc, char *argv[])
+{
+    for (int i=1; i<argc; i++) {
+        if (isPositiveIteger(argv[i]) == false) {
+            return false;
+        }
+        this->_inputVect.emplace_back(std::atoi(argv[i]));
+    }
+    return true;
+}
+
+void PmergeMe::_createPairVect()
+{
+    Pair semiPair;
+    if (this->_numberCount % 2 == 1) {
+        semiPair = Pair(this->_inputVect.back());
+        this->_inputVect.pop_back();
+    }
+    for (auto it=this->_inputVect.begin(); it!=this->_inputVect.end();
+            std::advance(it, 2)) {
+        this->_pairVect.emplace_back(
+                           Pair(std::max(*it, *std::next(it, 1)),
+                                std::min(*it, *std::next(it, 1))
+                               ));
+    }
+    sort(this->_pairVect.begin(), this->_pairVect.end());
+    if (this->_numberCount % 2 == 1) {
+        this->_pairVect.push_back(semiPair);
+    }
+}
+
+void PmergeMe::_mergeFirstIntoVect()
+{
+    for (class PmergeMe::Pair &pair : this->_pairVect) {
+        if (pair.semiPair == false) {
+            this->_sortedVect.emplace_back(pair.first);
+        }
+    }
+}
+
+void PmergeMe::_insertSecondIntoVect()
+{
+    size_t nrPairs = this->_pairVect.size();
+    this->_sortedVect.emplace(this->_sortedVect.begin(),
+                              this->_pairVect.front().second);
+    size_t nums_inserted = 1;
+    size_t IndexlastPairSorted = 0;
+
+    size_t jacobstahlIndex = 2;
+    size_t jacobstahlNr = getJacobstahlNr(jacobstahlIndex++);
+    while (IndexlastPairSorted < this->_pairVect.size()) {
+        size_t prevJacobstahlNr = jacobstahlNr;
+        jacobstahlNr = getJacobstahlNr(jacobstahlIndex++);
+        size_t pairIndex = jacobstahlNr - 1;
+        while (pairIndex < jacobstahlNr && pairIndex >= prevJacobstahlNr) {
+            if (pairIndex < nrPairs) {
+                auto it = this->_pairVect.begin();
+                std::advance(it, pairIndex);
+                binaryVectInsertion(it->second, this->_sortedVect, 0,
                                     pairIndex + nums_inserted);
                 nums_inserted++;
             }
