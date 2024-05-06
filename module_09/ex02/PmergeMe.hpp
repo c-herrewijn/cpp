@@ -17,13 +17,13 @@ public:
     ~PmergeMe();
     PmergeMe &operator=(const PmergeMe &rhs);
 
-    class Pair;
     bool parseInput(int argc, char *argv[]);
     void sortList();
     void printInputList();
     void printSortedList();
 
-// private:
+private:
+    class Pair;
     bool _convertInputToList(int argc, char *argv[]);
     void _createPairList();
     void _mergeFirstIntoList();
@@ -45,9 +45,9 @@ public:
     Pair &operator=(const Pair &rhs);
     bool operator<(Pair &rhs) const;
 
-    unsigned int _first;
-    unsigned int _second;
-    bool _semiPair; // true means only the "second" value is filled
+    unsigned int first;
+    unsigned int second;
+    bool semiPair; // true means only the "second" value is filled
 };
 
 #endif

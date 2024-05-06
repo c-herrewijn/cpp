@@ -92,9 +92,9 @@ void PmergeMe::_createPairList()
 
 void PmergeMe::_mergeFirstIntoList()
 {
-    for (auto i : this->_pairList) {
-        if (i._semiPair == false) {
-            this->_sortedList.emplace_back(i._first);
+    for (class PmergeMe::Pair &pair : this->_pairList) {
+        if (pair.semiPair == false) {
+            this->_sortedList.emplace_back(pair.first);
         }
     }
 }
@@ -103,7 +103,7 @@ void PmergeMe::_mergeFirstIntoList()
 void PmergeMe::_insertSecondIntoList()
 {
     size_t nrPairs = this->_pairList.size();
-    this->_sortedList.emplace_front(this->_pairList.front()._second);
+    this->_sortedList.emplace_front(this->_pairList.front().second);
     size_t nums_inserted = 1;
     size_t IndexlastPairSorted = 0;
 
@@ -117,7 +117,7 @@ void PmergeMe::_insertSecondIntoList()
             if (pairIndex < nrPairs) {
                 auto it = this->_pairList.begin();
                 std::advance(it, pairIndex);
-                binaryListInsertion(it->_second, this->_sortedList, 0,
+                binaryListInsertion(it->second, this->_sortedList, 0,
                                     pairIndex + nums_inserted);
                 nums_inserted++;
             }
@@ -130,25 +130,25 @@ void PmergeMe::_insertSecondIntoList()
 PmergeMe::Pair::Pair() {}
 
 PmergeMe::Pair::Pair(const Pair &rhs)
-    : _first(rhs._first), _second(rhs._second), _semiPair(rhs._semiPair) {}
+    : first(rhs.first), second(rhs.second), semiPair(rhs.semiPair) {}
 
 PmergeMe::Pair::Pair(unsigned int second)
-    : _first(-1), _second(second), _semiPair(true) {}
+    : first(-1), second(second), semiPair(true) {}
 
 PmergeMe::Pair::Pair(unsigned int first, unsigned int second)
-    : _first(first), _second(second), _semiPair(false) {}
+    : first(first), second(second), semiPair(false) {}
 
 PmergeMe::Pair::~Pair() {}
 
 PmergeMe::Pair &PmergeMe::Pair::operator=(const Pair &rhs)
 {
-    this->_first = rhs._first;
-    this->_second = rhs._second;
-    this->_semiPair = rhs._semiPair;
+    this->first = rhs.first;
+    this->second = rhs.second;
+    this->semiPair = rhs.semiPair;
     return *this;
 }
 
 bool PmergeMe::Pair::operator<(Pair &rhs) const
 {
-    return (this->_first < rhs._first);
+    return (this->first < rhs.first);
 }
