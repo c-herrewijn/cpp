@@ -19,17 +19,6 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &rhs)
     return *this;
 }
 
-bool PmergeMe::_convertInputToList(int argc, char *argv[])
-{
-    for (int i=1; i<argc; i++) {
-        if (isPositiveIteger(argv[i]) == false) {
-            return false;
-        }
-        this->_inputList.emplace_back(std::atoi(argv[i]));
-    }
-    return true;
-}
-
 bool PmergeMe::parseInput(int argc, char *argv[])
 {
     if (argc < 2) {
@@ -43,14 +32,32 @@ bool PmergeMe::parseInput(int argc, char *argv[])
     return true;
 }
 
+void PmergeMe::sortList()
+{
+    this->_createPairList();
+    this->_mergeFirstIntoList();
+    this->_insertSecondIntoList();
+}
+
+bool PmergeMe::_convertInputToList(int argc, char *argv[])
+{
+    for (int i=1; i<argc; i++) {
+        if (isPositiveIteger(argv[i]) == false) {
+            return false;
+        }
+        this->_inputList.emplace_back(std::atoi(argv[i]));
+    }
+    this->_numberCount = argc - 1;
+    return true;
+}
+
+// if nr. is odd, end with a semi pair that only has 1 nr.
 void PmergeMe::_createPairList()
 {
-    if (this->_inputList.size() % 2 == 1) {
-        this->_oddNumber = this->_inputList.front();
-        this->_inputList.pop_front();
-    }
-    else {
-        this->_oddNumber = -1;
+    Pair semiPair;
+    if (this->_numberCount % 2 == 1) {
+        semiPair = Pair(this->_inputList.back());
+        this->_inputList.pop_back();
     }
     for (auto it=this->_inputList.begin(); it!=this->_inputList.end();
             std::advance(it, 2)) {
@@ -60,33 +67,70 @@ void PmergeMe::_createPairList()
                                ));
     }
     this->_pairList.sort();
+    if (this->_numberCount % 2 == 1) {
+        this->_pairList.push_back(semiPair);
+    }
 }
 
-void PmergeMe::sortList()
+void PmergeMe::_mergeFirstIntoList()
 {
-    this->_createPairList();
+    for (auto i : this->_pairList) {
+        if (i._semiPair == false) {
+            this->_sortedList.emplace_back(i._first);
+        }
+    }
+}
 
-    // to do...
+// jacobstahl range: 0 1 1 3 5 11 21 43; so index [2] is value 1
+void PmergeMe::_insertSecondIntoList()
+{
+    size_t nrPairs = this->_pairList.size();
+    this->_sortedList.emplace_front(this->_pairList.front()._second);
+    size_t nums_inserted = 1;
+    size_t IndexlastPairSorted = 0;
+
+    size_t jacobstahlIndex = 2;
+    size_t jacobstahlNr = getJacobstahlNr(jacobstahlIndex++);
+    while (IndexlastPairSorted < this->_pairList.size()) {
+        size_t prevJacobstahlNr = jacobstahlNr;
+        jacobstahlNr = getJacobstahlNr(jacobstahlIndex++);
+        size_t pairIndex = jacobstahlNr - 1;
+        while (pairIndex < jacobstahlNr && pairIndex >= prevJacobstahlNr) {
+            if (pairIndex < nrPairs) {
+                auto it = this->_pairList.begin();
+                std::advance(it, pairIndex);
+                binaryListInsertion(it->_second, this->_sortedList, 0,
+                                    pairIndex + nums_inserted);
+                nums_inserted++;
+            }
+            pairIndex--;
+        }
+        IndexlastPairSorted = jacobstahlNr - 1;
+    }
 }
 
 PmergeMe::Pair::Pair() {}
 
 PmergeMe::Pair::Pair(const Pair &rhs)
-    : first(rhs.first), second(rhs.second) {}
+    : _first(rhs._first), _second(rhs._second), _semiPair(rhs._semiPair) {}
+
+PmergeMe::Pair::Pair(unsigned int second)
+    : _first(-1), _second(second), _semiPair(true) {}
 
 PmergeMe::Pair::Pair(unsigned int first, unsigned int second)
-    : first(first), second(second) {}
+    : _first(first), _second(second), _semiPair(false) {}
 
 PmergeMe::Pair::~Pair() {}
 
 PmergeMe::Pair &PmergeMe::Pair::operator=(const Pair &rhs)
 {
-    this->first = rhs.first;
-    this->second = rhs.second;
+    this->_first = rhs._first;
+    this->_second = rhs._second;
+    this->_semiPair = rhs._semiPair;
     return *this;
 }
 
 bool PmergeMe::Pair::operator<(Pair &rhs) const
 {
-    return (this->first < rhs.first);
+    return (this->_first < rhs._first);
 }

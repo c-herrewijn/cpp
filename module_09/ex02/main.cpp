@@ -24,7 +24,6 @@ unsigned int getJacobstahlNr(unsigned int n)
     return (n % 2 == 0) ? ((1UL<<n)-1)/3 : ((1UL<<n)+1)/3;
 }
 
-
 /*
 NOTE:
 - when calling this function, 'maxIndex' should be lst.size().
@@ -59,9 +58,16 @@ int main(int argc, char *argv[])
     }
     sorter.sortList();
 
+    // testing
+    std::cout << "sorted list: ";
+    for (auto i : sorter._sortedList) {
+        std::cout << i << ", ";
+    }
+    std::cout << std::endl;
+
     // test pair creation
     for (auto pair : sorter._pairList) {
-        std::cout << pair.first << ", " << pair.second << std::endl;
+        std::cout << pair._first << ", " << pair._second << std::endl;
     }
 
     // test binary list insertion
@@ -71,8 +77,6 @@ int main(int argc, char *argv[])
     lst.emplace_back(5);
     lst.emplace_back(7);
     lst.emplace_back(100);
-
-    auto it = lst.begin();
     binaryListInsertion(42, lst, 0, lst.size());
     for (int num : lst) {
         std::cout << num << ", ";
@@ -84,14 +88,14 @@ int main(int argc, char *argv[])
 
     // test Jacobstahl
     for (int i=0; i<10; i++) {
-        std::cout << getJacobstahlNr(i) << std::endl;
+        std::cout << i << ": " << getJacobstahlNr(i) << std::endl;
     }
 
     // test Pair
     PmergeMe::Pair p1, p2;
-    p1.first = 3;
-    p1.second = 4;
-    p2.first = 5;
-    p1.second = 7;
+    p1._first = 3;
+    p1._second = 4;
+    p2._first = 5;
+    p1._second = 7;
     std::cout << (p1 < p2) << std::endl;
 }

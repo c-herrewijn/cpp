@@ -6,6 +6,9 @@
 
 // utils
 bool isPositiveIteger(std::string s);
+unsigned int getJacobstahlNr(unsigned int n);
+void binaryListInsertion(int nrToInsert, std::list<int> &lst, int minIndex,
+                         int maxIndex);
 
 class PmergeMe {
 public:
@@ -21,23 +24,28 @@ public:
 // private:
     bool _convertInputToList(int argc, char *argv[]);
     void _createPairList();
+    void _mergeFirstIntoList();
+    void _insertSecondIntoList();
     std::list<int> _inputList;
+    std::list<int> _sortedList;
     std::list<Pair> _pairList;
-    int _oddNumber;
+    int _numberCount;
 };
 
 class PmergeMe::Pair {
 public:
     Pair();
     Pair(unsigned int first, unsigned int second);
+    Pair(unsigned int second);
     Pair(const Pair &rhs);
     ~Pair();
 
     Pair &operator=(const Pair &rhs);
     bool operator<(Pair &rhs) const;
 
-    unsigned int first;
-    unsigned int second;
+    unsigned int _first;
+    unsigned int _second;
+    bool _semiPair; // true means only the "second" value is filled
 };
 
 #endif
