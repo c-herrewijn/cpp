@@ -32,6 +32,24 @@ bool PmergeMe::parseInput(int argc, char *argv[])
     return true;
 }
 
+void PmergeMe::printInputList()
+{
+    std::cout << "Before: ";
+    for (int i : this->_inputList) {
+        std::cout << " " << i;
+    }
+    std::cout << std::endl;
+}
+
+void PmergeMe::printSortedList()
+{
+    std::cout << "After:  ";
+    for (int i : this->_sortedList) {
+        std::cout << " " << i;
+    }
+    std::cout << std::endl;
+}
+
 void PmergeMe::sortList()
 {
     this->_createPairList();

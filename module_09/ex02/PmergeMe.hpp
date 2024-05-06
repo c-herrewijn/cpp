@@ -20,6 +20,8 @@ public:
     class Pair;
     bool parseInput(int argc, char *argv[]);
     void sortList();
+    void printInputList();
+    void printSortedList();
 
 // private:
     bool _convertInputToList(int argc, char *argv[]);

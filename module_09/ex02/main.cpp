@@ -5,6 +5,7 @@
 #include <sstream>
 #include <regex>
 #include <iterator>
+#include <chrono>
 
 #include "PmergeMe.hpp"
 
@@ -56,7 +57,14 @@ int main(int argc, char *argv[])
     if (sorter.parseInput(argc, argv) == false) {
         return EXIT_FAILURE;
     }
+    sorter.printInputList();
+    const auto t0 = std::chrono::steady_clock::now();
     sorter.sortList();
+    const auto t1 = std::chrono::steady_clock::now();
+    sorter.printSortedList();
+    std::cout << "Time to process " << argc - 1 << " elements with std::list : "
+              << std::chrono::duration_cast<std::chrono::microseconds>(t1 - t0).count()
+              << " us" << std::endl;
 
     // testing
     std::cout << "sorted list: ";
