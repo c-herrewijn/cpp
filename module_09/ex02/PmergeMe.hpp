@@ -1,17 +1,9 @@
 #ifndef PMERGEME_HPP
 # define PMERGEME_HPP
 
-#include <string>
 #include <list>
+#include <string>
 #include <vector>
-
-// utils
-bool isPositiveIteger(std::string s);
-unsigned int getJacobstahlNr(unsigned int n);
-void binaryListInsertion(int nrToInsert, std::list<int> &lst, int minIndex,
-                         int maxIndex);
-void binaryVectInsertion(int nrToInsert, std::vector<int> &v, int minIndex,
-                         int maxIndex);
 
 class PmergeMe {
 public:
@@ -21,15 +13,23 @@ public:
     PmergeMe &operator=(const PmergeMe &rhs);
     bool parseInput(int argc, char *argv[]);
 
+    // utils
+    static bool isPositiveIteger(std::string s);
+    static unsigned int getJacobstahlNr(unsigned int n);
+    static void binaryListInsertion(int nrToInsert, std::list<int> &lst,
+                                    int minIndex, int maxIndex);
+    static void binaryVectInsertion(int nrToInsert, std::vector<int> &v,
+                                    int minIndex, int maxIndex);
+
     // list
     void sortList();
-    void printInputList();
-    void printSortedList();
+    void printInputList() const;
+    void printSortedList() const;
 
     // vector
     void sortVect();
-    void printInputVect();
-    void printSortedVect();
+    void printInputVect() const;
+    void printSortedVect() const;
 
 private:
     class Pair;

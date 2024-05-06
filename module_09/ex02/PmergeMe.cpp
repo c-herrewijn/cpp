@@ -1,6 +1,6 @@
 #include <algorithm>
 #include <iostream>
-#include <sstream>
+#include <regex>
 
 #include "PmergeMe.hpp"
 
@@ -24,6 +24,74 @@ PmergeMe &PmergeMe::operator=(const PmergeMe &rhs)
     return *this;
 }
 
+/*
+accepted range: [1 - INT32_MAX]
+*/
+bool PmergeMe::isPositiveIteger(std::string s)
+{
+    return (std::regex_match(s.data(), std::regex(R"([1-9][0-9]*)"))
+            && s.length() <= 10
+            && std::stol(s) <= INT32_MAX);
+}
+
+// works for n in range [0 - 33]
+unsigned int PmergeMe::getJacobstahlNr(unsigned int n)
+{
+    return (n % 2 == 0) ? ((1UL<<n)-1)/3 : ((1UL<<n)+1)/3;
+}
+
+/*
+NOTE:
+- when calling this function, 'maxIndex' should be lst.size().
+- this function assumes the list is sorted
+*/
+void PmergeMe::binaryListInsertion(int nrToInsert, std::list<int> &lst,
+                                   int minIndex, int maxIndex)
+{
+    if (minIndex == maxIndex) {
+        auto it = lst.begin();
+        std::advance(it, minIndex);
+        lst.insert(it, nrToInsert);
+    }
+    else {
+        int midIndex = minIndex + (maxIndex - minIndex) / 2;
+        auto itMid = lst.begin();
+        std::advance(itMid, midIndex);
+        if (nrToInsert < *itMid) {
+            binaryListInsertion(nrToInsert, lst, minIndex, midIndex);
+        }
+        else {
+            binaryListInsertion(nrToInsert, lst, midIndex+1, maxIndex);
+        }
+    }
+}
+
+/*
+NOTE:
+- when calling this function, 'maxIndex' should be lst.size().
+- this function assumes the list is sorted
+*/
+void PmergeMe::binaryVectInsertion(int nrToInsert, std::vector<int> &v,
+                                   int minIndex, int maxIndex)
+{
+    if (minIndex == maxIndex) {
+        auto it = v.begin();
+        std::advance(it, minIndex);
+        v.insert(it, nrToInsert);
+    }
+    else {
+        int midIndex = minIndex + (maxIndex - minIndex) / 2;
+        auto itMid = v.begin();
+        std::advance(itMid, midIndex);
+        if (nrToInsert < *itMid) {
+            binaryVectInsertion(nrToInsert, v, minIndex, midIndex);
+        }
+        else {
+            binaryVectInsertion(nrToInsert, v, midIndex+1, maxIndex);
+        }
+    }
+}
+
 bool PmergeMe::parseInput(int argc, char *argv[])
 {
     if (argc < 2) {
@@ -45,7 +113,7 @@ bool PmergeMe::parseInput(int argc, char *argv[])
     return true;
 }
 
-void PmergeMe::printInputList()
+void PmergeMe::printInputList() const
 {
     std::cout << "Before: ";
     for (int i : this->_inputList) {
@@ -54,7 +122,7 @@ void PmergeMe::printInputList()
     std::cout << std::endl;
 }
 
-void PmergeMe::printSortedList()
+void PmergeMe::printSortedList() const
 {
     std::cout << "After:  ";
     for (int i : this->_sortedList) {
@@ -139,7 +207,7 @@ void PmergeMe::_insertSecondIntoList()
     }
 }
 
-void PmergeMe::printInputVect()
+void PmergeMe::printInputVect() const
 {
     std::cout << "Before: ";
     for (int i : this->_inputVect) {
@@ -148,7 +216,7 @@ void PmergeMe::printInputVect()
     std::cout << std::endl;
 }
 
-void PmergeMe::printSortedVect()
+void PmergeMe::printSortedVect() const
 {
     std::cout << "After:  ";
     for (int i : this->_sortedVect) {
