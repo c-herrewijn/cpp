@@ -4,6 +4,7 @@
 #include <string>
 #include <sstream>
 #include <iostream>
+#include <regex>
 
 // utils
 bool dateValid(std::string dateStr);
@@ -46,6 +47,7 @@ bool BitcoinExchange::readPriceDatabase()
 
 bool BitcoinExchange::_addPricesFromStream(std::ifstream &ifstr)
 {
+    std::regex format = std::regex(R"(\d{4}-\d{2}-\d{2},\d+(\.\d{1,2})?)");
     for (std::string csv_line; std::getline(ifstr, csv_line);) {
         std::istringstream ss(csv_line);
         std::string date;
@@ -53,6 +55,7 @@ bool BitcoinExchange::_addPricesFromStream(std::ifstream &ifstr)
         getline(ss, date, ',');
         ss >> exchangeRateStr;
         if (ss.eof() == false
+                || std::regex_match(csv_line.data(), format) == false
                 || dateValid(date) == false
                 || priceValid(exchangeRateStr) == false) {
             std::cerr << "Error: invalid csv file" << std::endl;

@@ -3,6 +3,7 @@
 #include <sstream>
 #include <fstream>
 #include <algorithm>
+#include <regex>
 
 #include "BitcoinExchange.hpp"
 
@@ -13,9 +14,12 @@ bool dateValid(std::string dateStr)
 {
     char c1, c2;
     unsigned int y, m, d;
+    std::regex format = std::regex(R"(\d{4}-\d{2}-\d{2})");
     std::stringstream ss(dateStr);
+
     ss >> y >> c1 >> m >> c2 >> d;
     return (ss.eof() == true
+            && (std::regex_match(dateStr.data(), format))
             && (y >= 1899 && y < 9999)
             && (m >= 1 && m <= 12)
             && (d >= 1 && d <= 31)
@@ -105,6 +109,14 @@ static void calcBitcoinValue(BitcoinExchange &exchange, std::string csv_line)
     std::istringstream ss(csv_line);
     std::string date;
     double amount;
+
+    // regex format validation
+    std::regex format = std::regex(R"(\d{4}-\d{2}-\d{2} \| (-)?\d+(\.\d+)?)");
+    if (std::regex_match(csv_line.data(), format) == false) {
+        std::cerr << "Error: bad input => " << csv_line << std::endl;
+        return ;
+    }
+
     getline(ss, date, '|');
     rtrim(date);
     if (ss.eof() == true) {
